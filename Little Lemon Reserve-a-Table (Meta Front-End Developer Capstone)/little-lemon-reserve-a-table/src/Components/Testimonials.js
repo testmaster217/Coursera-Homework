@@ -2,7 +2,7 @@ import TestimonialCard from "./TestimonialCard";
 
 export default function Testimonials() {
     return <section>
-        <h1>Testimonials</h1>
+        <h3>Testimonials</h3>
         <ul>
             {/* Replace all profilePhotos with the actual paths to the images. */}
             {/* All data will (in the real world) have to come from an API. */}

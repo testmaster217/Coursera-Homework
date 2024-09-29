@@ -3,7 +3,7 @@ export default function Footer() {
         <img src="./Assets/Logo.svg"/>
         <menu>
         <li>
-            <h4>DORMAT NAVIGATION</h4>
+            <h3>DORMAT NAVIGATION</h3>
             <menu>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
@@ -14,7 +14,7 @@ export default function Footer() {
             </menu>
         </li>
         <li>
-            <h4>CONTACT</h4>
+            <h3>CONTACT</h3>
             <menu>
             <li>{/* Address */}</li>
             <li><a href="#">{/* Phone number */}</a></li>
@@ -22,7 +22,7 @@ export default function Footer() {
             </menu>
         </li>
         <li>
-            <h4>SOCIALS</h4>
+            <h3>SOCIALS</h3>
             <menu>
             <li><a href="#">Facebook</a></li>
             <li><a href="#">Twitter</a></li>

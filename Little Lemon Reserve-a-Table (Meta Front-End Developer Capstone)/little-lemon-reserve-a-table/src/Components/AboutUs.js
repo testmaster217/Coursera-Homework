@@ -1,7 +1,7 @@
 export default function AboutUs() {
     return <section>
-        <h1>Little Lemon</h1>
-        <h2>Chicago</h2>
+        <h3>Little Lemon</h3>
+        <h4>Chicago</h4>
         <p>
             {/* "About Us" blurb. The header and subheader may have to be changed too. */}
         </p>

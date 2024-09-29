@@ -2,7 +2,7 @@ import SpecialCard from "./SpecialCard";
 
 export default function Specials() {
     return <section>
-        <h1>This Week's Specials!</h1>
+        <h3>This Week's Specials!</h3>
         <button type="button">Online Menu</button>
         <ul>
             {/* All data will (in the real world) have to come from an API. */}
