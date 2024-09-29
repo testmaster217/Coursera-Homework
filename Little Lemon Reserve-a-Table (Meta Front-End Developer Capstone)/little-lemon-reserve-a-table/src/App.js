@@ -1,24 +1,16 @@
 import './App.css';
-import NavBar from './Components/Nav';
-import Hero from './Components/Hero';
-import Specials from './Components/Specials';
-import Testimonials from './Components/Testimonials';
-import AboutUs from './Components/AboutUs';
-import Footer from './Components/Footer';
+import Footer from '../Components/Footer';
+import Homepage from '../Pages/Homepage';
+import NavBar from '../Components/Nav';
 
 function App() {
-  return (
-    <>
-      <NavBar/>
-      <Hero/>
-      <main>
-        <Specials/>
-        <Testimonials/>
-        <AboutUs/>
-      </main>
-      <Footer/>
-    </>
-  );
+    return (
+      <>
+        <NavBar/>
+        <Homepage/>
+        <Footer/>
+      </>
+    );
 }
 
 export default App;
