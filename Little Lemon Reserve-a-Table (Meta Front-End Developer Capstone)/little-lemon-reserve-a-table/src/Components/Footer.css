@@ -45,11 +45,12 @@
 @media only screen and (max-width: 52em) {
     .PageFooter {
         flex-direction: column;
+        width: 25em;
+        padding: 0 calc(50% - 12.5em);
     }
 
     .PageFooter section {
         align-items: center;
-        padding: 0;
     }
 
     .PageFooter section menu {

@@ -49,6 +49,8 @@
 @media only screen and (max-width: 52em) {
     .AboutUs {
         flex-direction: column;
+        width: 25em;
+        padding: 2em calc(50% - 12.5em);
     }
 
     .AboutWords {

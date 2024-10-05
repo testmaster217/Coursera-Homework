@@ -44,3 +44,18 @@
     height: 1em;
     padding: 0 0.5em;
 }
+
+@media only screen and (max-width: 52em) {
+    .Special {
+        width: 31em;
+    }
+
+    .Special img {
+        width: 31em;
+        height: 20em;
+    }
+
+    .Special p {
+        height: 5em;
+    }
+}

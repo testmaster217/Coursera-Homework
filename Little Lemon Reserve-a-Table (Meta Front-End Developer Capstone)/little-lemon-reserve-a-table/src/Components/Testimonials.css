@@ -27,7 +27,8 @@
     .Testimonials {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: repeat(3, auto);
-        padding: 2em calc(50% - 25em);
+        width: 25em;
+        padding: 2em calc(50% - 12.5em);
     }
 
     .Testimonials h3 {
