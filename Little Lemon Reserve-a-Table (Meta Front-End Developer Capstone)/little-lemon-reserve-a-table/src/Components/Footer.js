@@ -1,34 +1,36 @@
+import './Footer.css';
+
+import logo from "../Assets/Logo.svg";
+
 export default function Footer() {
-    return <footer>
-        <img src="./Assets/Logo.svg"/>
-        <menu>
-        <li>
-            <h3>DORMAT NAVIGATION</h3>
+    return <footer className='PageFooter'>
+        <img src={logo} alt="Little Lemon's logo"/>
+        <section>
+            <h3 className='SectionTitle'>NAVIGATION</h3>
             <menu>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="#">Reservations</a></li>
-            <li><a href="#">Order Online</a></li>
-            <li><a href="#">Login</a></li>
+                <li><a href="#" className='ParagraphText'>Home</a></li>
+                <li><a href="#" className='ParagraphText'>About</a></li>
+                <li><a href="#" className='ParagraphText'>Menu</a></li>
+                <li><a href="#" className='ParagraphText'>Reservations</a></li>
+                <li><a href="#" className='ParagraphText'>Order Online</a></li>
+                <li><a href="#" className='ParagraphText'>Login</a></li>
             </menu>
-        </li>
-        <li>
-            <h3>CONTACT</h3>
+        </section>
+        <section>
+            <h3 className='SectionTitle'>CONTACT</h3>
             <menu>
-            <li>{/* Address */}</li>
-            <li><a href="#">{/* Phone number */}</a></li>
-            <li><a href="#">{/* Email */}</a></li>
+                <li className='ParagraphText'>456 MArket St.<br/>Chicago, IL 60613</li>
+                <li><a href="#" className='ParagraphText'>(872) 555-0100</a></li>
+                <li><a href="#" className='ParagraphText'>littlelemon@example.com</a></li>
             </menu>
-        </li>
-        <li>
-            <h3>SOCIALS</h3>
+        </section>
+        <section>
+            <h3 className='SectionTitle'>SOCIALS</h3>
             <menu>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Instagram</a></li>
+                <li><a href="#" className='ParagraphText'>Facebook</a></li>
+                <li><a href="#" className='ParagraphText'>Twitter</a></li>
+                <li><a href="#" className='ParagraphText'>Instagram</a></li>
             </menu>
-        </li>
-        </menu>
+        </section>
     </footer>
 }

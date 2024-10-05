@@ -1,8 +1,10 @@
+import restaurant from "../Assets/restaurant.jpg";
+
 import ReservationHero from '../Components/ReservationHero'
 
 export default function ReserveATable() {
     return (<>
-        <ReservationHero headerText="Reserve a Table" photo="../Assets/restaurant.jpg"/>
+        <ReservationHero headerText="Reserve a Table" photo={restaurant}/>
         <main>
             <form>
                 <label htmlFor="reservationDate">Choose a date:</label>

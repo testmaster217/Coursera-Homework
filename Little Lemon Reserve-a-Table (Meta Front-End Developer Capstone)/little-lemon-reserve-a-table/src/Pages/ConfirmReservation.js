@@ -1,8 +1,10 @@
+import chef from "../Assets/restaurant chef B";
+
 import ReservationHero from '../Components/ReservationHero'
 
 export default function ConfirmReservation() {
     return (<>
-        <ReservationHero headerText="Confirm your Reservation" photo="../Assets/restaurant chef B"/>
+        <ReservationHero headerText="Confirm your Reservation" photo={chef}/>
         <main>
             <form>
                 {/* TODO: Figure out how to get the ZIP code, the CC

@@ -1,11 +1,15 @@
+import './HomepageHero.css';
+
+import food from "../Assets/restauranfood.jpg";
+
 export default function HomepageHero() {
-    return <header>
-        <h1>Little Lemon</h1>
-        <h2>Chicago</h2>
-        <p>
-            We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.
-        </p>
-        <button type="button">Reserve a table</button>
-        <img src="./Assets/restaurantfood.jpg"/>
+    return <header className="Hero">
+        <div>
+            <h1 className='DisplayTitle'>Little Lemon</h1>
+            <h2 className='Subtitle'>Chicago</h2>
+            <p className='ParagraphText'>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
+            <button type="button" className='LeadText'>Reserve a table</button>
+        </div>
+        <img src={food} alt=""/>
     </header>;
 }

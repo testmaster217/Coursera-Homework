@@ -1,0 +1,43 @@
+.Hero {
+    padding: 1em calc(50% - 25em);
+    height: 20em;
+    width: 50em;
+    background-color: #495e57;
+    margin-bottom: 3em;
+    flex-wrap: wrap;
+}
+
+.Hero, .Hero div {
+    display: flex;
+    justify-content: center;
+}
+
+.Hero div {
+    flex-direction: column;
+    width: 25em;
+    padding-right: 5em;
+    padding-bottom: 3em;
+    align-items: flex-start;
+}
+
+.Hero h1, .Hero h2 {
+    margin: 0;
+}
+
+.Hero h1 {
+    color: var(--primary-yellow);
+}
+
+.Hero h2, .Hero p {
+    color: var(--secondary-white);
+}
+
+.Hero img {
+    width: 20em;
+    height: 23em;
+}
+
+.Hero button {
+    height: 3em;
+    padding: 0 2em;
+}

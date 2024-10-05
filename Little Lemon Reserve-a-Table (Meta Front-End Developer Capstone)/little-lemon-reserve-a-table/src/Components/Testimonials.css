@@ -1,0 +1,24 @@
+.Testimonials {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: #495e57;
+    column-gap: 1em;
+    row-gap: 2em;
+    justify-content: center;
+    width: 50em;
+    padding: 2em calc(50% - 25em) 5em;
+    margin: auto;
+}
+
+.Testimonials h3 {
+    grid-row: 1/1;
+    grid-column: 1/5;
+    text-align: center;
+    margin: 0;
+    color: var(--primary-yellow);
+}
+
+.Testimonials .Review {
+    grid-row: 2/2;
+}

@@ -1,14 +1,19 @@
-export default function SpecialCard({photoPath, name, price, description}) {
-    return <article>
-        <img src={photoPath}/>
+import "./SpecialCard.css"
+import deliveryCycle from "../Assets/Cycling.svg";
+
+export default function SpecialCard({photoPath, photoAlt, name, price, description}) {
+    return <article className="Special Card">
+        <img src={photoPath} alt={photoAlt}/>
         <header>
-            <h4>{name}</h4>
-            <span>${price}</span>
+            <h4 className="CardTitle">{name}</h4>
+            <span className="HighlightText">${price}</span>
         </header>
-        <p>{description}</p>
-        <footer>
+        <main>
+            <p className="ParagraphText">{description}</p>
+        </main>
+        <footer className="SectionCategory">
             Order for delivery
-            {/* <img src="path/to/delivery_icon.svg"/> */}
+            <img src={deliveryCycle} alt=""/>
         </footer>
     </article>
 }

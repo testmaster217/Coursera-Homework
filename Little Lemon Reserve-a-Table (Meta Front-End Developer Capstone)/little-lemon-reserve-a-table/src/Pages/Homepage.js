@@ -1,3 +1,5 @@
+import './Homepage.css';
+
 import HomepageHero from '../Components/HomepageHero';
 import Specials from '../Components/Specials';
 import Testimonials from '../Components/Testimonials';
