@@ -14,6 +14,7 @@ export default function SpecialCard({photoPath, photoAlt, name, price, descripti
         <footer className="SectionCategory">
             Order for delivery
             <img src={deliveryCycle} alt=""/>
+            {/* I got the icon by exporting it from the Figma design as I had no idea where it came from. */}
         </footer>
     </article>
 }
