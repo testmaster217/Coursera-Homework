@@ -45,3 +45,25 @@
 .AboutUs .Img2 {
     transform: translate(8em, -10em);
 }
+
+@media only screen and (max-width: 52em) {
+    .AboutUs {
+        flex-direction: column;
+    }
+
+    .AboutWords {
+        padding-right: 0;
+    }
+
+    .AboutImages {
+        height: 23em;
+    }
+
+    .AboutUs .Img1 {
+        transform: translate(0, 8em)
+    }
+    
+    .AboutUs .Img2 {
+        transform: translate(10em, -14em);
+    }
+}
