@@ -41,3 +41,22 @@
 .PageFooter a:active {
     color: var(--primary-yellow);
 }
+
+@media only screen and (max-width: 52em) {
+    .PageFooter {
+        flex-direction: column;
+    }
+
+    .PageFooter section {
+        align-items: center;
+        padding: 0;
+    }
+
+    .PageFooter section menu {
+        margin: 0;
+    }
+
+    .PageFooter li {
+        margin: 1em;
+    }
+}
