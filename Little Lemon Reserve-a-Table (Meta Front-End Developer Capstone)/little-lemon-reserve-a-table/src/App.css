@@ -68,11 +68,11 @@ body {
     background-color: var(--secondary-white);
 }
 
-img, button, .Card {
+img, .MainButton, .Card {
     border-radius: 16px;
 }
 
-button {
+.MainButton {
     background-color: var(--primary-yellow);
     color: var(--secondary-black);
     border: none;
@@ -80,7 +80,7 @@ button {
     transition: 0.2s
 }
 
-button:active {
+.MainButton:active {
     color: var(--secondary-white);
     background-color: var(--primary-green);
     box-shadow: 0 4px 4px var(--secondary-black) inset;

@@ -9,7 +9,7 @@ import SpecialCard from "./SpecialCard";
 export default function Specials() {
     return <section className="Specials">
         <h3 className="DisplayTitle">This Week's Specials!</h3>
-        <button type="button" className="LeadText">Online menu</button>
+        <button type="button" className="MainButton LeadText">Online menu</button>
         {/* All data and images will (in the real world) have to come from an API. */}
         <SpecialCard
             photoPath={greekSalad}

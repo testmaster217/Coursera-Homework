@@ -4,7 +4,6 @@
     width: 50em;
     background-color: #495e57;
     margin-bottom: 3em;
-    flex-wrap: wrap;
 }
 
 .Hero, .Hero div {
@@ -40,4 +39,15 @@
 .Hero button {
     height: 3em;
     padding: 0 2em;
+}
+
+@media only screen and (max-width: 52em) {
+    .Hero {
+        flex-direction: column;
+        width: 25em;
+        height: 30em;
+        padding: 1em calc(50% - 12.5em);
+        margin-bottom: 13em;
+        justify-content: flex-start;
+    }
 }
