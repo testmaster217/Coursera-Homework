@@ -30,22 +30,22 @@
 
 @media only screen and (max-width: 52em) {
     .Specials {
-        grid-template-columns: 1fr 1fr;
         grid-template-rows: repeat(3, auto);
         width: 25em;
         padding: 1em calc(50% - 12.5em) 2em;
     }
 
-    .Specials h3 {
-        grid-column: 1/2;
+    .Specials button {
+        grid-column: 3/3;
+        justify-self: center;
     }
 
-    .Specials button {
-        grid-column: 2/3;
+    .Specials h3 {
+        grid-column: 1/3;
     }
 
     .Specials .Special {
         grid-row: auto;
-        grid-column: 1/3;
+        grid-column: 1/4;
     }
 }

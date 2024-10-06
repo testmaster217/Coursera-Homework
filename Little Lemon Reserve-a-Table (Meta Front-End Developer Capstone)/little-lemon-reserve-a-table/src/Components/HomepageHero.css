@@ -47,7 +47,16 @@
         width: 25em;
         height: 30em;
         padding: 1em calc(50% - 12.5em);
-        margin-bottom: 13em;
+        margin-bottom: 19em;
         justify-content: flex-start;
+    }
+
+    .Hero div {
+        padding-right: 0;
+    }
+
+    .Hero img {
+        width: 25em;
+        height: 29em;
     }
 }

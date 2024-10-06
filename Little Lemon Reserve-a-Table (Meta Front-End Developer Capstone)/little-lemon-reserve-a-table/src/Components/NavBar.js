@@ -2,9 +2,18 @@ import './NavBar.css';
 
 import logo from "../Assets/Logo.svg";
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBars} from "@fortawesome/free-solid-svg-icons";
+
 export default function NavBar() {
     return <nav>
-        <img src={logo} alt="Little Lemon's logo"/>
+        <div className='Icons'>
+            <img src={logo} alt="Little Lemon's logo"/>
+            <button type="button">
+                <span className='ParagraphText'>MENU</span>
+                <FontAwesomeIcon icon={faBars}/>
+            </button>
+        </div>
         <menu>
             <li><a href="#" className='ParagraphText'>HOME</a></li>
             <li><a href="#" className='ParagraphText'>ABOUT</a></li>

@@ -37,7 +37,7 @@
 
     .Testimonials .Review {
         grid-row: auto;
-        width: 12em;
+        width: 10em;
     }
 
     .Review:nth-child(even) {
