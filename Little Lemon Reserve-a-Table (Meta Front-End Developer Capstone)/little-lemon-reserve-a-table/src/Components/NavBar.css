@@ -62,7 +62,7 @@ nav a:active {
         margin: 0;
         justify-content: space-between;
         width: calc(100%);
-        padding: 0 1em;
+        padding: 0;
     }
 
     .Icons button {
@@ -70,5 +70,13 @@ nav a:active {
         align-items: center;
         justify-content: flex-end;
         padding: 0;
+    }
+
+    .Icons button:hover {
+        color: var(--secondary-pink);
+    }
+
+    .Icons button:active {
+        color: var(--primary-yellow);
     }
 }

@@ -47,9 +47,9 @@
         flex-wrap: wrap;
         width: calc(100% - 2em);
         height: auto;
-        padding: 1em;
+        padding: 2em 1em;
         margin-bottom: auto;
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .Hero div {
@@ -59,7 +59,6 @@
 
     .Hero img {
         align-self: stretch;
-        margin: 1em auto;
     }
 
     .Hero button {
