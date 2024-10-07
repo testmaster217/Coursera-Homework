@@ -43,7 +43,6 @@
 
 @media only screen and (max-width: 52em) {
     .Hero {
-        --heroWidth: calc(100% - 2em);
         flex-wrap: wrap;
         width: calc(100% - 2em);
         height: auto;

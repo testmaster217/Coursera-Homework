@@ -52,7 +52,22 @@ nav a:active {
     }
 
     nav menu {
-        display: none;
+        display: none; /*  TODO: Change this to "flex" when the hamburger button is clicked. */
+        flex-direction: column;
+        justify-content: stretch;
+        width: 100%;
+        padding-top: 1em;
+    }
+
+    nav menu li {
+        width: calc(100% - 2em);
+        padding: 1em;
+        border-top: 1px dashed var(--primary-green);
+        text-align: center;
+    }
+
+    nav menu li:last-child {
+        border-bottom: 1px dashed var(--primary-green);
     }
 
     nav .Icons {
