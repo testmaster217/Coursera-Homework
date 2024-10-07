@@ -1,6 +1,8 @@
 .Special {
     width: 15em;
     margin: auto;
+    /* display: flex;
+    flex-direction: column; */
 }
 
 .Special img {
@@ -47,15 +49,17 @@
 
 @media only screen and (max-width: 52em) {
     .Special {
-        width: 25em;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .Special img {
-        width: 25em;
-        height: 17em;
+        width: 100%;
+        height: calc(67% - 1.3em);
     }
 
     .Special p {
-        height: 5em;
+        height: auto;
     }
 }

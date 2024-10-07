@@ -39,7 +39,7 @@
 }
 
 .AboutUs .Img1 {
-    transform: translate(-2em, 12em)
+    transform: translate(-2em, 12em);
 }
 
 .AboutUs .Img2 {
@@ -49,8 +49,12 @@
 @media only screen and (max-width: 52em) {
     .AboutUs {
         flex-direction: column;
-        width: 25em;
-        padding: 2em calc(50% - 12.5em);
+        width: calc(100% - 2em);
+        padding: 2em 1em;
+    }
+
+    .AboutUs div {
+        width: 100%;
     }
 
     .AboutWords {
@@ -58,14 +62,21 @@
     }
 
     .AboutImages {
-        height: 23em;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .AboutUs img {
+        padding: 1em;
     }
 
     .AboutUs .Img1 {
-        transform: translate(0, 8em)
+        transform: none;
     }
-    
+
     .AboutUs .Img2 {
-        transform: translate(10em, -14em);
+        transform: none;
     }
 }

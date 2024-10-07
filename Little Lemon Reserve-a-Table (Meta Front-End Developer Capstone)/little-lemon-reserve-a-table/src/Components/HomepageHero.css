@@ -43,20 +43,26 @@
 
 @media only screen and (max-width: 52em) {
     .Hero {
-        flex-direction: column;
-        width: 25em;
-        height: 30em;
-        padding: 1em calc(50% - 12.5em);
-        margin-bottom: 19em;
+        --heroWidth: calc(100% - 2em);
+        flex-wrap: wrap;
+        width: calc(100% - 2em);
+        height: auto;
+        padding: 1em;
+        margin-bottom: auto;
         justify-content: flex-start;
     }
 
     .Hero div {
         padding-right: 0;
+        padding-bottom: 2em;
     }
 
     .Hero img {
-        width: 25em;
-        height: 29em;
+        align-self: stretch;
+        margin: 1em auto;
+    }
+
+    .Hero button {
+        margin: 0 auto;
     }
 }

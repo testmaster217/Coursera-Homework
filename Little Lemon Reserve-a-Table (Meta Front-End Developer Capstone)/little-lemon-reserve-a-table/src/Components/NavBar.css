@@ -47,8 +47,8 @@ nav a:active {
 
 @media only screen and (max-width: 52em) {
     nav {
-        width: 25em;
-        padding: 1em calc(50% - 12.5em);
+        width: calc(100% - 2em);
+        padding: 1em;
     }
 
     nav menu {
@@ -61,13 +61,14 @@ nav a:active {
         align-items: center;
         margin: 0;
         justify-content: space-between;
-        width: 25em;
-        padding: 0 calc(50% - 12.5em);
+        width: calc(100%);
+        padding: 0 1em;
     }
 
     .Icons button {
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        padding: 0;
     }
 }

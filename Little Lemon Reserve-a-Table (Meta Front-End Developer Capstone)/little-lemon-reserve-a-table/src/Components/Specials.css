@@ -31,8 +31,8 @@
 @media only screen and (max-width: 52em) {
     .Specials {
         grid-template-rows: repeat(3, auto);
-        width: 25em;
-        padding: 1em calc(50% - 12.5em) 2em;
+        width: calc(100% - 2em);
+        padding: 1em 1em 2em;
     }
 
     .Specials button {

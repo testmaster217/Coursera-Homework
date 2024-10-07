@@ -27,8 +27,8 @@
     .Testimonials {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: repeat(3, auto);
-        width: 25em;
-        padding: 2em calc(50% - 12.5em);
+        width: calc(100% - 2em);
+        padding: 2em 1em;
     }
 
     .Testimonials h3 {
@@ -37,7 +37,7 @@
 
     .Testimonials .Review {
         grid-row: auto;
-        width: 10em;
+        width: calc(100% - 2em);
     }
 
     .Review:nth-child(even) {
