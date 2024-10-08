@@ -77,7 +77,7 @@ img, .MainButton, .Card {
     color: var(--secondary-black);
     border: none;
     box-shadow: 0 4px 4px var(--secondary-black);
-    transition: 0.2s
+    transition: 0.2s;
 }
 
 .MainButton:active {

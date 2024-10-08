@@ -1,4 +1,4 @@
-import chef from "../Assets/restaurant chef B";
+import chef from "../Assets/restaurant chef B.jpg";
 
 import ReservationHero from '../Components/ReservationHero'
 

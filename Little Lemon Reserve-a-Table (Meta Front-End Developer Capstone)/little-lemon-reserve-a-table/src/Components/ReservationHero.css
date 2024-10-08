@@ -39,6 +39,15 @@
     padding: 0;
     background-color: var(--secondary-white);
     color: var(--secondary-black);
+    box-shadow: 0 4px 4px var(--secondary-black);
+    transition: 0.2s;
+}
+
+.ReservationHero .BackButton:active {
+    color: var(--secondary-white);
+    background-color: var(--primary-green);
+    box-shadow: 0 4px 4px var(--secondary-black) inset;
+    transition: 0.2s;
 }
 
 @media only screen and (max-width: 52em) {
