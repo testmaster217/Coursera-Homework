@@ -90,3 +90,13 @@ img, .MainButton, .Card {
 .Card {
     box-shadow: 0 4px 4px var(--secondary-black);
 }
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#root main {
+    flex-grow: 1;
+}

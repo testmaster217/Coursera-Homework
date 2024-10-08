@@ -9,7 +9,7 @@ export default function Homepage() {
     return (
         <>
           <HomepageHero/>
-          <main>
+          <main className='HomepageMain'>
             <Specials/>
             <Testimonials/>
             <AboutUs/>
