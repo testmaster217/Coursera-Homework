@@ -16,9 +16,10 @@
 
 #seatingChoice {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr auto;
     grid-template-rows: repeat(3, 1fr);
     gap: 0.5em;
+    justify-content: left;
     padding: 0;
     margin: 0;
     border: none;
