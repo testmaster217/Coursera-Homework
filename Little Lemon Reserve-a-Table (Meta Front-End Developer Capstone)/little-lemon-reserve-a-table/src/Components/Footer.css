@@ -44,9 +44,16 @@
 
 @media only screen and (max-width: 52em) {
     .PageFooter {
-        flex-wrap: wrap;
+        /* flex-wrap: wrap; */
+        flex-direction: column;
+        justify-content: center;
         width: calc(100% - 2em);
         padding: 0 1em;
+    }
+
+    .PageFooter section {
+        margin-inline: 1em;
+        align-items: center;
     }
 
     .PageFooter section menu {
@@ -54,12 +61,6 @@
     }
 
     .PageFooter li {
-        margin: 1em;
+        margin: 1em 0;
     }
 }
-
-/* @media only screen and (min-height: 100%) {
-    .PageFooter {
-        margin-top: calc(100vh - 100%);
-    }
-} */

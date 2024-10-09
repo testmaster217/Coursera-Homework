@@ -11,6 +11,8 @@ export default function ReserveATable() {
             {/* TODO: May need to replace the native form elements with stuff from
             a UI framework for better customizability. See if it comes up later in
             the project. */}
+            {/* TODO: Address the fact that the browser console is yelling at me
+            about "value" being set for a lot of these elements, but not "onChange". */}
             <form className="ReserveForm">
                 {/* TODO: Add error messages that appear when a field is invalid.
                 (Might come up later in the project.) */}

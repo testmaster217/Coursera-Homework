@@ -57,3 +57,16 @@
     height: 3em;
     margin: auto;
 }
+
+@media only screen and (max-width: 52em) {
+    .ReserveForm {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 2em);
+        padding: 2em 1em;
+    }
+
+    #seatingChoice {
+        grid-template-columns: 1fr 25fr;
+    }
+}

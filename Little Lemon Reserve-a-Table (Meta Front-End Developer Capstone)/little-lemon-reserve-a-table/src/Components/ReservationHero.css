@@ -66,5 +66,7 @@
 
     .ReservationHero img {
         align-self: stretch;
+        width: 100%;
+        aspect-ratio: 25/23;
     }
 }
