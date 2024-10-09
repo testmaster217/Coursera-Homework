@@ -9,6 +9,8 @@ export default function ReserveATable() {
         <ReservationHero headerText="Reserve a Table" photo={restaurant}/>
         <main>
             <form className="ReserveForm">
+                {/* TODO: Add error messages that appear when a field is invalid.
+                (Might come up later in the project.) */}
                 <div>
                     <label htmlFor="reservationDate"><span className='HighlightText'>*</span>Choose a date:</label>
                     {/* TODO: Set today's date as the min and the value. */}

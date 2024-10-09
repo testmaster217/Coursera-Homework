@@ -12,6 +12,8 @@ export default function ConfirmReservation() {
                 fallback doesn't have the validation needed already),
                 and the 3-digit code to have validation. (This might
                 come up later in the project anyway.) */}
+                {/* TODO: Add error messages that appear when a field is invalid.
+                (Might come up later in the project.) */}
                 <fieldset>
                     <legend>Contact Info</legend>
 
