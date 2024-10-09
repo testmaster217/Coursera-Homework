@@ -13,10 +13,30 @@
     display: flex;
     flex-direction: column;
 }
+.ReserveForm label {
+    color: var(--primary-green);
+}
+
+.ReserveForm input[type="radio"] {
+    background-color: var(--secondary-white);
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.ReserveForm textarea {
+    border-radius: 8px;
+    background-color: var(--secondary-white);
+    color: var(--secondary-black);
+    border: none;
+    box-shadow: 0 4px 4px rgb(from var(--primary-green) r g b / 0.25) inset,
+                0 -4px 4px rgb(from var(--primary-green) r g b / 0.25) inset;
+    height: 5em;
+    padding: 0 0.2em;
+}
 
 #seatingChoice {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 10fr;
     grid-template-rows: repeat(3, 1fr);
     gap: 0.5em;
     justify-content: left;
@@ -33,4 +53,7 @@
 
 .ReserveForm > button {
     grid-column: 1/4;
+    width: 12em;
+    height: 3em;
+    margin: auto;
 }
