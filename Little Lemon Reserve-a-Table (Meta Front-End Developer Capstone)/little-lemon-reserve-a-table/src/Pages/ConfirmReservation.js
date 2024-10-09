@@ -15,35 +15,35 @@ export default function ConfirmReservation() {
                 <fieldset>
                     <legend>Contact Info</legend>
 
-                    <label htmlFor="fName">First name:</label>
+                    <label htmlFor="fName"><span className='HighlightText'>*</span>First name:</label>
                     <input type="text" id="fName" name="fName" required/>
 
-                    <label htmlFor="lName">Last name:</label>
+                    <label htmlFor="lName"><span className='HighlightText'>*</span>Last name:</label>
                     <input type="text" id="lName" name="lName" required/>
 
                     <label htmlFor="phone">Phone #:</label>
                     <input type="tel" id="phone" name="phone"/>
 
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email"><span className='HighlightText'>*</span>Email:</label>
                     <input type="email" id="email" name="email" required/>
                 </fieldset>
 
                 <fieldset>
                     <legend>Billing Info</legend>
 
-                    <label htmlFor="ccName">Name on credit card:</label>
+                    <label htmlFor="ccName"><span className='HighlightText'>*</span>Name on credit card:</label>
                     <input type="text" id="ccName" name="ccName" required/>
 
-                    <label htmlFor="address">Address:</label>
+                    <label htmlFor="address"><span className='HighlightText'>*</span>Address:</label>
                     <input type="text" id="address" name="address" required/>
 
                     <label htmlFor="addressLine2">Address line 2:</label>
                     <input type="text" id="addressLine2" name="addressLine2"/>
 
-                    <label htmlFor="city">City:</label>
+                    <label htmlFor="city"><span className='HighlightText'>*</span>City:</label>
                     <input type="text" id="city" name="city" required/>
 
-                    <label htmlFor="state">State:</label>
+                    <label htmlFor="state"><span className='HighlightText'>*</span>State:</label>
                     <select id="state" name="state" required>
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
@@ -97,16 +97,16 @@ export default function ConfirmReservation() {
                         <option value="WY">WY</option>
                     </select>
 
-                    <label htmlFor="zip">ZIP code:</label>
+                    <label htmlFor="zip"><span className='HighlightText'>*</span>ZIP code:</label>
                     <input type="text" id="zip" name="zip" required/>
 
-                    <label htmlFor="ccNum">Credit card number:</label>
+                    <label htmlFor="ccNum"><span className='HighlightText'>*</span>Credit card number:</label>
                     <input type="text" id="ccNum" name="ccNum" required/>
 
-                    <label htmlFor="expDate">Expiration date:</label>
+                    <label htmlFor="expDate"><span className='HighlightText'>*</span>Expiration date:</label>
                     <input type="month" id="expDate" name="expDate" required/>
 
-                    <label htmlFor="threeDigitCode">3-digit code:</label>
+                    <label htmlFor="threeDigitCode"><span className='HighlightText'>*</span>3-digit code:</label>
                     <input type="text" id="threeDigitCode" name="threeDigitCode" required/>
                 </fieldset>
 
