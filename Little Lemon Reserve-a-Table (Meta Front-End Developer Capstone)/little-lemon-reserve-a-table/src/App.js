@@ -11,7 +11,7 @@ function App() {
     return (
       <>
         <NavBar/>
-        <ConfirmReservation/>
+        <Homepage/>
         <Footer/>
       </>
     );

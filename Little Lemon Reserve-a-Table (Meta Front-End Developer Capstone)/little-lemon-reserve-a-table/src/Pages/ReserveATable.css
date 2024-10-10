@@ -13,14 +13,9 @@
     display: flex;
     flex-direction: column;
 }
+
 .ReserveForm label {
     color: var(--primary-green);
-}
-
-.ReserveForm input[type="radio"] {
-    background-color: var(--secondary-white);
-    color: var(--primary-green);
-    border-color: var(--primary-green);
 }
 
 .ReserveForm textarea {
@@ -49,6 +44,9 @@
     padding: 0;
     margin: 0;
     width: 2em;
+    background-color: var(--secondary-white);
+    color: var(--primary-green);
+    border-color: var(--primary-green);
 }
 
 .ReserveForm > button {
