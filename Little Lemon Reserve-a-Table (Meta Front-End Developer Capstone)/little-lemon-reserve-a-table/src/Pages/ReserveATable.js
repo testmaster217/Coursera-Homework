@@ -4,9 +4,11 @@ import restaurant from "../Assets/restaurant.jpg";
 
 import ReservationHero from '../Components/ReservationHero'
 
+import { Link } from 'react-router-dom';
+
 export default function ReserveATable() {
     return (<>
-        <ReservationHero headerText="Reserve a Table" photo={restaurant}/>
+        <ReservationHero headerText="Reserve a Table" photo={restaurant} backLink="/"/>
         <main>
             {/* TODO: May need to replace the native form elements with stuff from
             a UI framework for better customizability. See if it comes up later in
@@ -52,7 +54,7 @@ export default function ReserveATable() {
                     <label htmlFor="comments" className='ParagraphText'>Additional comments? (i.e., any special isntructions or accommodations needed):</label>
                     <textarea id="comments" name="comments"/>
                 </div>
-                <button type="submit" className='MainButton LeadText'>Submit Reservation</button>
+                <Link to="/reserve-page-2"><button type="submit" className='MainButton LeadText'>Submit Reservation</button></Link>
             </form>
         </main>
     </>);

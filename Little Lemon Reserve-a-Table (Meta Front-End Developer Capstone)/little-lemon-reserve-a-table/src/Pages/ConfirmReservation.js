@@ -4,9 +4,11 @@ import chef from "../Assets/restaurant chef B.jpg";
 
 import ReservationHero from '../Components/ReservationHero'
 
+import { Link } from 'react-router-dom';
+
 export default function ConfirmReservation() {
     return (<>
-        <ReservationHero headerText="Confirm your Reservation" photo={chef}/>
+        <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
         <main>
             <form className="ReserveConfirmForm">
                 {/* TODO: Figure out how to get the ZIP code, the CC
@@ -127,7 +129,7 @@ export default function ConfirmReservation() {
                     </div>
                 </fieldset>
 
-                <button type="submit" className='MainButton LeadText'>Confirm Reservation</button>
+                <Link to="/reserve-confirmation"><button type="submit" className='MainButton LeadText'>Confirm Reservation</button></Link>
             </form>
         </main>
     </>);

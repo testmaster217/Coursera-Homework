@@ -30,10 +30,13 @@
     color: var(--primary-green);
 }
 
+.ReserveConfirmForm > a {
+    margin: 2em auto auto;
+}
+
 .ReserveConfirmForm button {
     width: 12em;
     height: 3em;
-    margin: 2em auto auto;
 }
 
 @media only screen and (max-width: 52em) {
