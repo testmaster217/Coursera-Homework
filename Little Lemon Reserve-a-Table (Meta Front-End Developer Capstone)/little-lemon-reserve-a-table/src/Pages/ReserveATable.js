@@ -41,11 +41,11 @@ export default function ReserveATable() {
                 <div>
                     <label htmlFor="occasion" className='ParagraphText'>Is it a special occasion?</label>
                     <select id="occasion" name="occasion" value="nothing" className='FormDropDown LeadText'>
-                        <option value="nothing">Nothing special</option>
-                        <option value="birthday">Birthday</option>
-                        <option value="engagement">Engagement</option>
-                        <option value="anniversary">Anniversary</option>
-                        <option value="other">Other (Explain in "Additional comments")</option>
+                        <option value="nothing" className='LeadText'>Nothing special</option>
+                        <option value="birthday" className='LeadText'>Birthday</option>
+                        <option value="engagement" className='LeadText'>Engagement</option>
+                        <option value="anniversary" className='LeadText'>Anniversary</option>
+                        <option value="other" className='LeadText'>Other (Explain in "Additional comments")</option>
                     </select>
                 </div>
                 <div>

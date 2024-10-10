@@ -1,3 +1,5 @@
+import './ConfirmReservation.css';
+
 import chef from "../Assets/restaurant chef B.jpg";
 
 import ReservationHero from '../Components/ReservationHero'
@@ -6,7 +8,7 @@ export default function ConfirmReservation() {
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef}/>
         <main>
-            <form>
+            <form className="ReserveConfirmForm">
                 {/* TODO: Figure out how to get the ZIP code, the CC
                 number, the expiration date (if it's text-type
                 fallback doesn't have the validation needed already),
@@ -15,104 +17,117 @@ export default function ConfirmReservation() {
                 {/* TODO: Add error messages that appear when a field is invalid.
                 (Might come up later in the project.) */}
                 <fieldset>
-                    <legend>Contact Info</legend>
-
-                    <label htmlFor="fName"><span className='HighlightText'>*</span>First name:</label>
-                    <input type="text" id="fName" name="fName" required/>
-
-                    <label htmlFor="lName"><span className='HighlightText'>*</span>Last name:</label>
-                    <input type="text" id="lName" name="lName" required/>
-
-                    <label htmlFor="phone">Phone #:</label>
-                    <input type="tel" id="phone" name="phone"/>
-
-                    <label htmlFor="email"><span className='HighlightText'>*</span>Email:</label>
-                    <input type="email" id="email" name="email" required/>
+                    <legend className="DisplayTitle">Contact Info</legend>
+                    <div>
+                        <label htmlFor="fName" className='ParagraphText'><span className='HighlightText'>*</span>First name:</label>
+                        <input type="text" id="fName" name="fName" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="lName" className='ParagraphText'><span className='HighlightText'>*</span>Last name:</label>
+                        <input type="text" id="lName" name="lName" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className='ParagraphText'>Phone #:</label>
+                        <input type="tel" id="phone" name="phone" className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="email" className='ParagraphText'><span className='HighlightText'>*</span>Email:</label>
+                        <input type="email" id="email" name="email" required className='FormField LeadText'/>
+                    </div>
                 </fieldset>
 
                 <fieldset>
-                    <legend>Billing Info</legend>
-
-                    <label htmlFor="ccName"><span className='HighlightText'>*</span>Name on credit card:</label>
-                    <input type="text" id="ccName" name="ccName" required/>
-
-                    <label htmlFor="address"><span className='HighlightText'>*</span>Address:</label>
-                    <input type="text" id="address" name="address" required/>
-
-                    <label htmlFor="addressLine2">Address line 2:</label>
-                    <input type="text" id="addressLine2" name="addressLine2"/>
-
-                    <label htmlFor="city"><span className='HighlightText'>*</span>City:</label>
-                    <input type="text" id="city" name="city" required/>
-
-                    <label htmlFor="state">State:</label>
-                    <select id="state" name="state">
-                        <option value="AL">AL</option>
-                        <option value="AK">AK</option>
-                        <option value="AZ">AZ</option>
-                        <option value="AR">AR</option>
-                        <option value="CA">CA</option>
-                        <option value="CO">CO</option>
-                        <option value="CT">CT</option>
-                        <option value="DE">DE</option>
-                        <option value="DC">DC</option>
-                        <option value="FL">FL</option>
-                        <option value="GA">GA</option>
-                        <option value="HI">HI</option>
-                        <option value="ID">ID</option>
-                        <option value="IL">IL</option>
-                        <option value="IN">IN</option>
-                        <option value="KS">KS</option>
-                        <option value="KY">KY</option>
-                        <option value="LA">LA</option>
-                        <option value="ME">ME</option>
-                        <option value="MD">MD</option>
-                        <option value="MA">MA</option>
-                        <option value="MI">MI</option>
-                        <option value="MN">MN</option>
-                        <option value="MS">MS</option>
-                        <option value="MO">MO</option>
-                        <option value="MT">MT</option>
-                        <option value="NE">NE</option>
-                        <option value="NV">NV</option>
-                        <option value="NH">NH</option>
-                        <option value="NJ">NJ</option>
-                        <option value="NM">NM</option>
-                        <option value="NY">NY</option>
-                        <option value="NC">NC</option>
-                        <option value="ND">ND</option>
-                        <option value="OH">OH</option>
-                        <option value="OK">OK</option>
-                        <option value="OR">OR</option>
-                        <option value="PA">PA</option>
-                        <option value="RI">RI</option>
-                        <option value="SC">SC</option>
-                        <option value="SD">SD</option>
-                        <option value="TN">TN</option>
-                        <option value="TX">TX</option>
-                        <option value="UT">UT</option>
-                        <option value="VT">VT</option>
-                        <option value="VA">VA</option>
-                        <option value="WA">WA</option>
-                        <option value="WV">WV</option>
-                        <option value="WI">WI</option>
-                        <option value="WY">WY</option>
-                    </select>
-
-                    <label htmlFor="zip"><span className='HighlightText'>*</span>ZIP code:</label>
-                    <input type="text" id="zip" name="zip" required/>
-
-                    <label htmlFor="ccNum"><span className='HighlightText'>*</span>Credit card number:</label>
-                    <input type="text" id="ccNum" name="ccNum" required/>
-
-                    <label htmlFor="expDate"><span className='HighlightText'>*</span>Expiration date:</label>
-                    <input type="month" id="expDate" name="expDate" required/>
-
-                    <label htmlFor="threeDigitCode"><span className='HighlightText'>*</span>3-digit code:</label>
-                    <input type="text" id="threeDigitCode" name="threeDigitCode" required/>
+                    <legend className='DisplayTitle'>Billing Info</legend>
+                    <div>
+                        <label htmlFor="ccName" className='ParagraphText'><span className='HighlightText'>*</span>Name on credit card:</label>
+                        <input type="text" id="ccName" name="ccName" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="address" className='ParagraphText'><span className='HighlightText'>*</span>Address:</label>
+                        <input type="text" id="address" name="address" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="addressLine2" className='ParagraphText'>Address line 2:</label>
+                        <input type="text" id="addressLine2" name="addressLine2" className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="city" className='ParagraphText'><span className='HighlightText'>*</span>City:</label>
+                        <input type="text" id="city" name="city" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="state" className='ParagraphText'>State:</label>
+                        <select id="state" name="state" className='FormDropDown LeadText'>
+                            <option value="AL" className='LeadText'>AL</option>
+                            <option value="AK" className='LeadText'>AK</option>
+                            <option value="AZ" className='LeadText'>AZ</option>
+                            <option value="AR" className='LeadText'>AR</option>
+                            <option value="CA" className='LeadText'>CA</option>
+                            <option value="CO" className='LeadText'>CO</option>
+                            <option value="CT" className='LeadText'>CT</option>
+                            <option value="DE" className='LeadText'>DE</option>
+                            <option value="DC" className='LeadText'>DC</option>
+                            <option value="FL" className='LeadText'>FL</option>
+                            <option value="GA" className='LeadText'>GA</option>
+                            <option value="HI" className='LeadText'>HI</option>
+                            <option value="ID" className='LeadText'>ID</option>
+                            <option value="IL" className='LeadText'>IL</option>
+                            <option value="IN" className='LeadText'>IN</option>
+                            <option value="KS" className='LeadText'>KS</option>
+                            <option value="KY" className='LeadText'>KY</option>
+                            <option value="LA" className='LeadText'>LA</option>
+                            <option value="ME" className='LeadText'>ME</option>
+                            <option value="MD" className='LeadText'>MD</option>
+                            <option value="MA" className='LeadText'>MA</option>
+                            <option value="MI" className='LeadText'>MI</option>
+                            <option value="MN" className='LeadText'>MN</option>
+                            <option value="MS" className='LeadText'>MS</option>
+                            <option value="MO" className='LeadText'>MO</option>
+                            <option value="MT" className='LeadText'>MT</option>
+                            <option value="NE" className='LeadText'>NE</option>
+                            <option value="NV" className='LeadText'>NV</option>
+                            <option value="NH" className='LeadText'>NH</option>
+                            <option value="NJ" className='LeadText'>NJ</option>
+                            <option value="NM" className='LeadText'>NM</option>
+                            <option value="NY" className='LeadText'>NY</option>
+                            <option value="NC" className='LeadText'>NC</option>
+                            <option value="ND" className='LeadText'>ND</option>
+                            <option value="OH" className='LeadText'>OH</option>
+                            <option value="OK" className='LeadText'>OK</option>
+                            <option value="OR" className='LeadText'>OR</option>
+                            <option value="PA" className='LeadText'>PA</option>
+                            <option value="RI" className='LeadText'>RI</option>
+                            <option value="SC" className='LeadText'>SC</option>
+                            <option value="SD" className='LeadText'>SD</option>
+                            <option value="TN" className='LeadText'>TN</option>
+                            <option value="TX" className='LeadText'>TX</option>
+                            <option value="UT" className='LeadText'>UT</option>
+                            <option value="VT" className='LeadText'>VT</option>
+                            <option value="VA" className='LeadText'>VA</option>
+                            <option value="WA" className='LeadText'>WA</option>
+                            <option value="WV" className='LeadText'>WV</option>
+                            <option value="WI" className='LeadText'>WI</option>
+                            <option value="WY" className='LeadText'>WY</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="zip" className='ParagraphText'><span className='HighlightText'>*</span>ZIP code:</label>
+                        <input type="text" id="zip" name="zip" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText'>*</span>Credit card number:</label>
+                        <input type="text" id="ccNum" name="ccNum" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText'>*</span>Expiration date:</label>
+                        <input type="month" id="expDate" name="expDate" required className='FormField LeadText'/>
+                    </div>
+                    <div>
+                        <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText'>*</span>3-digit code:</label>
+                        <input type="text" id="threeDigitCode" name="threeDigitCode" required className='FormField LeadText'/>
+                    </div>
                 </fieldset>
 
-                <button type="submit">Confirm Reservation</button>
+                <button type="submit" className='MainButton LeadText'>Confirm Reservation</button>
             </form>
         </main>
     </>);
