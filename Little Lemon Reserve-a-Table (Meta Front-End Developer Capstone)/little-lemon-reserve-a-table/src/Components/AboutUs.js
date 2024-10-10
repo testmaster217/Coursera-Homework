@@ -4,7 +4,7 @@ import marioAndAdrianA from "../Assets/Mario and Adrian A.jpg";
 import marioAndAdrianB from "../Assets/Mario and Adrian b.jpg";
 
 export default function AboutUs() {
-    return <section className="AboutUs">
+    return <section className="AboutUs" id="about-us">
         <div className="AboutWords">
             <h3 className="DisplayTitle">About Us</h3>
             <h4 className="Subtitle">Our Story</h4>

@@ -28,17 +28,17 @@ nav menu {
     padding: 0;
 }
 
-nav menu li {
+nav menu a {
     padding-left: 1em;
     color: var(--secondary-black);
     text-decoration: none;
 }
 
-nav li:hover {
+nav a:hover {
     color: var(--secondary-pink);
 }
 
-nav li:active {
+nav a:active {
     color: var(--primary-yellow);
 }
 
