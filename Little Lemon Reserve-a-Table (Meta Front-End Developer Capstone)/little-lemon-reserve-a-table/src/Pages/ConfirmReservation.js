@@ -45,8 +45,8 @@ export default function ConfirmReservation() {
                     <label htmlFor="city"><span className='HighlightText'>*</span>City:</label>
                     <input type="text" id="city" name="city" required/>
 
-                    <label htmlFor="state"><span className='HighlightText'>*</span>State:</label>
-                    <select id="state" name="state" required>
+                    <label htmlFor="state">State:</label>
+                    <select id="state" name="state">
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
                         <option value="AZ">AZ</option>
@@ -112,7 +112,7 @@ export default function ConfirmReservation() {
                     <input type="text" id="threeDigitCode" name="threeDigitCode" required/>
                 </fieldset>
 
-                <input type="submit">Confirm Reservation</input>
+                <button type="submit">Confirm Reservation</button>
             </form>
         </main>
     </>);

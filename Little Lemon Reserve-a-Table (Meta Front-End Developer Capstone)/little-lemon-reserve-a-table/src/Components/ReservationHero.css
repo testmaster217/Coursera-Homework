@@ -27,6 +27,7 @@
 .ReservationHero img {
     width: 25em;
     height: 23em;
+    object-fit: cover;
 }
 
 .ReservationHero .BackButton {
@@ -67,6 +68,5 @@
     .ReservationHero img {
         align-self: stretch;
         width: 100%;
-        aspect-ratio: 25/23;
     }
 }
