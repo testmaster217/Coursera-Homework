@@ -1,6 +1,7 @@
 .Review {
     background-color: #EDEFEE;
     padding: 0 1em;
+    margin: 0 1em;
 }
 
 .Review span, .Review p {
@@ -19,4 +20,10 @@
 
 .Review span {
     display: block;
+}
+
+@media only screen and (max-width: 52em) {
+    .Review {
+        margin: 0 0.5em;
+    }
 }

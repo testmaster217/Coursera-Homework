@@ -30,18 +30,15 @@ nav menu {
 
 nav menu li {
     padding-left: 1em;
-}
-
-nav a {
     color: var(--secondary-black);
     text-decoration: none;
 }
 
-nav a:hover {
+nav li:hover {
     color: var(--secondary-pink);
 }
 
-nav a:active {
+nav li:active {
     color: var(--primary-yellow);
 }
 

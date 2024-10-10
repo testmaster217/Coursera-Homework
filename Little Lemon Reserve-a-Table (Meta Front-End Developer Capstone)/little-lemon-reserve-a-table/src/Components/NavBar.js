@@ -5,6 +5,8 @@ import logo from "../Assets/Logo.svg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
 
+import { Link } from 'react-router-dom';
+
 export default function NavBar() {
     return <nav>
         <div className='Icons'>
@@ -15,12 +17,12 @@ export default function NavBar() {
             </button>
         </div>
         <menu>
-            <li><a href="#" className='ParagraphText'>HOME</a></li>
-            <li><a href="#" className='ParagraphText'>ABOUT</a></li>
-            <li><a href="#" className='ParagraphText'>MENU</a></li>
-            <li><a href="#" className='ParagraphText'>RESERVATIONS</a></li>
-            <li><a href="#" className='ParagraphText'>ORDER ONLINE</a></li>
-            <li><a href="#" className='ParagraphText'>LOGIN</a></li>
+            <li><Link to="/" className='ParagraphText'>HOME</Link></li>
+            <li><Link to="/" className='ParagraphText'>ABOUT</Link></li>
+            <li><Link to="/" className='ParagraphText'>MENU</Link></li>
+            <li><Link to="/" className='ParagraphText'>RESERVATIONS</Link></li>
+            <li><Link to="/" className='ParagraphText'>ORDER ONLINE</Link></li>
+            <li><Link to="/" className='ParagraphText'>LOGIN</Link></li>
         </menu>
     </nav>;
 }

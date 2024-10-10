@@ -3,7 +3,6 @@
     grid-template-rows: auto auto;
     grid-template-columns: repeat(4, 1fr);
     background-color: #495e57;
-    column-gap: 1em;
     row-gap: 2em;
     justify-content: center;
     width: 50em;
