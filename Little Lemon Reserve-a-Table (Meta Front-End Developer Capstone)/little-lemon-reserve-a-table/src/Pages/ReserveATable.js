@@ -32,7 +32,10 @@ export default function ReserveATable({reserveInfo}) {
                         className='FormField LeadText'
                         value={reserveInfo.resDate}
                         min={reserveInfo.resDate}
-                        onChange={e => reserveInfo.setResDate(e.target.value)}
+                        onChange={e => {
+                            reserveInfo.setResDate(e.target.value);
+                            reserveInfo.setAvailableTimes(e.target.value);
+                        }}
                     />
                 </div>
                 <div>

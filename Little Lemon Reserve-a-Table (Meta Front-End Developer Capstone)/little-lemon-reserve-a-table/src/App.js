@@ -7,13 +7,23 @@ import ConfirmReservation from './Pages/ConfirmReservation';
 import ReservationConfirmation from './Pages/ReservationConfirmation';
 import NavBar from './Components/NavBar';
 
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
+    /* TODO: Change this to show different times depending on the selected date.
+    (Will come up later in the course.) */
+    function updateTimes(selectedDate) {
+        return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+    }
+
+    // function initializeTimes() {
+    //     return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+    // }
+
     /* TODO: Add default states for all of these based on the formats that they need to be in. */
     const [resDate, setResDate] = useState("");
-    const [availableTimes, setAvailableTimes] = useState(["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]);
+    const [availableTimes, setAvailableTimes] = useReducer(updateTimes, ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]);
     const [resTime, setResTime] = useState(availableTimes[0]);
     const [resGuests, setResGuests] = useState(1);
     const [resSeating, setResSeating] = useState("No Preference");
