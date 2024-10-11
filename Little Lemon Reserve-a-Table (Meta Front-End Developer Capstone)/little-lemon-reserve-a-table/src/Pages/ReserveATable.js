@@ -19,7 +19,7 @@ export default function ReserveATable({reserveInfo}) {
             {/* TODO: May need to replace the native form elements with stuff from
             a UI framework for better customizability. Alternatively, can just use
             a _lot_ of CSS. */}
-            <form className="ReserveForm">
+            <form className="ReserveForm" role='form'>
                 {/* TODO: Add error messages that appear when a field is invalid.
                 (Might come up later in the project.) */}
                 <div>

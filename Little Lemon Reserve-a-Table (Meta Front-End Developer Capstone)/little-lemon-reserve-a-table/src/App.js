@@ -2,7 +2,7 @@ import './App.css';
 
 import Footer from './Components/Footer';
 import Homepage from './Pages/Homepage';
-import ReserveATAble from './Pages/ReserveATable';
+import ReserveATable from './Pages/ReserveATable';
 import ConfirmReservation from './Pages/ConfirmReservation';
 import ReservationConfirmation from './Pages/ReservationConfirmation';
 import NavBar from './Components/NavBar';
@@ -95,7 +95,7 @@ function App() {
                 {/* TODO: Add a route to make the "About Us" link in the nav bar scroll to
                 the "About Us" section of the homepage. Will involve useEffect and possibly
                 useRef */}
-                <Route path='/reserve-a-table' element={<ReserveATAble reserveInfo={reserveInfo}/>}/>
+                <Route path='/reserve-a-table' element={<ReserveATable reserveInfo={reserveInfo}/>}/>
                 <Route path='/reserve-page-2' element={<ConfirmReservation reserveUserInfo={reserveUserInfo}/>}/>
                 <Route path='/reserve-confirmation' element={<ReservationConfirmation/>}/>
             </Routes>
