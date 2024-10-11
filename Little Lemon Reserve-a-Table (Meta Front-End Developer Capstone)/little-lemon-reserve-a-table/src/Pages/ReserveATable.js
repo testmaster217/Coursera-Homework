@@ -30,14 +30,22 @@ export default function ReserveATable() {
                 <div>
                     <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
                     {/* TODO: Set the current time as the min and the defaultValue. */}
-                    <input
+                    {/* <input
                         type="time"
                         id="reservationTime"
                         name="reservationTime"
                         required
                         step="1800"
                         className='FormField LeadText'
-                    />
+                    /> */}
+                    <select id='reservationTime' name='reservationTime' className='FormDropDown LeadText'>
+                        <option>17:00</option>
+                        <option>18:00</option>
+                        <option>19:00</option>
+                        <option>20:00</option>
+                        <option>21:00</option>
+                        <option>22:00</option>
+                    </select>
                 </div>
                 <div>
                     <label htmlFor="numOfGuests" className='ParagraphText'><span className='HighlightText'>*</span>Number of guests:</label>
