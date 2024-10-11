@@ -71,7 +71,7 @@ export default function ReserveATable() {
                             type="radio"
                             value="No Preference"
                             id="NoPreferenceRadio"
-                            checked
+                            defaultChecked
                         /><label htmlFor="NoPreferenceRadio" className='ParagraphText'>No Preference</label>
                     </fieldset>
                 </div>
