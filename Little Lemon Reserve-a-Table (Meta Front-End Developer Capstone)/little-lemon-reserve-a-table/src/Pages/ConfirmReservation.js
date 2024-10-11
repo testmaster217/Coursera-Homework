@@ -4,28 +4,14 @@ import chef from "../Assets/restaurant chef B.jpg";
 
 import ReservationHero from '../Components/ReservationHero'
 
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
-export default function ConfirmReservation() {
-    /* TODO: Add default states for all of these based on the formats that they need to be in. */
-    const [resFirstName, setResFirstName] = useState("");
-    const [resLastName, setResLastName] = useState("");
-    const [resPhone, setResPhone] = useState("");
-    const [resEmail, setResEmail] = useState("");
-    const [resCCName, setResCCName] = useState("");
-    const [resAddress, setResAddress] = useState("");
-    const [resAddress2, setResAddress2] = useState("");
-    const [resCity, setResCity] = useState("");
-    const [resState, setResState] = useState("AL");
-    const [resZip, setResZip] = useState("");
-    const [resCCNum, setResCCNum] = useState("");
-    const [resExpDate, setResExpDate] = useState("");
+export default function ConfirmReservation({reserveUserInfo}) {
     useEffect(() => {
         const currentDate = new Date();
-        setResExpDate(`${(currentDate.getFullYear() + 3).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}`);
+        reserveUserInfo.setResExpDate(`${(currentDate.getFullYear() + 3).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}`);
     }, []);
-    const [res3Digit, setRes3Digit] = useState("");
 
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
@@ -48,8 +34,8 @@ export default function ConfirmReservation() {
                             name="fName"
                             required
                             className='FormField LeadText'
-                            value={resFirstName}
-                            onChange={e => setResFirstName(e.target.value)}
+                            value={reserveUserInfo.resFirstName}
+                            onChange={e => reserveUserInfo.setResFirstName(e.target.value)}
                         />
                     </div>
                     <div>
@@ -60,8 +46,8 @@ export default function ConfirmReservation() {
                             name="lName"
                             required
                             className='FormField LeadText'
-                            value={resLastName}
-                            onChange={e => setResLastName(e.target.value)}
+                            value={reserveUserInfo.resLastName}
+                            onChange={e => reserveUserInfo.setResLastName(e.target.value)}
                         />
                     </div>
                     <div>
@@ -71,8 +57,8 @@ export default function ConfirmReservation() {
                             id="phone"
                             name="phone"
                             className='FormField LeadText'
-                            value={resPhone}
-                            onChange={e => setResPhone(e.target.value)}
+                            value={reserveUserInfo.resPhone}
+                            onChange={e => reserveUserInfo.setResPhone(e.target.value)}
                         />
                     </div>
                     <div>
@@ -83,8 +69,8 @@ export default function ConfirmReservation() {
                             name="email"
                             required
                             className='FormField LeadText'
-                            value={resEmail}
-                            onChange={e => setResEmail(e.target.value)}
+                            value={reserveUserInfo.resEmail}
+                            onChange={e => reserveUserInfo.setResEmail(e.target.value)}
                         />
                     </div>
                 </fieldset>
@@ -99,8 +85,8 @@ export default function ConfirmReservation() {
                             name="ccName"
                             required
                             className='FormField LeadText'
-                            value={resCCName}
-                            onChange={e => setResCCName(e.target.value)}
+                            value={reserveUserInfo.resCCName}
+                            onChange={e => reserveUserInfo.setResCCName(e.target.value)}
                         />
                     </div>
                     <div>
@@ -111,8 +97,8 @@ export default function ConfirmReservation() {
                             name="address"
                             required
                             className='FormField LeadText'
-                            value={resAddress}
-                            onChange={e => setResAddress(e.target.value)}
+                            value={reserveUserInfo.resAddress}
+                            onChange={e => reserveUserInfo.setResAddress(e.target.value)}
                         />
                     </div>
                     <div>
@@ -122,8 +108,8 @@ export default function ConfirmReservation() {
                             id="addressLine2"
                             name="addressLine2"
                             className='FormField LeadText'
-                            value={resAddress2}
-                            onChange={e => setResAddress2(e.target.value)}
+                            value={reserveUserInfo.resAddress2}
+                            onChange={e => reserveUserInfo.setResAddress2(e.target.value)}
                         />
                     </div>
                     <div>
@@ -134,8 +120,8 @@ export default function ConfirmReservation() {
                             name="city"
                             required
                             className='FormField LeadText'
-                            value={resCity}
-                            onChange={e => setResCity(e.target.value)}
+                            value={reserveUserInfo.resCity}
+                            onChange={e => reserveUserInfo.setResCity(e.target.value)}
                         />
                     </div>
                     <div>
@@ -144,8 +130,8 @@ export default function ConfirmReservation() {
                             id="state"
                             name="state"
                             className='FormDropDown LeadText'
-                            value={resState}
-                            onChange={e => setResState(e.target.value)}
+                            value={reserveUserInfo.resState}
+                            onChange={e => reserveUserInfo.setResState(e.target.value)}
                         >
                             <option value="AL" className='LeadText'>AL</option>
                             <option value="AK" className='LeadText'>AK</option>
@@ -207,8 +193,8 @@ export default function ConfirmReservation() {
                             name="zip"
                             required
                             className='FormField LeadText'
-                            value={resZip}
-                            onChange={e => setResZip(e.target.value)}
+                            value={reserveUserInfo.resZip}
+                            onChange={e => reserveUserInfo.setResZip(e.target.value)}
                         />
                     </div>
                     <div>
@@ -219,8 +205,8 @@ export default function ConfirmReservation() {
                             name="ccNum"
                             required
                             className='FormField LeadText'
-                            value={resCCNum}
-                            onChange={e => setResCCNum(e.target.value)}
+                            value={reserveUserInfo.resCCNum}
+                            onChange={e => reserveUserInfo.setResCCNum(e.target.value)}
                         />
                     </div>
                     <div>
@@ -231,8 +217,8 @@ export default function ConfirmReservation() {
                             name="expDate"
                             required
                             className='FormField LeadText'
-                            value={resExpDate}
-                            onChange={e => setResExpDate(e.target.value)}
+                            value={reserveUserInfo.resExpDate}
+                            onChange={e => reserveUserInfo.setResExpDate(e.target.value)}
                         />
                     </div>
                     <div>
@@ -243,8 +229,8 @@ export default function ConfirmReservation() {
                             name="threeDigitCode"
                             required
                             className='FormField LeadText'
-                            value={res3Digit}
-                            onChange={e => setRes3Digit(e.target.value)}
+                            value={reserveUserInfo.res3Digit}
+                            onChange={e => reserveUserInfo.setRes3Digit(e.target.value)}
                         />
                     </div>
                 </fieldset>
