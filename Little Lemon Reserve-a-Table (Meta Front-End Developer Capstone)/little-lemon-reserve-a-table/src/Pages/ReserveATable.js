@@ -20,29 +20,66 @@ export default function ReserveATable() {
                 (Might come up later in the project.) */}
                 <div>
                     <label htmlFor="reservationDate" className='ParagraphText'><span className='HighlightText'>*</span>Choose a date:</label>
-                    {/* TODO: Set today's date as the min and the value. */}
-                    <input type="date" id="reservationDate" name="reservationDate" required className='FormField LeadText'/>
+                    {/* TODO: Set today's date as the min and the defaultValue. */}
+                    <input
+                        type="date"
+                        id="reservationDate"
+                        name="reservationDate"
+                        required
+                        className='FormField LeadText'
+                    />
                 </div>
                 <div>
                     <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
-                    {/* TODO: Set the current time as the min and the value. */}
-                    <input type="time" id="reservationTime" name="reservationTime" required className='FormField LeadText'/>
+                    {/* TODO: Set the current time as the min and the defaultValue. */}
+                    <input
+                        type="time"
+                        id="reservationTime"
+                        name="reservationTime"
+                        required
+                        step="1800"
+                        className='FormField LeadText'
+                    />
                 </div>
                 <div>
                     <label htmlFor="numOfGuests" className='ParagraphText'><span className='HighlightText'>*</span>Number of guests:</label>
-                    <input type="number" id="numOfGuests" name="numOfGuests" value="1" required min="1" className='FormField LeadText'/>
+                    <input
+                        type="number"
+                        id="numOfGuests"
+                        name="numOfGuests"
+                        defaultValue="1"
+                        required
+                        min="1"
+                        className='FormField LeadText'
+                    />
                 </div>
                 <div>
                     <label htmlFor="seatingChoice" className='ParagraphText'>Where would you like to sit?</label>
-                    <fieldset id="seatingChoice" name="seatingChoice">
-                        <input type="radio" value="Inside" id="InsideRadio"/><label htmlFor="InsideRadio" className='ParagraphText'>Inside</label>
-                        <input type="radio" value="Outside" id="OutsideRadio"/><label htmlFor="OutsideRadio" className='ParagraphText'>Outside</label>
-                        <input type="radio" value="No Preference" id="NoPreferenceRadio" checked/><label htmlFor="NoPreferenceRadio" className='ParagraphText'>No Preference</label>
+                    <fieldset
+                        id="seatingChoice"
+                        name="seatingChoice"
+                    >
+                        <input
+                            type="radio"
+                            value="Inside"
+                            id="InsideRadio"
+                        /><label htmlFor="InsideRadio" className='ParagraphText'>Inside</label>
+                        <input
+                            type="radio"
+                            value="Outside"
+                            id="OutsideRadio"
+                        /><label htmlFor="OutsideRadio" className='ParagraphText'>Outside</label>
+                        <input
+                            type="radio"
+                            value="No Preference"
+                            id="NoPreferenceRadio"
+                            checked
+                        /><label htmlFor="NoPreferenceRadio" className='ParagraphText'>No Preference</label>
                     </fieldset>
                 </div>
                 <div>
                     <label htmlFor="occasion" className='ParagraphText'>Is it a special occasion?</label>
-                    <select id="occasion" name="occasion" value="nothing" className='FormDropDown LeadText'>
+                    <select id="occasion" name="occasion" className='FormDropDown LeadText'>
                         <option value="nothing" className='LeadText'>Nothing special</option>
                         <option value="birthday" className='LeadText'>Birthday</option>
                         <option value="engagement" className='LeadText'>Engagement</option>

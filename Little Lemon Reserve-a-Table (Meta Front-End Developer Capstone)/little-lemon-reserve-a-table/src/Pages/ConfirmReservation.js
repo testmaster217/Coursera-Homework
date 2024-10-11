@@ -22,19 +22,42 @@ export default function ConfirmReservation() {
                     <legend className="DisplayTitle">Contact Info</legend>
                     <div>
                         <label htmlFor="fName" className='ParagraphText'><span className='HighlightText'>*</span>First name:</label>
-                        <input type="text" id="fName" name="fName" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="fName"
+                            name="fName"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="lName" className='ParagraphText'><span className='HighlightText'>*</span>Last name:</label>
-                        <input type="text" id="lName" name="lName" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="lName"
+                            name="lName"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="phone" className='ParagraphText'>Phone #:</label>
-                        <input type="tel" id="phone" name="phone" className='FormField LeadText'/>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="email" className='ParagraphText'><span className='HighlightText'>*</span>Email:</label>
-                        <input type="email" id="email" name="email" required className='FormField LeadText'/>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                 </fieldset>
 
@@ -42,19 +65,42 @@ export default function ConfirmReservation() {
                     <legend className='DisplayTitle'>Billing Info</legend>
                     <div>
                         <label htmlFor="ccName" className='ParagraphText'><span className='HighlightText'>*</span>Name on credit card:</label>
-                        <input type="text" id="ccName" name="ccName" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="ccName"
+                            name="ccName"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="address" className='ParagraphText'><span className='HighlightText'>*</span>Address:</label>
-                        <input type="text" id="address" name="address" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="address"
+                            name="address"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="addressLine2" className='ParagraphText'>Address line 2:</label>
-                        <input type="text" id="addressLine2" name="addressLine2" className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="addressLine2"
+                            name="addressLine2"
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="city" className='ParagraphText'><span className='HighlightText'>*</span>City:</label>
-                        <input type="text" id="city" name="city" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="state" className='ParagraphText'>State:</label>
@@ -113,19 +159,43 @@ export default function ConfirmReservation() {
                     </div>
                     <div>
                         <label htmlFor="zip" className='ParagraphText'><span className='HighlightText'>*</span>ZIP code:</label>
-                        <input type="text" id="zip" name="zip" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="zip"
+                            name="zip"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText'>*</span>Credit card number:</label>
-                        <input type="text" id="ccNum" name="ccNum" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="ccNum"
+                            name="ccNum"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText'>*</span>Expiration date:</label>
-                        <input type="month" id="expDate" name="expDate" required className='FormField LeadText'/>
+                        <input
+                            type="month"
+                            id="expDate"
+                            name="expDate"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                     <div>
                         <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText'>*</span>3-digit code:</label>
-                        <input type="text" id="threeDigitCode" name="threeDigitCode" required className='FormField LeadText'/>
+                        <input
+                            type="text"
+                            id="threeDigitCode"
+                            name="threeDigitCode"
+                            required
+                            className='FormField LeadText'
+                        />
                     </div>
                 </fieldset>
 
