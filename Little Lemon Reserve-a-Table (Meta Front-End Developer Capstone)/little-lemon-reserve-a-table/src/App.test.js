@@ -1,9 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import {initializeTimes, updateTimes} from './App';
+import {initializeTimes, updateTimes, submitAPI} from './App';
+import App from './App';
 import ReserveATable from './Pages/ReserveATable';
-import ConfirmReservation from './Pages/ConfirmReservation';
+
+beforeEach(() => {
+  localStorage.removeItem("TableReservation-2024-10-11-17:00");
+});
 
 test('Renders the "Submit" button for the first page of the reservation form', () => {
   const reserveInfo = {
@@ -32,74 +36,140 @@ test('Renders the "Submit" button for the first page of the reservation form', (
   expect(submitButton).toBeInTheDocument();
 });
 
-test('initializeTimes works', () => {
-  expect(initializeTimes())
-    .toStrictEqual(["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]);
+test('initializeTimes returns a non-empty array', () => {
+  expect(initializeTimes().length).toBeGreaterThan(0);
 });
 
 test('updateTimes works', () => {
-  expect(updateTimes(["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]))
-    .toStrictEqual(["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]);
+  let newDate = new Date("2024-10-11");
+  newDate.setDate(newDate.getDate() + 1);
+
+  expect(updateTimes(["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"], {type: "changed_date", newDate: newDate})).toStrictEqual(["17:00", "17:30", "18:30", "19:00", "20:30", "21:00", "22:00", "23:30"]);
 });
 
 test('First part of the reservation form can be submitted', () => {
-  const reserveInfo = {
-    resDate: "2024-10-11",
-    setResDate: jest.fn(),
-    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
-    setAvailableTimes: jest.fn(),
-    resTime: "17:00",
-    setResTime: jest.fn(),
-    resGuests: 1,
-    setResGuests: jest.fn(),
-    resSeating: "No Preference",
-    setResSeating: jest.fn(),
-    resOccasion: "nothing",
-    setResOccasion: jest.fn(),
-    resComments: "",
-    setResComments: jest.fn()
-  };
-  const reserveUserInfo = {
-    resFirstName: "",
-    setResFirstName: jest.fn(),
-    resLastName: "",
-    setResLastName: jest.fn(),
-    resPhone: "",
-    setResPhone: jest.fn(),
-    resEmail: "",
-    setResEmail: jest.fn(),
-    resCCName: "",
-    setResCCName: jest.fn(),
-    resAddress: "",
-    setResAddress: jest.fn(),
-    resAddress2: "",
-    setResAddress2: jest.fn(),
-    resCity: "",
-    setResCity: jest.fn(),
-    resState: "AL",
-    setResState: jest.fn(),
-    resZip: "",
-    setResZip: jest.fn(),
-    resCCNum: "",
-    setResCCNum: jest.fn(),
-    resExpDate: "",
-    setResExpDate: jest.fn(),
-    res3Digit: "",
-    setRes3Digit: jest.fn()
-  }
-
   render(
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<ReserveATable reserveInfo={reserveInfo}/>}/>
-        <Route path='/reserve-page-2' element={<ConfirmReservation reserveUserInfo={reserveUserInfo}/>}/>
-      </Routes>
+      <App/>
     </BrowserRouter>
   );
+
+  const reserveButton = screen.getByText(/Reserve a Table/i)
+  fireEvent.click(reserveButton);
 
   const submitButton = screen.getByText(/Submit Reservation/i);
   fireEvent.click(submitButton);
 
   const newHeader = screen.getByText(/Confirm your Reservation/i);
   expect(newHeader).toBeInTheDocument();
+});
+
+test('Reservation data is written to local storage.', () => {
+  submitAPI({
+    resDate: "2024-10-11",
+    resTime: "17:00",
+    resGuests: 1,
+    resSeating: "No Preference",
+    resOccasion: "nothing",
+    resComments: ""
+  });
+  console.log(localStorage.getItem("TableReservation-2024-10-11-17:00"));
+  submitAPI({
+    resDate: "2024-10-11",
+    resTime: "17:00",
+    resFirstName: "Collin",
+    resLastName: "Vesel",
+    resPhone: "",
+    resEmail: "cvesel217@gmail.com",
+    resCCName: "Collin vesel",
+    resAddress: "318 S Clayton Ave.",
+    resAddress2: "",
+    resCity: "Maryville",
+    resState: "MO",
+    resZip: "64468",
+    resCCNum: "0000000000000000",
+    resExpDate: "2027-10",
+    res3Digit: "000"
+  });
+
+  expect(JSON.parse(localStorage.getItem("TableReservation-2024-10-11-17:00"))).toStrictEqual({
+    resDate: "2024-10-11",
+    resTime: "17:00",
+    resGuests: 1,
+    resSeating: "No Preference",
+    resOccasion: "nothing",
+    resComments: "",
+    resFirstName: "Collin",
+    resLastName: "Vesel",
+    resPhone: "",
+    resEmail: "cvesel217@gmail.com",
+    resCCName: "Collin vesel",
+    resAddress: "318 S Clayton Ave.",
+    resAddress2: "",
+    resCity: "Maryville",
+    resState: "MO",
+    resZip: "64468",
+    resCCNum: "0000000000000000",
+    resExpDate: "2027-10",
+    res3Digit: "000"
+  });
+  // render(
+  //   <BrowserRouter>
+  //     <App/>
+  //   </BrowserRouter>
+  // );
+
+  // const reserveButton = screen.getByText(/Reserve a table/i)
+  // fireEvent.click(reserveButton);
+
+  // const submitButton = screen.getByText(/Submit Reservation/i);
+  // fireEvent.click(submitButton);
+
+  // const fNameField = screen.getByLabelText(/First name:$/);
+  // fireEvent.change(fNameField, {target: {value: "Collin"}});
+  // const lNameField = screen.getByLabelText(/Last name:$/);
+  // fireEvent.change(lNameField, {target: {value: "Vesel"}});
+  // const emailField = screen.getByLabelText(/Email:$/);
+  // fireEvent.change(emailField, {target: {value: "cvesel217@gmail.com"}});
+  // const ccNameField = screen.getByLabelText(/Name on credit card:$/);
+  // fireEvent.change(ccNameField, {target: {value: "Collin Vesel"}});
+  // const addressField = screen.getByLabelText(/Address:$/);
+  // fireEvent.change(addressField, {target: {value: "318 S Clayton Ave."}});
+  // const cityField = screen.getByLabelText(/City:$/);
+  // fireEvent.change(cityField, {target: {value: "Maryville"}});
+  // const stateField = screen.getByLabelText(/State:$/);
+  // fireEvent.change(stateField, {target: {value: "MO"}});
+  // const zipField = screen.getByLabelText(/ZIP code:$/);
+  // fireEvent.change(zipField, {target: {value: "64468"}});
+  // const ccNumField = screen.getByLabelText(/Credit card number:$/);
+  // fireEvent.change(ccNumField, {target: {value: "0000000000000000"}});
+  // const expDateField = screen.getByLabelText(/Expiration date:$/);
+  // fireEvent.change(expDateField, {target: {value: "2027-10"}});
+  // const threeDigitField = screen.getByLabelText(/3-digit code:$/);
+  // fireEvent.change(threeDigitField, {target: {value: "000"}});
+
+  // const confirmButton = screen.getByText(/Confirm Reservation/i);
+  // fireEvent.click(confirmButton);
+
+  // expect(window.localStorage.getItem("TableReservation-2024-10-11-17:00")).toStrictEqual({
+  //   resDate: "2024-10-11",
+  //   resTime: "17:00",
+  //   resGuests: 1,
+  //   resSeating: "No Preference",
+  //   resOccasion: "nothing",
+  //   resComments: "",
+  //   resFirstName: "Collin",
+  //   resLastName: "Vesel",
+  //   resPhone: "",
+  //   resEmail: "cvesel217@gmail.com",
+  //   resCCName: "Collin Vesel",
+  //   resAddress: "318 S Clayton Ave.",
+  //   resAddress2: "",
+  //   resCity: "Maryville",
+  //   resState: "MO",
+  //   resZip: "64468",
+  //   resCCNum: "0000000000000000",
+  //   resExpDate: "2027-10",
+  //   res3Digit: "000"
+  // });
 });

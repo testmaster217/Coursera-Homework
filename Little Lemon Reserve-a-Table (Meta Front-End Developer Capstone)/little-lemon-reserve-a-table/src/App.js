@@ -33,13 +33,13 @@ const fetchAPI = function(date) {
     }
     return result;
 };
-const submitAPI = function(formData) {
+export const submitAPI = function(formData) {
     /* If this was a real API, it would probably be using a database instead of localStorage. */
     const localStorage = window.localStorage;
 
     localStorage.setItem("TableReservation-" + formData.resDate + "-" + formData.resTime, JSON.stringify(
         {
-            ...localStorage.getItem("TableReservation-" + formData.resDate + "-" + formData.resTimeformData),
+            ...JSON.parse(localStorage.getItem("TableReservation-" + formData.resDate + "-" + formData.resTime)),
             ...formData
         }
     ));

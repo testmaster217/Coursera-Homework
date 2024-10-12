@@ -41,14 +41,6 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                 </div>
                 <div>
                     <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
-                    {/* <input
-                        type="time"
-                        id="reservationTime"
-                        name="reservationTime"
-                        required
-                        step="1800"
-                        className='FormField LeadText'
-                    /> */}
                     <select
                         id='reservationTime'
                         name='reservationTime'
