@@ -36,6 +36,47 @@
     margin: 2em auto auto;
 }
 
+/* Styles for invalid fields */
+div:has(#fName:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#lName:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#email:user-invalid)::after {
+    content: "This field is required and must be a valid email address.";
+}
+
+div:has(#ccName:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#address:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#city:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#zip:user-invalid)::after {
+    content: "This field is required.";
+}
+
+div:has(#ccNum:user-invalid)::after {
+    content: "This field is required and must be a valid credit card number.";
+}
+
+div:has(#expDate:user-invalid)::after {
+    content: "This field is required and must be in the form MM/YY.";
+}
+
+div:has(#threeDigitCode:user-invalid)::after {
+    content: "This field is required and must be three digits.";
+}
+
 @media only screen and (max-width: 52em) {
     .ReserveConfirmForm {
         width: calc(100% - 2em);

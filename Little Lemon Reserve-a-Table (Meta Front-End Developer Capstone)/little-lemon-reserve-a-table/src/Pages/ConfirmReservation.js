@@ -32,6 +32,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="fName"
                             name="fName"
                             required
+                            autoComplete='given-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resFirstName}
                             onChange={e => reserveUserInfo.setResFirstName(e.target.value)}
@@ -44,6 +45,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="lName"
                             name="lName"
                             required
+                            autoComplete='family-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resLastName}
                             onChange={e => reserveUserInfo.setResLastName(e.target.value)}
@@ -55,6 +57,8 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             type="tel"
                             id="phone"
                             name="phone"
+                            placeholder='123-456-7890'
+                            autoComplete='tel'
                             className='FormField LeadText'
                             value={reserveUserInfo.resPhone}
                             onChange={e => reserveUserInfo.setResPhone(e.target.value)}
@@ -66,6 +70,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             type="email"
                             id="email"
                             name="email"
+                            placeholder='yourname@example.com'
                             required
                             className='FormField LeadText'
                             value={reserveUserInfo.resEmail}
@@ -83,6 +88,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="ccName"
                             name="ccName"
                             required
+                            autoComplete='cc-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCName}
                             onChange={e => reserveUserInfo.setResCCName(e.target.value)}
@@ -94,7 +100,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             type="text"
                             id="address"
                             name="address"
+                            placeholder='123 Main St.'
                             required
+                            autoComplete='billing address-line1'
                             className='FormField LeadText'
                             value={reserveUserInfo.resAddress}
                             onChange={e => reserveUserInfo.setResAddress(e.target.value)}
@@ -106,6 +114,8 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             type="text"
                             id="addressLine2"
                             name="addressLine2"
+                            placeholder='Apt. #456'
+                            autoComplete='billing address-line2'
                             className='FormField LeadText'
                             value={reserveUserInfo.resAddress2}
                             onChange={e => reserveUserInfo.setResAddress2(e.target.value)}
@@ -118,6 +128,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="city"
                             name="city"
                             required
+                            autoComplete='billing address-level2'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCity}
                             onChange={e => reserveUserInfo.setResCity(e.target.value)}
@@ -129,6 +140,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="state"
                             name="state"
                             className='FormDropDown LeadText'
+                            autoComplete='billing address-level1'
                             value={reserveUserInfo.resState}
                             onChange={e => reserveUserInfo.setResState(e.target.value)}
                         >
@@ -191,6 +203,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="zip"
                             name="zip"
                             required
+                            autoComplete='billing postal-code'
                             className='FormField LeadText'
                             value={reserveUserInfo.resZip}
                             onChange={e => reserveUserInfo.setResZip(e.target.value)}
@@ -203,6 +216,11 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="ccNum"
                             name="ccNum"
                             required
+                            maxLength="16"
+                            minLength="16"
+                            placeholder='1234567890123456'
+                            pattern='\d{16}'
+                            autoComplete='cc-number'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCNum}
                             onChange={e => reserveUserInfo.setResCCNum(e.target.value)}
@@ -215,6 +233,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="expDate"
                             name="expDate"
                             required
+                            autoComplete='cc-exp'
                             className='FormField LeadText'
                             value={reserveUserInfo.resExpDate}
                             onChange={e => reserveUserInfo.setResExpDate(e.target.value)}
@@ -227,6 +246,11 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="threeDigitCode"
                             name="threeDigitCode"
                             required
+                            placeholder='000'
+                            minLength="3"
+                            maxLength="3"
+                            pattern='\d{3}'
+                            autoComplete='cc-csc'
                             className='FormField LeadText'
                             value={reserveUserInfo.res3Digit}
                             onChange={e => reserveUserInfo.setRes3Digit(e.target.value)}

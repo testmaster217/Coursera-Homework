@@ -41,19 +41,41 @@
 }
 
 #seatingChoice input[type="radio"] {
+    /* appearance: none; */
     padding: 0;
     margin: 0;
     width: 2em;
     background-color: var(--secondary-white);
     color: var(--primary-green);
     border-color: var(--primary-green);
+    border: 2px solid;
+    border-radius: 50%;
 }
+/* #seatingChoice input[type="radio"]:checked {
+    width: 1em;
+    padding: 1em;
+} */
 
 .ReserveForm > button {
     width: 12em;
     height: 3em;
     grid-column: 1/4;
     margin: auto;
+}
+
+/* Styles for invalid fields */
+div:has(#reservationDate:user-invalid:not(:out-of-range))::after {
+    content: "This field is required.";
+}
+div:has(#reservationDate:user-invalid:out-of-range)::after {
+    content: "Date can't be in the past.";
+}
+
+div:has(#numOfGuests:user-invalid:out-of-range)::after {
+    content: "Number of guests must be between 1 and 10.";
+}
+div:has(#numOfGuests:user-invalid:not(:out-of-range))::after {
+    content: "This field is required and must be a whole number.";
 }
 
 @media only screen and (max-width: 52em) {

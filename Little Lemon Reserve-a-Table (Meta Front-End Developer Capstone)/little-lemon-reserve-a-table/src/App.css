@@ -57,7 +57,7 @@
     max-width: 65em;
 }
 
-.HighlightText {
+.HighlightText, div:has(:user-invalid)::after {
     color: var(--secondary-pink);
     font-family: 'Karla', sans-serif;
     font-weight: 500;
@@ -110,6 +110,10 @@ img, .MainButton, .Card {
     box-shadow: 0 4px 4px rgb(from var(--primary-green) r g b / 0.25);
     height: 2em;
     padding: 0;
+}
+
+.FormField:user-invalid, .FormDropDown:user-invalid {
+    background-color: var(--secondary-pink);
 }
 
 #root {

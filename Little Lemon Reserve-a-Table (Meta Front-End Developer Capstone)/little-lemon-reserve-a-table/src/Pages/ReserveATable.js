@@ -40,7 +40,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
+                    <label htmlFor="reservationTime" className='ParagraphText'>Choose a time:</label>
                     <select
                         id='reservationTime'
                         name='reservationTime'
@@ -61,6 +61,8 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         name="numOfGuests"
                         required
                         min="1"
+                        max="10"
+                        step="1"
                         className='FormField LeadText'
                         value={reserveInfo.resGuests}
                         onChange={e => reserveInfo.setResGuests(e.target.value)}
