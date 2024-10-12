@@ -49,14 +49,11 @@
     border-color: var(--primary-green);
 }
 
-.ReserveForm > a {
-    grid-column: 1/4;
-    margin: auto;
-}
-
-.ReserveForm button {
+.ReserveForm > button {
     width: 12em;
     height: 3em;
+    grid-column: 1/4;
+    margin: auto;
 }
 
 @media only screen and (max-width: 52em) {

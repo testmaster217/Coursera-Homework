@@ -5,9 +5,8 @@ import restaurant from "../Assets/restaurant.jpg";
 import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-export default function ReserveATable({reserveInfo}) {
+export default function ReserveATable({reserveInfo, handleSubmit}) {
     useEffect(() => {
         const currentDate = new Date();
         reserveInfo.setResDate(`${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}`);
@@ -19,7 +18,7 @@ export default function ReserveATable({reserveInfo}) {
             {/* TODO: May need to replace the native form elements with stuff from
             a UI framework for better customizability. Alternatively, can just use
             a _lot_ of CSS. */}
-            <form className="ReserveForm" role='form'>
+            <form className="ReserveForm" role='form' onSubmit={handleSubmit}>
                 {/* TODO: Add error messages that appear when a field is invalid.
                 (Might come up later in the project.) */}
                 <div>
@@ -34,7 +33,9 @@ export default function ReserveATable({reserveInfo}) {
                         min={reserveInfo.resDate}
                         onChange={e => {
                             reserveInfo.setResDate(e.target.value);
-                            reserveInfo.setAvailableTimes(e.target.value);
+                            let newDate = new Date(e.target.value);
+                            newDate.setDate(newDate.getDate() + 1);
+                            reserveInfo.setAvailableTimes({type: "changed_date", newDate: newDate});
                         }}
                     />
                 </div>
@@ -126,7 +127,7 @@ export default function ReserveATable({reserveInfo}) {
                         onChange={e => reserveInfo.setResComments(e.target.value)}
                     />
                 </div>
-                <Link to="/reserve-page-2"><button type="submit" className='MainButton LeadText'>Submit Reservation</button></Link>
+                <button type="submit" className='MainButton LeadText'>Submit Reservation</button>
             </form>
         </main>
     </>);

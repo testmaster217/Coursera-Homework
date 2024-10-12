@@ -8,15 +8,51 @@ import ReservationConfirmation from './Pages/ReservationConfirmation';
 import NavBar from './Components/NavBar';
 
 import { useReducer, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
-/* TODO: Change this to show different times depending on the selected date.
-(Will come up later in the course.) */
-export function updateTimes(selectedDate) {
-    return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+/* API functions. (Copied and pasted from the API link because it doesn't work for some reason.) */
+const seededRandom = function (seed) {
+    var m = 2**35 - 31;
+    var a = 185852;
+    var s = seed % m;
+    return function () {
+        return (s = s * a % m) / m;
+    };
+}
+const fetchAPI = function(date) {
+    let result = [];
+    let random = seededRandom(date.getDate());
+
+    for(let i = 17; i <= 23; i++) {
+        if(random() < 0.5) {
+            result.push(i + ':00');
+        }
+        if(random() < 0.5) {
+            result.push(i + ':30');
+        }
+    }
+    return result;
+};
+const submitAPI = function(formData) {
+    /* If this was a real API, it would probably be using a database instead of localStorage. */
+    const localStorage = window.localStorage;
+
+    localStorage.setItem("TableReservation-" + formData.resDate + "-" + formData.resTime, JSON.stringify(
+        {
+            ...localStorage.getItem("TableReservation-" + formData.resDate + "-" + formData.resTimeformData),
+            ...formData
+        }
+    ));
+
+    return true;
+};
+
+export function updateTimes(availableTimes, action) {
+    if (action.type === "changed_date") return fetchAPI(action.newDate);
+    else return availableTimes;
 }
 export function initializeTimes() {
-    return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+    return fetchAPI(new Date());
 }
 
 function App() {
@@ -41,6 +77,8 @@ function App() {
     const [resCCNum, setResCCNum] = useState("");
     const [resExpDate, setResExpDate] = useState("");
     const [res3Digit, setRes3Digit] = useState("");
+
+    const navigate = useNavigate();
 
     const reserveInfo = {
         resDate: resDate,
@@ -87,6 +125,41 @@ function App() {
         setRes3Digit: setRes3Digit
     }
 
+    function submitFormPart1() {
+        if (submitAPI({
+            resDate: resDate,
+            resTime: resTime,
+            resGuests: resGuests,
+            resSeating: resSeating,
+            resOccasion: resOccasion,
+            resComments: resComments
+        })) {
+            navigate('/reserve-page-2');
+        }
+    }
+
+    function submitFormPart2() {
+        if (submitAPI({
+            resDate: resDate,
+            resTime: resTime,
+            resFirstName: resFirstName,
+            resLastName: resLastName,
+            resPhone: resPhone,
+            resEmail: resEmail,
+            resCCName: resCCName,
+            resAddress: resAddress,
+            resAddress2: resAddress2,
+            resCity: resCity,
+            resState: resState,
+            resZip: resZip,
+            resCCNum: resCCNum,
+            resExpDate: resExpDate,
+            res3Digit: res3Digit
+        })) {
+            navigate('/reserve-confirmation');
+        }
+    }
+
     return (
         <>
             <NavBar/>
@@ -95,8 +168,14 @@ function App() {
                 {/* TODO: Add a route to make the "About Us" link in the nav bar scroll to
                 the "About Us" section of the homepage. Will involve useEffect and possibly
                 useRef */}
-                <Route path='/reserve-a-table' element={<ReserveATable reserveInfo={reserveInfo}/>}/>
-                <Route path='/reserve-page-2' element={<ConfirmReservation reserveUserInfo={reserveUserInfo}/>}/>
+                <Route path='/reserve-a-table' element={<ReserveATable reserveInfo={reserveInfo} handleSubmit={e => {
+                    e.preventDefault();
+                    submitFormPart1();
+                }}/>}/>
+                <Route path='/reserve-page-2' element={<ConfirmReservation reserveUserInfo={reserveUserInfo} handleSubmit={e => {
+                    e.preventDefault();
+                    submitFormPart2();
+                }}/>}/>
                 <Route path='/reserve-confirmation' element={<ReservationConfirmation/>}/>
             </Routes>
             <Footer/>

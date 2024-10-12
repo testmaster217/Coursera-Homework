@@ -5,9 +5,8 @@ import chef from "../Assets/restaurant chef B.jpg";
 import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-export default function ConfirmReservation({reserveUserInfo}) {
+export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
     useEffect(() => {
         const currentDate = new Date();
         reserveUserInfo.setResExpDate(`${(currentDate.getFullYear() + 3).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}`);
@@ -16,7 +15,7 @@ export default function ConfirmReservation({reserveUserInfo}) {
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
         <main>
-            <form className="ReserveConfirmForm">
+            <form className="ReserveConfirmForm" role='form' onSubmit={handleSubmit}>
                 {/* TODO: Figure out how to get the ZIP code, the CC
                 number, the expiration date (if it's text-type
                 fallback doesn't have the validation needed already),
@@ -235,7 +234,7 @@ export default function ConfirmReservation({reserveUserInfo}) {
                     </div>
                 </fieldset>
 
-                <Link to="/reserve-confirmation"><button type="submit" className='MainButton LeadText'>Confirm Reservation</button></Link>
+                <button type="submit" className='MainButton LeadText'>Confirm Reservation</button>
             </form>
         </main>
     </>);
