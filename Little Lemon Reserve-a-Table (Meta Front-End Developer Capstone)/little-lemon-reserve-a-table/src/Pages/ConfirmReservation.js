@@ -225,7 +225,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             onChange={e => {
                                 // reserveUserInfo.setResCCNum(e.target.value);
                                 // If the input so far includes only digits (with spaces after evcery four) or is blank, then...
-                                if (e.target.value.match(/\d{1,4}\u{0020}?\d{0,4}\u{0020}?\d{0,4}\u{0020}?\d{0,4}/ug) || !e.target.value) {
+                                if (e.target.value.match(/^((\d{1,3})|(\d{4}\u{0020}?)){1,3}(\d{1,4})?$/ug) || !e.target.value) {
                                     // If the number of digits > 4 && the number of digits % 4 === 1, and there isn't already a space before the digit that the user just typed, add one.
                                     let digits = e.target.value.length !== 0 ? e.target.value.match(/\d{1}/g).length : 0; // Finds the digits in the string.
                                     if (digits > 4 && digits % 4 === 1 && e.target.value.at(-2) !== " ") {
