@@ -255,7 +255,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     <div>
                         <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText'>*</span>3-digit code:</label>
                         <input
-                            type="text"
+                            type="tel"
                             id="threeDigitCode"
                             name="threeDigitCode"
                             required
