@@ -82,11 +82,17 @@ img, .MainButton, .Card {
     box-shadow: 0 4px 4px rgb(from var(--secondary-black) r g b / 0.25);
     transition: 0.2s;
 }
-
 .MainButton:active {
     color: var(--secondary-white);
     background-color: var(--primary-green);
     box-shadow: 0 4px 4px rgb(from var(--secondary-black) r g b / 0.25) inset;
+    transition: 0.2s;
+}
+.MainButton:disabled {
+    background-color: var(--secondary-pink);
+    color: var(--secondary-black);
+    border: none;
+    box-shadow: 0 4px 4px rgb(from var(--secondary-black) r g b / 0.25);
     transition: 0.2s;
 }
 
