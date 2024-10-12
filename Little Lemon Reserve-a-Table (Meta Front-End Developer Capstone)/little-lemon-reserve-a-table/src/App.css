@@ -63,6 +63,9 @@
     font-weight: 500;
     font-size: 16px;
 }
+div:has(:user-valid)::after {
+    content: none;
+}
 
 body {
     background-color: var(--secondary-white);
@@ -114,6 +117,9 @@ img, .MainButton, .Card {
 
 .FormField:user-invalid, .FormDropDown:user-invalid {
     background-color: var(--secondary-pink);
+}
+.FormField:user-valid, .FormDropDown:user-valid {
+    background-color: var(--secondary-white);
 }
 
 #root {

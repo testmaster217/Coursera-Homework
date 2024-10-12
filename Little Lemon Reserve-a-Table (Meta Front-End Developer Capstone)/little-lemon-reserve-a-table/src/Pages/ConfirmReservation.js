@@ -57,7 +57,6 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             type="tel"
                             id="phone"
                             name="phone"
-                            placeholder='123-456-7890'
                             autoComplete='tel'
                             className='FormField LeadText'
                             value={reserveUserInfo.resPhone}
@@ -216,14 +215,28 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="ccNum"
                             name="ccNum"
                             required
-                            maxLength="16"
-                            minLength="16"
-                            placeholder='1234567890123456'
-                            pattern='\d{16}'
+                            maxLength="19"
+                            minLength="19"
+                            placeholder='#### #### #### ####'
+                            pattern='\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}'
                             autoComplete='cc-number'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCNum}
-                            onChange={e => reserveUserInfo.setResCCNum(e.target.value)}
+                            onChange={e => {
+                                // reserveUserInfo.setResCCNum(e.target.value);
+                                // If the input so far includes only digits (with spaces after evcery four) or is blank, then...
+                                if (e.target.value.match(/\d{1,4}\u{0020}?\d{0,4}\u{0020}?\d{0,4}\u{0020}?\d{0,4}/ug) || !e.target.value) {
+                                    // If the number of digits > 4 && the number of digits % 4 === 1, add a space before the digit that the user just typed.
+                                    let digits = e.target.value.length !== 0 ? e.target.value.match(/\d{1}/g).length : 0; // Finds the digits in the string.
+                                    if (digits > 4 && digits % 4 === 1) {
+                                        let valAsArray = Array.from(e.target.value);
+                                        valAsArray.splice(e.target.value.length - 1, 0, " ");
+                                        e.target.value = valAsArray.toString().replaceAll(",", "");
+                                    }
+                                    // After that check, update the state.
+                                    reserveUserInfo.setResCCNum(e.target.value);
+                                }
+                            }}
                         />
                     </div>
                     <div>
@@ -246,7 +259,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="threeDigitCode"
                             name="threeDigitCode"
                             required
-                            placeholder='000'
+                            placeholder='###'
                             minLength="3"
                             maxLength="3"
                             pattern='\d{3}'
