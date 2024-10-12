@@ -57,6 +57,9 @@ test('First part of the reservation form can be submitted', () => {
   const reserveButton = screen.getByText(/Reserve a Table/i)
   fireEvent.click(reserveButton);
 
+  // !!! THIS ONLY WORKS BECAUSE EVERYTHING ON THE FIRST PAGE !!! //
+  // !!! OF THE FORM HAPPENS TO BE VALID BY DEFAULT. UPDATE   !!! //
+  // !!! THIS TEST CASE IF THAT CHANGES.                      !!! //
   const submitButton = screen.getByText(/Submit Reservation/i);
   fireEvent.click(submitButton);
 
@@ -87,7 +90,7 @@ test('Reservation data is written to local storage.', () => {
     resCity: "Maryville",
     resState: "MO",
     resZip: "64468",
-    resCCNum: "0000000000000000",
+    resCCNum: "0000 0000 0000 0000",
     resExpDate: "2027-10",
     res3Digit: "000"
   });
@@ -109,7 +112,7 @@ test('Reservation data is written to local storage.', () => {
     resCity: "Maryville",
     resState: "MO",
     resZip: "64468",
-    resCCNum: "0000000000000000",
+    resCCNum: "0000 0000 0000 0000",
     resExpDate: "2027-10",
     res3Digit: "000"
   });

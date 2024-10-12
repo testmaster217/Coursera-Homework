@@ -211,7 +211,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     <div>
                         <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText'>*</span>Credit card number:</label>
                         <input
-                            type="text"
+                            type="tel"
                             id="ccNum"
                             name="ccNum"
                             required
