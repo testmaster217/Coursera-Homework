@@ -218,7 +218,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             maxLength="19"
                             minLength="19"
                             placeholder='#### #### #### ####'
-                            pattern='\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}'
+                            pattern='^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$'
                             autoComplete='cc-number'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCNum}
@@ -262,7 +262,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             placeholder='###'
                             minLength="3"
                             maxLength="3"
-                            pattern='\d{3}'
+                            pattern='^\d{3}$'
                             autoComplete='cc-csc'
                             className='FormField LeadText'
                             value={reserveUserInfo.res3Digit}
@@ -271,7 +271,21 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     </div>
                 </fieldset>
 
-                <button type="submit" className='MainButton LeadText'>Confirm Reservation</button>
+                <button type="submit" className='MainButton LeadText' disabled={
+                    !reserveUserInfo.resFirstName ||
+                    !reserveUserInfo.resLastName ||
+                    !reserveUserInfo.resEmail ||
+                    !reserveUserInfo.resEmail.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/) ||
+                    !reserveUserInfo.resCCName ||
+                    !reserveUserInfo.resAddress ||
+                    !reserveUserInfo.resCity ||
+                    !reserveUserInfo.resZip ||
+                    !reserveUserInfo.resCCNum ||
+                    !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
+                    // TODO: Add cases for the month field once I finish redesigning it!
+                    !reserveUserInfo.res3Digit ||
+                    !reserveUserInfo.res3Digit.match(/^\d{3}$/)
+                }>Confirm Reservation</button>
             </form>
         </main>
     </>);

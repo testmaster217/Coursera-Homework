@@ -121,7 +121,14 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         onChange={e => reserveInfo.setResComments(e.target.value)}
                     />
                 </div>
-                <button type="submit" className='MainButton LeadText'>Submit Reservation</button>
+                <button type="submit" className='MainButton LeadText' disabled={
+                    !reserveInfo.resDate ||
+                    reserveInfo.resDate < new Date(Date.now()).getFullYear() + "-" + (new Date(Date.now()).getMonth() + 1) + "-" + new Date(Date.now()).getDate() ||
+                    !reserveInfo.resGuests ||
+                    !parseInt(reserveInfo.resGuests) ||
+                    parseInt(reserveInfo.resGuests) < 1 ||
+                    parseInt(reserveInfo.resGuests) > 10
+                }>Submit Reservation</button>
             </form>
         </main>
     </>);
