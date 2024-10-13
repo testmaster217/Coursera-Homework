@@ -12,13 +12,63 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
         reserveUserInfo.setResExpDate(`${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toPrecision(4).substring(2)}`);
     }, []);
 
+    const states = [
+        "AL",
+        "AK",
+        "AZ",
+        "AR",
+        "CA",
+        "CO",
+        "CT",
+        "DE",
+        "DC",
+        "FL",
+        "GA",
+        "HI",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MA",
+        "MI",
+        "MN",
+        "MS",
+        "MO",
+        "MT",
+        "NE",
+        "NV",
+        "NH",
+        "NJ",
+        "NM",
+        "NY",
+        "NC",
+        "ND",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VT",
+        "VA",
+        "WA",
+        "WV",
+        "WI",
+        "WY"
+    ];
+
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
         <main>
             <form className="ReserveConfirmForm" role='form' onSubmit={handleSubmit}>
-                {/* TODO: Figure out how to get the expiration date
-                to have validation. (This might come up later in the
-                project anyway.) */}
                 <fieldset>
                     <legend className="DisplayTitle">Contact Info</legend>
                     <div>
@@ -139,56 +189,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resState}
                             onChange={e => reserveUserInfo.setResState(e.target.value)}
                         >
-                            <option value="AL" className='LeadText'>AL</option>
-                            <option value="AK" className='LeadText'>AK</option>
-                            <option value="AZ" className='LeadText'>AZ</option>
-                            <option value="AR" className='LeadText'>AR</option>
-                            <option value="CA" className='LeadText'>CA</option>
-                            <option value="CO" className='LeadText'>CO</option>
-                            <option value="CT" className='LeadText'>CT</option>
-                            <option value="DE" className='LeadText'>DE</option>
-                            <option value="DC" className='LeadText'>DC</option>
-                            <option value="FL" className='LeadText'>FL</option>
-                            <option value="GA" className='LeadText'>GA</option>
-                            <option value="HI" className='LeadText'>HI</option>
-                            <option value="ID" className='LeadText'>ID</option>
-                            <option value="IL" className='LeadText'>IL</option>
-                            <option value="IN" className='LeadText'>IN</option>
-                            <option value="KS" className='LeadText'>KS</option>
-                            <option value="KY" className='LeadText'>KY</option>
-                            <option value="LA" className='LeadText'>LA</option>
-                            <option value="ME" className='LeadText'>ME</option>
-                            <option value="MD" className='LeadText'>MD</option>
-                            <option value="MA" className='LeadText'>MA</option>
-                            <option value="MI" className='LeadText'>MI</option>
-                            <option value="MN" className='LeadText'>MN</option>
-                            <option value="MS" className='LeadText'>MS</option>
-                            <option value="MO" className='LeadText'>MO</option>
-                            <option value="MT" className='LeadText'>MT</option>
-                            <option value="NE" className='LeadText'>NE</option>
-                            <option value="NV" className='LeadText'>NV</option>
-                            <option value="NH" className='LeadText'>NH</option>
-                            <option value="NJ" className='LeadText'>NJ</option>
-                            <option value="NM" className='LeadText'>NM</option>
-                            <option value="NY" className='LeadText'>NY</option>
-                            <option value="NC" className='LeadText'>NC</option>
-                            <option value="ND" className='LeadText'>ND</option>
-                            <option value="OH" className='LeadText'>OH</option>
-                            <option value="OK" className='LeadText'>OK</option>
-                            <option value="OR" className='LeadText'>OR</option>
-                            <option value="PA" className='LeadText'>PA</option>
-                            <option value="RI" className='LeadText'>RI</option>
-                            <option value="SC" className='LeadText'>SC</option>
-                            <option value="SD" className='LeadText'>SD</option>
-                            <option value="TN" className='LeadText'>TN</option>
-                            <option value="TX" className='LeadText'>TX</option>
-                            <option value="UT" className='LeadText'>UT</option>
-                            <option value="VT" className='LeadText'>VT</option>
-                            <option value="VA" className='LeadText'>VA</option>
-                            <option value="WA" className='LeadText'>WA</option>
-                            <option value="WV" className='LeadText'>WV</option>
-                            <option value="WI" className='LeadText'>WI</option>
-                            <option value="WY" className='LeadText'>WY</option>
+                            {states.map(currentState =>
+                                <option key={currentState} value={currentState} className='LeadText'>{currentState}</option>
+                            )}
                         </select>
                     </div>
                     <div>
@@ -294,6 +297,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     !reserveUserInfo.resCCName ||
                     !reserveUserInfo.resAddress ||
                     !reserveUserInfo.resCity ||
+                    !states.includes(reserveUserInfo.resState) ||
                     !reserveUserInfo.resZip ||
                     !reserveUserInfo.resCCNum ||
                     !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||

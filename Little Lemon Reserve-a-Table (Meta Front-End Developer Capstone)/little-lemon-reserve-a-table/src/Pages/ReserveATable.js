@@ -122,6 +122,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                 <button type="submit" className='MainButton LeadText' disabled={
                     !reserveInfo.resDate ||
                     reserveInfo.resDate < new Date(Date.now()).getFullYear() + "-" + (new Date(Date.now()).getMonth() + 1) + "-" + new Date(Date.now()).getDate() ||
+                    !reserveInfo.availableTimes.includes(reserveInfo.resTime) ||
                     !reserveInfo.resGuests ||
                     !parseInt(reserveInfo.resGuests) ||
                     parseInt(reserveInfo.resGuests) < 1 ||
