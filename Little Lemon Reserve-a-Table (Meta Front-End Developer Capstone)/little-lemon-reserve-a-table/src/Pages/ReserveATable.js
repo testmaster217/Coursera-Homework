@@ -19,8 +19,6 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
             a UI framework for better customizability. Alternatively, can just use
             a _lot_ of CSS. */}
             <form className="ReserveForm" role='form' onSubmit={handleSubmit}>
-                {/* TODO: Add error messages that appear when a field is invalid.
-                (Might come up later in the project.) */}
                 <div>
                     <label htmlFor="reservationDate" className='ParagraphText'><span className='HighlightText'>*</span>Choose a date:</label>
                     <input

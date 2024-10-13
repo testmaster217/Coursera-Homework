@@ -9,20 +9,16 @@ import { useEffect } from 'react';
 export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
     useEffect(() => {
         const currentDate = new Date();
-        reserveUserInfo.setResExpDate(`${(currentDate.getFullYear() + 3).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}`);
+        reserveUserInfo.setResExpDate(`${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toPrecision(4).substring(2)}`);
     }, []);
 
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
         <main>
             <form className="ReserveConfirmForm" role='form' onSubmit={handleSubmit}>
-                {/* TODO: Figure out how to get the ZIP code, the CC
-                number, the expiration date (if it's text-type
-                fallback doesn't have the validation needed already),
-                and the 3-digit code to have validation. (This might
-                come up later in the project anyway.) */}
-                {/* TODO: Add error messages that appear when a field is invalid.
-                (Might come up later in the project.) */}
+                {/* TODO: Figure out how to get the expiration date
+                to have validation. (This might come up later in the
+                project anyway.) */}
                 <fieldset>
                     <legend className="DisplayTitle">Contact Info</legend>
                     <div>
@@ -225,7 +221,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             onChange={e => {
                                 // reserveUserInfo.setResCCNum(e.target.value);
                                 // If the input so far includes only digits (with spaces after evcery four) or is blank, then...
-                                if (e.target.value.match(/^((\d{1,3})|(\d{4}\u{0020}?)){1,3}(\d{1,4})?$/ug) || !e.target.value) {
+                                if (e.target.value.match(/^(?:(?:\d{1,3})|(?:\d{4}\u{0020}?)){1,3}(?:\d{1,4})?$/ug) || !e.target.value) {
                                     // If the number of digits > 4 && the number of digits % 4 === 1, and there isn't already a space before the digit that the user just typed, add one.
                                     let digits = e.target.value.length !== 0 ? e.target.value.match(/\d{1}/g).length : 0; // Finds the digits in the string.
                                     if (digits > 4 && digits % 4 === 1 && e.target.value.at(-2) !== " ") {
@@ -242,14 +238,33 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     <div>
                         <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText'>*</span>Expiration date:</label>
                         <input
-                            type="month"
+                            type="tel"
                             id="expDate"
                             name="expDate"
                             required
+                            maxLength="5"
+                            minLength="5"
+                            placeholder='MM/YY'
+                            pattern='^(?:0[1-9]|1[0-2])\/\d{2}$'
                             autoComplete='cc-exp'
                             className='FormField LeadText'
                             value={reserveUserInfo.resExpDate}
-                            onChange={e => reserveUserInfo.setResExpDate(e.target.value)}
+                            onChange={e => {
+                                // Input should be either a single digit (0 or 1) or 2 digits (0 followed by a nonzero digit,
+                                // or 1 followed by 0, 1, or 2). If it's two digits, they might be followed by a /, which
+                                // itself might be followed by 1 or 2 digits.
+                                if (e.target.value.match(/^[0-1]$|^0[1-9]\/?(?:\d{1,2})?$|^1[0-2]\/?(?:\d{1,2})?$/g) || !e.target.value) {
+                                    // If the number of digits > 2 && the number of digits % 2 === 1 && there isn't already a / before the digit that the user just typed, add one.
+                                    let digits = e.target.value.length !== 0 ? e.target.value.match(/\d{1}/g).length : 0; // Finds the digits in the string.
+                                    if (digits > 2 && digits % 2 === 1 && e.target.value.at(-2) !== "/") {
+                                        let valAsArray = Array.from(e.target.value);
+                                        valAsArray.splice(e.target.value.length - 1, 0, "/");
+                                        e.target.value = valAsArray.toString().replaceAll(",", "");
+                                    }
+                                    // After that, update the state.
+                                    reserveUserInfo.setResExpDate(e.target.value);
+                                }
+                            }}
                         />
                     </div>
                     <div>
@@ -282,7 +297,8 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     !reserveUserInfo.resZip ||
                     !reserveUserInfo.resCCNum ||
                     !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
-                    // TODO: Add cases for the month field once I finish redesigning it!
+                    !reserveUserInfo.resExpDate ||
+                    !reserveUserInfo.resExpDate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/) ||
                     !reserveUserInfo.res3Digit ||
                     !reserveUserInfo.res3Digit.match(/^\d{3}$/)
                 }>Confirm Reservation</button>
