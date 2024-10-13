@@ -91,7 +91,7 @@ test('Reservation data is written to local storage.', () => {
     resState: "MO",
     resZip: "64468",
     resCCNum: "0000 0000 0000 0000",
-    resExpDate: "2027-10",
+    resExpDate: "10/27",
     res3Digit: "000"
   });
 
@@ -113,66 +113,7 @@ test('Reservation data is written to local storage.', () => {
     resState: "MO",
     resZip: "64468",
     resCCNum: "0000 0000 0000 0000",
-    resExpDate: "2027-10",
+    resExpDate: "10/27",
     res3Digit: "000"
   });
-  // render(
-  //   <BrowserRouter>
-  //     <App/>
-  //   </BrowserRouter>
-  // );
-
-  // const reserveButton = screen.getByText(/Reserve a table/i)
-  // fireEvent.click(reserveButton);
-
-  // const submitButton = screen.getByText(/Submit Reservation/i);
-  // fireEvent.click(submitButton);
-
-  // const fNameField = screen.getByLabelText(/First name:$/);
-  // fireEvent.change(fNameField, {target: {value: "Collin"}});
-  // const lNameField = screen.getByLabelText(/Last name:$/);
-  // fireEvent.change(lNameField, {target: {value: "Vesel"}});
-  // const emailField = screen.getByLabelText(/Email:$/);
-  // fireEvent.change(emailField, {target: {value: "cvesel217@gmail.com"}});
-  // const ccNameField = screen.getByLabelText(/Name on credit card:$/);
-  // fireEvent.change(ccNameField, {target: {value: "Collin Vesel"}});
-  // const addressField = screen.getByLabelText(/Address:$/);
-  // fireEvent.change(addressField, {target: {value: "318 S Clayton Ave."}});
-  // const cityField = screen.getByLabelText(/City:$/);
-  // fireEvent.change(cityField, {target: {value: "Maryville"}});
-  // const stateField = screen.getByLabelText(/State:$/);
-  // fireEvent.change(stateField, {target: {value: "MO"}});
-  // const zipField = screen.getByLabelText(/ZIP code:$/);
-  // fireEvent.change(zipField, {target: {value: "64468"}});
-  // const ccNumField = screen.getByLabelText(/Credit card number:$/);
-  // fireEvent.change(ccNumField, {target: {value: "0000000000000000"}});
-  // const expDateField = screen.getByLabelText(/Expiration date:$/);
-  // fireEvent.change(expDateField, {target: {value: "2027-10"}});
-  // const threeDigitField = screen.getByLabelText(/3-digit code:$/);
-  // fireEvent.change(threeDigitField, {target: {value: "000"}});
-
-  // const confirmButton = screen.getByText(/Confirm Reservation/i);
-  // fireEvent.click(confirmButton);
-
-  // expect(window.localStorage.getItem("TableReservation-2024-10-11-17:00")).toStrictEqual({
-  //   resDate: "2024-10-11",
-  //   resTime: "17:00",
-  //   resGuests: 1,
-  //   resSeating: "No Preference",
-  //   resOccasion: "nothing",
-  //   resComments: "",
-  //   resFirstName: "Collin",
-  //   resLastName: "Vesel",
-  //   resPhone: "",
-  //   resEmail: "cvesel217@gmail.com",
-  //   resCCName: "Collin Vesel",
-  //   resAddress: "318 S Clayton Ave.",
-  //   resAddress2: "",
-  //   resCity: "Maryville",
-  //   resState: "MO",
-  //   resZip: "64468",
-  //   resCCNum: "0000000000000000",
-  //   resExpDate: "2027-10",
-  //   res3Digit: "000"
-  // });
 });
