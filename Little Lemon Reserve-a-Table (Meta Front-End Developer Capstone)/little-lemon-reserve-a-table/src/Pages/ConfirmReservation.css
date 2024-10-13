@@ -61,6 +61,10 @@ div:has(#city:user-invalid)::after {
     content: "This field is required.";
 }
 
+div:has(#state:user-invalid)::after {
+    content: "Please choose one of the states.";
+}
+
 div:has(#zip:user-invalid)::after {
     content: "This field is required.";
 }

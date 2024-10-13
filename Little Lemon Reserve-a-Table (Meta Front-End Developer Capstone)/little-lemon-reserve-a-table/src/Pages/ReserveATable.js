@@ -6,6 +6,28 @@ import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
 
+const occasions = [
+    {value: "nothing", displayMsg: "Nothing special"},
+    {value: "birthday", displayMsg: "Birthday"},
+    {value: "engagement", displayMsg: "Engagement"},
+    {value: "anniversary", displayMsg: "Anniversary"},
+    {value: "other", displayMsg: 'Other (Explain in "Additional comments")'}
+];
+
+// Returns true if any of the form fields are invalid.
+export function validateReserveForm(reserveInfo) {
+    const currentDate = new Date(Date.now());
+
+    return !reserveInfo.resDate ||
+    reserveInfo.resDate < `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}` ||
+    !reserveInfo.availableTimes.includes(reserveInfo.resTime) ||
+    !reserveInfo.resGuests ||
+    !parseInt(reserveInfo.resGuests) ||
+    parseInt(reserveInfo.resGuests) < 1 ||
+    parseInt(reserveInfo.resGuests) > 10 ||
+    !occasions.map(current => current.value).includes(reserveInfo.resOccasion);
+}
+
 export default function ReserveATable({reserveInfo, handleSubmit}) {
     useEffect(() => {
         const currentDate = new Date();
@@ -38,10 +60,11 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="reservationTime" className='ParagraphText'>Choose a time:</label>
+                    <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
                     <select
                         id='reservationTime'
                         name='reservationTime'
+                        required
                         className='FormDropDown LeadText'
                         value={reserveInfo.resTime}
                         onChange={e => reserveInfo.setResTime(e.target.value)}
@@ -102,11 +125,9 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         value={reserveInfo.resOccasion}
                         onChange={e => reserveInfo.setResOccasion(e.target.value)}
                     >
-                        <option value="nothing" className='LeadText'>Nothing special</option>
-                        <option value="birthday" className='LeadText'>Birthday</option>
-                        <option value="engagement" className='LeadText'>Engagement</option>
-                        <option value="anniversary" className='LeadText'>Anniversary</option>
-                        <option value="other" className='LeadText'>Other (Explain in "Additional comments")</option>
+                        {occasions.map(current =>
+                            <option key={current.value} value={current.value} className='LeadText'>{current.displayMsg}</option>
+                        )}
                     </select>
                 </div>
                 <div>
@@ -119,15 +140,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         onChange={e => reserveInfo.setResComments(e.target.value)}
                     />
                 </div>
-                <button type="submit" className='MainButton LeadText' disabled={
-                    !reserveInfo.resDate ||
-                    reserveInfo.resDate < new Date(Date.now()).getFullYear() + "-" + (new Date(Date.now()).getMonth() + 1) + "-" + new Date(Date.now()).getDate() ||
-                    !reserveInfo.availableTimes.includes(reserveInfo.resTime) ||
-                    !reserveInfo.resGuests ||
-                    !parseInt(reserveInfo.resGuests) ||
-                    parseInt(reserveInfo.resGuests) < 1 ||
-                    parseInt(reserveInfo.resGuests) > 10
-                }>Submit Reservation</button>
+                <button type="submit" className='MainButton LeadText' disabled={validateReserveForm(reserveInfo)}>Submit Reservation</button>
             </form>
         </main>
     </>);

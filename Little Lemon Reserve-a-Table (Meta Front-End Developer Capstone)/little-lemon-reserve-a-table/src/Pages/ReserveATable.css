@@ -71,11 +71,19 @@ div:has(#reservationDate:user-invalid:out-of-range)::after {
     content: "Date can't be in the past.";
 }
 
+div:has(#reservationTime:user-invalid)::after {
+    content: "Please choose from the available times."
+}
+
 div:has(#numOfGuests:user-invalid:out-of-range)::after {
     content: "Number of guests must be between 1 and 10.";
 }
 div:has(#numOfGuests:user-invalid:not(:out-of-range))::after {
     content: "This field is required and must be a whole number.";
+}
+
+div:has(#occasion:user-invalid)::after {
+    content: 'Please choose from the available options, or choose "Other" and explain in the comments.'
 }
 
 @media only screen and (max-width: 52em) {

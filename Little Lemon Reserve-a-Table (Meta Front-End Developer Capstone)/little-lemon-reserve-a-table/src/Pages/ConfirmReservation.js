@@ -184,6 +184,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         <select
                             id="state"
                             name="state"
+                            required
                             className='FormDropDown LeadText'
                             autoComplete='billing address-level1'
                             value={reserveUserInfo.resState}

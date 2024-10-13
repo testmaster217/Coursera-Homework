@@ -3,7 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import {initializeTimes, updateTimes, submitAPI} from './App';
 import App from './App';
-import ReserveATable from './Pages/ReserveATable';
+import ReserveATable, {validateReserveForm} from './Pages/ReserveATable';
+import ConfirmReservation from './Pages/ConfirmReservation';
 
 beforeEach(() => {
   localStorage.removeItem("TableReservation-2024-10-11-17:00");
@@ -76,7 +77,6 @@ test('Reservation data is written to local storage.', () => {
     resOccasion: "nothing",
     resComments: ""
   });
-  console.log(localStorage.getItem("TableReservation-2024-10-11-17:00"));
   submitAPI({
     resDate: "2024-10-11",
     resTime: "17:00",
@@ -116,4 +116,1212 @@ test('Reservation data is written to local storage.', () => {
     resExpDate: "10/27",
     res3Digit: "000"
   });
+});
+
+test('Reservation date is required.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Choose a date:$/);
+  expect(dateElement).toHaveAttribute("required");
+});
+
+test('Reservation date is type date.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Choose a date:$/);
+  expect(dateElement).toHaveAttribute("type", "date");
+});
+
+test("Reservation date has today's date as the minimum.", () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Choose a date:$/);
+  expect(dateElement).toHaveAttribute("min", reserveInfo.resDate);
+});
+
+test('Reservation time is required.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const timeElement = screen.getByLabelText(/Choose a time:$/);
+  expect(timeElement).toHaveAttribute("required");
+});
+
+test('Reservation number of guests is required.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  expect(dateElement).toHaveAttribute("required");
+});
+
+test('Reservation number of guests is type number.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  expect(dateElement).toHaveAttribute("type", "number");
+});
+
+test('Reservation number of guests has 1 as the minimum.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  expect(dateElement).toHaveAttribute("min", "1");
+});
+
+test('Reservation number of guests has 10 as the maximum.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  expect(dateElement).toHaveAttribute("max", "10");
+});
+
+test('Reservation number of guests has 1 as the step amount.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  expect(dateElement).toHaveAttribute("step", "1");
+});
+
+test('Reservation form page 1 can be submitted when all fields are valid.', async () => {
+  // Leave most things as their default values because those are all valid.
+  // Change resDate and resGuests, since their default values are boundary
+  // cases that other tests cover.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeFalsy();
+});
+
+test('Reservation form page 1 cannot be submitted when date is missing.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when date is in the past.', () => {
+  
+});
+
+test('Reservation form page 1 can be submitted when date is today.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when time is invalid.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests is missing.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests is not a number.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests < 1.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests > 10.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests is not a whole number.', () => {
+  
+});
+
+test('Reservation form page 1 can be submitted when number of guests === 1.', () => {
+  
+});
+
+test('Reservation form page 1 can be submitted when number of guests === 10.', () => {
+  
+});
+
+test('Reservation form page 1 cannot be submitted when occasion is invalid.', () => {
+  
+});
+
+test('Reservation first name is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const fNameElement = screen.getByLabelText(/First name:$/);
+  expect(fNameElement).toHaveAttribute("required");
+});
+
+test('Reservation last name is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const lNameElement = screen.getByLabelText(/Last name:$/);
+  expect(lNameElement).toHaveAttribute("required");
+});
+
+test('Reservation phone is type tel', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const phoneElement = screen.getByLabelText(/Phone #:$/);
+  expect(phoneElement).toHaveAttribute("type", "tel");
+});
+
+test('Reservation email name is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const emailElement = screen.getByLabelText(/Email:$/);
+  expect(emailElement).toHaveAttribute("required");
+});
+
+test('Reservation email is type email.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const emailElement = screen.getByLabelText(/Email:$/);
+  expect(emailElement).toHaveAttribute("type", "email");
+});
+
+test('Reservation CC name is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const ccNameElement = screen.getByLabelText(/Name on credit card:$/);
+  expect(ccNameElement).toHaveAttribute("required");
+});
+
+test('Reservation address is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const addressElement = screen.getByLabelText(/Address:$/);
+  expect(addressElement).toHaveAttribute("required");
+});
+
+test('Reservation city is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const cityElement = screen.getByLabelText(/City:$/);
+  expect(cityElement).toHaveAttribute("required");
+});
+
+test('Reservation state is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const stateElement = screen.getByLabelText(/State:$/);
+  expect(stateElement).toHaveAttribute("required");
+});
+
+test('Reservation zip is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const zipElement = screen.getByLabelText(/ZIP code:$/);
+  expect(zipElement).toHaveAttribute("required");
+});
+
+test('Reservation CC number is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  expect(ccNumElement).toHaveAttribute("required");
+});
+
+test('Reservation CC number is type tel.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  expect(ccNumElement).toHaveAttribute("type", "tel");
+});
+
+test('Reservation CC number must be 19 characters long.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  expect(ccNumElement).toHaveAttribute("minLength", "19");
+  expect(ccNumElement).toHaveAttribute("maxLength", "19");
+});
+
+test('Reservation CC number must be a CC number.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  expect(ccNumElement).toHaveAttribute("pattern", "^\\d{4}\\u{0020}\\d{4}\\u{0020}\\d{4}\\u{0020}\\d{4}$");
+});
+
+test('Reservation exp date is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  expect(expDateElement).toHaveAttribute("required");
+});
+
+test('Reservation exp date is type tel.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  expect(expDateElement).toHaveAttribute("type", "tel");
+});
+
+test('Reservation exp date must be 5 characters long.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  expect(expDateElement).toHaveAttribute("minLength", "5");
+  expect(expDateElement).toHaveAttribute("maxLength", "5");
+});
+
+test('Reservation exp date must be an exp date.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  expect(expDateElement).toHaveAttribute("pattern", "^(?:0[1-9]|1[0-2])\\/\\d{2}$");
+});
+
+test('Reservation 3-digit code is required.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  expect(threeDigitElement).toHaveAttribute("required");
+});
+
+test('Reservation 3-digit code is type tel.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  expect(threeDigitElement).toHaveAttribute("type", "tel");
+});
+
+test('Reservation 3-digit code must be 3 characters long.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  expect(threeDigitElement).toHaveAttribute("minLength", "3");
+  expect(threeDigitElement).toHaveAttribute("maxLength", "3");
+});
+
+test('Reservation 3-digit code must be a 3-digit code.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  expect(threeDigitElement).toHaveAttribute("pattern", "^\\d{3}$");
 });
