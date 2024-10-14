@@ -3,16 +3,16 @@ import './ReservationHero.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ReservationHero({headerText, photo, backLink}) {
+    const navigate = useNavigate();
+
     return <header className="ReservationHero">
         <div>
-            <Link to={backLink}>
-                <button type="button" className="BackButton" title="Back">
-                    <FontAwesomeIcon icon={faArrowLeft}/>
-                </button>
-            </Link>
+            <button type="button" className="BackButton" title="Back" onClick={() => navigate(backLink)}>
+                <FontAwesomeIcon icon={faArrowLeft}/>
+            </button>
             <h1 className='DisplayTitle'>{headerText}</h1>
         </div>
         <img src={photo} alt=""/>

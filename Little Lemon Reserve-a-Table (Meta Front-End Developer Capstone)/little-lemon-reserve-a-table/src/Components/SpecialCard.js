@@ -6,7 +6,7 @@ export default function SpecialCard({photoPath, photoAlt, name, price, descripti
         <img src={photoPath} alt={photoAlt}/>
         <header>
             <h4 className="CardTitle">{name}</h4>
-            <span className="HighlightText">${price}</span>
+            <span className="HighlightText">{`$${price}`}</span>
         </header>
         <main>
             <p className="ParagraphText">{description}</p>

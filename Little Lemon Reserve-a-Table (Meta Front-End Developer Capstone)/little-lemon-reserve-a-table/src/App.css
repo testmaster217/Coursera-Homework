@@ -8,6 +8,16 @@
     --secondary-black: #333333;
 }
 
+/* For elements used only by screen readers */
+.SrOnly {
+    position: absolute;
+    left: -1000000000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 /* Text style vars */
 .DisplayTitle {
     font-family: 'Markazi Text', serif;

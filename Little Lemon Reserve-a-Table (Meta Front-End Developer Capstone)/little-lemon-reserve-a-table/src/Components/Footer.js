@@ -19,7 +19,7 @@ export default function Footer() {
         <section>
             <h3 className='SectionTitle'>CONTACT</h3>
             <menu>
-                <li className='ParagraphText'>456 MArket St.<br/>Chicago, IL 60613</li>
+                <li className='ParagraphText'>456 Market St.<br/>Chicago, IL 60613</li>
                 <li><a href="#" className='ParagraphText'>(872) 555-0100</a></li>
                 <li><a href="#" className='ParagraphText'>littlelemon@example.com</a></li>
             </menu>
