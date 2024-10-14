@@ -14,13 +14,6 @@
     margin-block: 2em;
 }
 
-.ReserveConfirmForm fieldset div {
-    grid-column: auto;
-    grid-row: auto;
-    display: flex;
-    flex-direction: column;
-}
-
 .ReserveConfirmForm legend {
     color: var(--primary-green);
     margin-bottom: 0.5em;
@@ -28,6 +21,14 @@
 
 .ReserveConfirmForm label {
     color: var(--primary-green);
+    grid-column: auto;
+    grid-row: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.ReserveConfirmForm label span:not([aria-hidden]) {
+    display: flex;
 }
 
 .ReserveConfirmForm button {

@@ -98,8 +98,8 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
             <form className="ReserveConfirmForm" role='form' onSubmit={handleSubmit}>
                 <fieldset>
                     <legend className="DisplayTitle">Contact Info</legend>
-                    <div>
-                        <label htmlFor="fName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>First name:</label>
+                    <label htmlFor="fName" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>First name:</span>
                         <input
                             type="text"
                             id="fName"
@@ -110,9 +110,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resFirstName}
                             onChange={e => reserveUserInfo.setResFirstName(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="lName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Last name:</label>
+                    </label>
+                    <label htmlFor="lName" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Last name:</span>
                         <input
                             type="text"
                             id="lName"
@@ -123,9 +123,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resLastName}
                             onChange={e => reserveUserInfo.setResLastName(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="phone" className='ParagraphText' aria-hidden>Phone #:</label>
+                    </label>
+                    <label htmlFor="phone" className='ParagraphText' aria-hidden>
+                        Phone #:
                         <input
                             type="tel"
                             id="phone"
@@ -136,9 +136,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resPhone}
                             onChange={e => reserveUserInfo.setResPhone(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Email:</label>
+                    </label>
+                    <label htmlFor="email" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Email:</span>
                         <input
                             type="email"
                             id="email"
@@ -149,13 +149,13 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resEmail}
                             onChange={e => reserveUserInfo.setResEmail(e.target.value)}
                         />
-                    </div>
+                    </label>
                 </fieldset>
 
                 <fieldset>
                     <legend className='DisplayTitle'>Billing Info</legend>
-                    <div>
-                        <label htmlFor="ccName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Name on credit card:</label>
+                    <label htmlFor="ccName" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Name on credit card:</span>
                         <input
                             type="text"
                             id="ccName"
@@ -166,9 +166,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resCCName}
                             onChange={e => reserveUserInfo.setResCCName(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="address" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Address:</label>
+                    </label>
+                    <label htmlFor="address" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Address:</span>
                         <input
                             type="text"
                             id="address"
@@ -180,9 +180,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resAddress}
                             onChange={e => reserveUserInfo.setResAddress(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="addressLine2" className='ParagraphText'>Address line 2:</label>
+                    </label>
+                    <label htmlFor="addressLine2" className='ParagraphText'>
+                        Address line 2:
                         <input
                             type="text"
                             id="addressLine2"
@@ -193,9 +193,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resAddress2}
                             onChange={e => reserveUserInfo.setResAddress2(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="city" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>City:</label>
+                    </label>
+                    <label htmlFor="city" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>City:</span>
                         <input
                             type="text"
                             id="city"
@@ -206,9 +206,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resCity}
                             onChange={e => reserveUserInfo.setResCity(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="state" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>State:</label>
+                    </label>
+                    <label htmlFor="state" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>State:</span>
                         <select
                             id="state"
                             name="state"
@@ -222,9 +222,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                                 <option key={currentState.value} value={currentState.value} className='LeadText' aria-label={currentState.accessibleValue}>{currentState.value}</option>
                             )}
                         </select>
-                    </div>
-                    <div>
-                        <label htmlFor="zip" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>ZIP code:</label>
+                    </label>
+                    <label htmlFor="zip" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>ZIP code:</span>
                         <input
                             type="text"
                             id="zip"
@@ -235,9 +235,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resZip}
                             onChange={e => reserveUserInfo.setResZip(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Credit card number:</label>
+                    </label>
+                    <label htmlFor="ccNum" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Credit card number:</span>
                         <input
                             type="tel"
                             id="ccNum"
@@ -266,9 +266,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                                 }
                             }}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Expiration date:</label>
+                    </label>
+                    <label htmlFor="expDate" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>Expiration date:</span>
                         <input
                             type="tel"
                             id="expDate"
@@ -298,9 +298,9 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                                 }
                             }}
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>3-digit code:</label>
+                    </label>
+                    <label htmlFor="threeDigitCode" className='ParagraphText'>
+                        <span><span className='HighlightText' aria-hidden>*</span>3-digit code:</span>
                         <input
                             type="tel"
                             id="threeDigitCode"
@@ -315,7 +315,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.res3Digit}
                             onChange={e => reserveUserInfo.setRes3Digit(e.target.value)}
                         />
-                    </div>
+                    </label>
                 </fieldset>
 
                 <button type="submit" className='MainButton LeadText' disabled={validateConfirmForm(reserveUserInfo)}>Confirm Reservation</button>
