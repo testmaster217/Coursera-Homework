@@ -15,6 +15,6 @@ export default function ReservationHero({headerText, photo, backLink}) {
             </button>
             <h1 className='DisplayTitle'>{headerText}</h1>
         </div>
-        <img src={photo} alt=""/>
+        <img src={photo} aria-hidden/>
     </header>;
 }

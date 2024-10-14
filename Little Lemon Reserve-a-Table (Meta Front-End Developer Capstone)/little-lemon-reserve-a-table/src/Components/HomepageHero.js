@@ -14,6 +14,6 @@ export default function HomepageHero() {
             <p className='ParagraphText'>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
             <button type="button" className='MainButton LeadText' onClick={() => navigate("/reserve-a-table")}>Reserve a table</button>
         </div>
-        <img src={food} alt=""/>
+        <img src={food} aria-hidden/>
     </header>;
 }

@@ -16,8 +16,8 @@ export default function AboutUs() {
             </p>
         </div>
         <div className="AboutImages">
-            <img className="Img1" src={marioAndAdrianA} alt="A photo of Little Lemon's two chefs: Adrian and Mario"/>
-            <img className="Img2" src={marioAndAdrianB} alt="Another photo of Little Lemon's two chefs: Adrian and Mario"/>
+            <img className="Img1" src={marioAndAdrianA} aria-hidden/>
+            <img className="Img2" src={marioAndAdrianB} aria-hidden/>
         </div>
     </section>
 }
