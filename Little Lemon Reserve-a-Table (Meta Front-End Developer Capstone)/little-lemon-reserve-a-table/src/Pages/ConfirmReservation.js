@@ -99,7 +99,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                 <fieldset>
                     <legend className="DisplayTitle">Contact Info</legend>
                     <div>
-                        <label htmlFor="fName" className='ParagraphText'><span className='HighlightText'>*</span>First name:</label>
+                        <label htmlFor="fName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>First name:</label>
                         <input
                             type="text"
                             id="fName"
@@ -112,7 +112,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="lName" className='ParagraphText'><span className='HighlightText'>*</span>Last name:</label>
+                        <label htmlFor="lName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Last name:</label>
                         <input
                             type="text"
                             id="lName"
@@ -137,7 +137,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className='ParagraphText'><span className='HighlightText'>*</span>Email:</label>
+                        <label htmlFor="email" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Email:</label>
                         <input
                             type="email"
                             id="email"
@@ -154,7 +154,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                 <fieldset>
                     <legend className='DisplayTitle'>Billing Info</legend>
                     <div>
-                        <label htmlFor="ccName" className='ParagraphText'><span className='HighlightText'>*</span>Name on credit card:</label>
+                        <label htmlFor="ccName" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Name on credit card:</label>
                         <input
                             type="text"
                             id="ccName"
@@ -167,7 +167,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="address" className='ParagraphText'><span className='HighlightText'>*</span>Address:</label>
+                        <label htmlFor="address" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Address:</label>
                         <input
                             type="text"
                             id="address"
@@ -194,7 +194,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="city" className='ParagraphText'><span className='HighlightText'>*</span>City:</label>
+                        <label htmlFor="city" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>City:</label>
                         <input
                             type="text"
                             id="city"
@@ -207,7 +207,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="state" className='ParagraphText'>State:</label>
+                        <label htmlFor="state" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>State:</label>
                         <select
                             id="state"
                             name="state"
@@ -223,7 +223,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="zip" className='ParagraphText'><span className='HighlightText'>*</span>ZIP code:</label>
+                        <label htmlFor="zip" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>ZIP code:</label>
                         <input
                             type="text"
                             id="zip"
@@ -236,7 +236,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText'>*</span>Credit card number:</label>
+                        <label htmlFor="ccNum" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Credit card number:</label>
                         <input
                             type="tel"
                             id="ccNum"
@@ -267,7 +267,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText'>*</span>Expiration date:</label>
+                        <label htmlFor="expDate" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Expiration date:</label>
                         <input
                             type="tel"
                             id="expDate"
@@ -299,7 +299,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText'>*</span>3-digit code:</label>
+                        <label htmlFor="threeDigitCode" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>3-digit code:</label>
                         <input
                             type="tel"
                             id="threeDigitCode"

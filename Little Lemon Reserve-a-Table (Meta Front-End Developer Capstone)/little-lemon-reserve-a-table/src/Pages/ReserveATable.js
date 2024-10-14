@@ -54,7 +54,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
             a _lot_ of CSS. */}
             <form className="ReserveForm" role='form' onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="reservationDate" className='ParagraphText'><span className='HighlightText'>*</span>Choose a date:</label>
+                    <label htmlFor="reservationDate" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Choose a date:</label>
                     <input
                         type="date"
                         id="reservationDate"
@@ -72,7 +72,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText'>*</span>Choose a time:</label>
+                    <label htmlFor="reservationTime" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Choose a time:</label>
                     <select
                         id='reservationTime'
                         name='reservationTime'
@@ -87,7 +87,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="numOfGuests" className='ParagraphText'><span className='HighlightText'>*</span>Number of guests:</label>
+                    <label htmlFor="numOfGuests" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Number of guests:</label>
                     <input
                         type="number"
                         id="numOfGuests"
@@ -102,7 +102,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="seatingChoice" className='ParagraphText'><span className='HighlightText'>*</span>Where would you like to sit?</label>
+                    <label htmlFor="seatingChoice" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Where would you like to sit?</label>
                     <fieldset
                         id="seatingChoice"
                         onChange={e => reserveInfo.setResSeating(e.target.value)}
@@ -123,7 +123,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     </fieldset>
                 </div>
                 <div>
-                    <label htmlFor="occasion" className='ParagraphText'><span className='HighlightText'>*</span>Is it a special occasion?</label>
+                    <label htmlFor="occasion" className='ParagraphText'><span className='HighlightText' aria-hidden>*</span>Is it a special occasion?</label>
                     <select
                         id="occasion"
                         name="occasion"
@@ -138,7 +138,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="comments" className='ParagraphText'>{reserveInfo.resOccasion === "other" && <span className='HighlightText'>*</span>}Additional comments? (i.e., any special isntructions or accommodations needed):</label>
+                    <label htmlFor="comments" className='ParagraphText'>{reserveInfo.resOccasion === "other" && <span className='HighlightText' aria-hidden>*</span>}Additional comments? (i.e., any special isntructions or accommodations needed):</label>
                     <textarea
                         id="comments"
                         name="comments"
