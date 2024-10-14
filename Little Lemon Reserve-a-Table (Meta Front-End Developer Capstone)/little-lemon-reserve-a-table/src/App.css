@@ -121,10 +121,10 @@ img, .MainButton, .Card {
     padding: 0;
 }
 
-.FormField:user-invalid, .FormDropDown:user-invalid {
+.FormField:user-invalid, .FormDropDown:user-invalid, textarea:user-invalid, input[type=radio]:user-invalid {
     background-color: var(--secondary-pink);
 }
-.FormField:user-valid, .FormDropDown:user-valid {
+.FormField:user-valid, .FormDropDown:user-valid, textarea:user-valid, input[type=radio]:user-valid {
     background-color: var(--secondary-white);
 }
 

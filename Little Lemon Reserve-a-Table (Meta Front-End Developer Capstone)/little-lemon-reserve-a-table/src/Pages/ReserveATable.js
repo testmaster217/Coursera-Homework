@@ -6,6 +6,12 @@ import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
 
+const seatingChoices = [
+    {value: "Inside", defaultChecked: false},
+    {value: "Outside", defaultChecked: false},
+    {value: "No Preference", defaultChecked: true}
+];
+
 const occasions = [
     {value: "nothing", displayMsg: "Nothing special"},
     {value: "birthday", displayMsg: "Birthday"},
@@ -21,11 +27,17 @@ export function validateReserveForm(reserveInfo) {
     return !reserveInfo.resDate ||
     reserveInfo.resDate < `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}` ||
     !reserveInfo.availableTimes.includes(reserveInfo.resTime) ||
+    !reserveInfo.resTime ||
     !reserveInfo.resGuests ||
     !parseInt(reserveInfo.resGuests) ||
     parseInt(reserveInfo.resGuests) < 1 ||
     parseInt(reserveInfo.resGuests) > 10 ||
-    !occasions.map(current => current.value).includes(reserveInfo.resOccasion);
+    reserveInfo.resGuests % 1 !== 0 ||
+    !reserveInfo.resSeating ||
+    !seatingChoices.map(current => current.value).includes(reserveInfo.resSeating) ||
+    !reserveInfo.resOccasion ||
+    !occasions.map(current => current.value).includes(reserveInfo.resOccasion) ||
+    (reserveInfo.resOccasion === "other" && !reserveInfo.resComments);
 }
 
 export default function ReserveATable({reserveInfo, handleSubmit}) {
@@ -90,37 +102,32 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     />
                 </div>
                 <div>
-                    <label htmlFor="seatingChoice" className='ParagraphText'>Where would you like to sit?</label>
+                    <label htmlFor="seatingChoice" className='ParagraphText'><span className='HighlightText'>*</span>Where would you like to sit?</label>
                     <fieldset
                         id="seatingChoice"
                         onChange={e => reserveInfo.setResSeating(e.target.value)}
                     >
-                        <input
-                            type="radio"
-                            value="Inside"
-                            id="InsideRadio"
-                            name="seatingChoice"
-                        /><label htmlFor="InsideRadio" className='ParagraphText'>Inside</label>
-                        <input
-                            type="radio"
-                            value="Outside"
-                            id="OutsideRadio"
-                            name="seatingChoice"
-                        /><label htmlFor="OutsideRadio" className='ParagraphText'>Outside</label>
-                        <input
-                            type="radio"
-                            value="No Preference"
-                            id="NoPreferenceRadio"
-                            name="seatingChoice"
-                            defaultChecked
-                        /><label htmlFor="NoPreferenceRadio" className='ParagraphText'>No Preference</label>
+                        {seatingChoices.map(choice =>
+                            <label key={choice.value} htmlFor={choice.value.concat('Radio')} className='ParagraphText'>
+                                <input
+                                    type='radio'
+                                    value={choice.value}
+                                    id={choice.value.concat('Radio')}
+                                    name='seatingChoice'
+                                    required
+                                    defaultChecked={choice.defaultChecked}
+                                />
+                                {choice.value}
+                            </label>
+                        )}
                     </fieldset>
                 </div>
                 <div>
-                    <label htmlFor="occasion" className='ParagraphText'>Is it a special occasion?</label>
+                    <label htmlFor="occasion" className='ParagraphText'><span className='HighlightText'>*</span>Is it a special occasion?</label>
                     <select
                         id="occasion"
                         name="occasion"
+                        required
                         className='FormDropDown LeadText'
                         value={reserveInfo.resOccasion}
                         onChange={e => reserveInfo.setResOccasion(e.target.value)}
@@ -131,10 +138,11 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="comments" className='ParagraphText'>Additional comments? (i.e., any special isntructions or accommodations needed):</label>
+                    <label htmlFor="comments" className='ParagraphText'>{reserveInfo.resOccasion === "other" && <span className='HighlightText'>*</span>}Additional comments? (i.e., any special isntructions or accommodations needed):</label>
                     <textarea
                         id="comments"
                         name="comments"
+                        required={reserveInfo.resOccasion === "other"}
                         className='LeadText'
                         value={reserveInfo.resComments}
                         onChange={e => reserveInfo.setResComments(e.target.value)}

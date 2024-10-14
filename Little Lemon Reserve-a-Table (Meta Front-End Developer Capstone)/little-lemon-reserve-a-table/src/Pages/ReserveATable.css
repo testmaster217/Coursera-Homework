@@ -30,21 +30,25 @@
 }
 
 #seatingChoice {
-    display: grid;
-    grid-template-columns: 1fr 10fr;
-    grid-template-rows: repeat(3, 1fr);
-    gap: 0.5em;
-    justify-content: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
     padding: 0;
     margin: 0;
     border: none;
 }
 
+#seatingChoice label {
+    display: flex;
+}
+
 #seatingChoice input[type="radio"] {
     /* appearance: none; */
     padding: 0;
-    margin: 0;
+    margin: 0 1em 0 0;
     width: 2em;
+    height: 2em;
     background-color: var(--secondary-white);
     color: var(--primary-green);
     border-color: var(--primary-green);
@@ -65,7 +69,7 @@
 
 /* Styles for invalid fields */
 div:has(#reservationDate:user-invalid:not(:out-of-range))::after {
-    content: "This field is required.";
+    content: "This field is required and must be a valid date.";
 }
 div:has(#reservationDate:user-invalid:out-of-range)::after {
     content: "Date can't be in the past.";
@@ -82,8 +86,23 @@ div:has(#numOfGuests:user-invalid:not(:out-of-range))::after {
     content: "This field is required and must be a whole number.";
 }
 
+div:has([id$="Radio"]:user-invalid)::after {
+    content: "Please choose one of these options.";
+}
+
 div:has(#occasion:user-invalid)::after {
     content: 'Please choose from the available options, or choose "Other" and explain in the comments.'
+}
+
+div:has(#comments:user-invalid)::after {
+    content: 'If you set the "Occasion" field to "Other", please use this comments box to explain what the occasion is.'
+}
+
+textarea:user-invalid, input[type=radio]:user-invalid {
+    background-color: var(--secondary-pink);
+}
+textarea:user-valid, input[type=radio]:user-valid {
+    background-color: var(--secondary-white);
 }
 
 @media only screen and (max-width: 52em) {
@@ -94,7 +113,7 @@ div:has(#occasion:user-invalid)::after {
         padding: 2em 1em;
     }
 
-    #seatingChoice {
-        grid-template-columns: 1fr 25fr;
+    #seatingChoice label {
+        padding-block: 0.5em;
     }
 }

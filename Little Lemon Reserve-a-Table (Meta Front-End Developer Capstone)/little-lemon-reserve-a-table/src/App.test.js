@@ -370,6 +370,118 @@ test('Reservation number of guests has 1 as the step amount.', () => {
   expect(dateElement).toHaveAttribute("step", "1");
 });
 
+test('Reservation seating choice is required.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const seatingElement = screen.getByLabelText(/No Preference$/);
+  expect(seatingElement).toHaveAttribute("required");
+});
+
+test('Reservation occasion is required.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const occasionElement = screen.getByLabelText(/Is it a special occasion\?$/);
+  expect(occasionElement).toHaveAttribute("required");
+});
+
+test('Reservation comments is not required normally.', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):$/);
+  expect(commentsElement).not.toHaveAttribute("required");
+});
+
+test('Reservation comments is required if occasion is "other".', () => {
+  const reserveInfo = {
+    resDate: "2024-10-11",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 1,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "other",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  render(
+    <BrowserRouter>
+      <ReserveATable reserveInfo={reserveInfo}/>
+    </BrowserRouter>
+  );
+
+  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):$/);
+  expect(commentsElement).toHaveAttribute("required");
+});
+
 test('Reservation form page 1 can be submitted when all fields are valid.', async () => {
   // Leave most things as their default values because those are all valid.
   // Change resDate and resGuests, since their default values are boundary
@@ -396,51 +508,514 @@ test('Reservation form page 1 can be submitted when all fields are valid.', asyn
 });
 
 test('Reservation form page 1 cannot be submitted when date is missing.', () => {
-  
+  // Everything stays the same as the "happy path" test case above, but no date.
+  const reserveInfo = {
+    resDate: "",
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when date is in the past.', () => {
-  
+  // Everything stays the same as the "happy path" test case above, but date is in the past.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `1900-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when date is yesterday.', async () => {
+  // (Boundary case. Should be invalid.)
+  // Everything stays the same as the "happy path" test case above, but date is yesterday.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() - 1).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when date is not a date.', () => {
+  // Everything stays the same as the "happy path" test case above, but date is not a valid date.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 can be submitted when date is today.', () => {
-  
+  // (Boudary case. Data should be valid.)
+  // Everything stays the same as the "happy path" test case, but the date is today.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeFalsy();
 });
 
 test('Reservation form page 1 cannot be submitted when time is invalid.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the time is not in the list.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "8:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when time is missing.', () => {
+  // Everything is the same as the "happy path" test case, but the time is missing.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when number of guests is missing.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the number of guests is missing.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when number of guests is not a number.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the number of guests is something other than a number.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "abc",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when number of guests < 1.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the number of guests is too low.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "-2",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests === 0.', () => {
+  // (Boundary case. Should be invalid.)
+  // Everything is the same as the "happy path" test case, but the number of guests is 0.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "0",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when number of guests > 10.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the number of guests is too high.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "13",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when number of guests === 0.', () => {
+  // (Boundary case. Should be invalid.)
+  // Everything is the same as the "happy path" test case, but the number of guests is 11.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "11",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when number of guests is not a whole number.', () => {
-  
+  // Everything is the same as the "happy path" test case, but the number of guests is not a whole number.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "1.5",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 can be submitted when number of guests === 1.', () => {
-  
+  // (Boudary case. Should be valid.)
+  // Everything is the same as the "happy path" test case, but the number of guests is 1.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "1",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeFalsy();
 });
 
 test('Reservation form page 1 can be submitted when number of guests === 10.', () => {
-  
+  // (Boudary case. Should be valid.)
+  // Everything is the same as the "happy path" test case, but the number of guests is 10.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: "10",
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeFalsy();
+});
+
+test('Reservation form page 1 cannot be submitted when seating choice is missing.', () => {
+  // Everything is the same as the "happy path" test case, but no seating choice.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when seating choice is invalid.', () => {
+  // Everything is the same as the "happy path" test case, but seating choice is invalid.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "idk wut 2 put hear ¯\_(ツ)_/¯",
+    setResSeating: jest.fn(),
+    resOccasion: "nothing",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when occasion is missing.', () => {
+  // Everything is the same as the "happy path" test case, but no occasion.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
 test('Reservation form page 1 cannot be submitted when occasion is invalid.', () => {
-  
+  // Everything is the same as the "happy path" test case, but occasion is invalid.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "...something",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 cannot be submitted when occasion is "other" and no comments.', () => {
+  // Everything is the same as the "happy path" test case, but occasion is "other" and no comments.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "other",
+    setResOccasion: jest.fn(),
+    resComments: "",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeTruthy();
+});
+
+test('Reservation form page 1 can be submitted when occasion is "other" and comments are present.', () => {
+  // Everything is the same as the "happy path" test case, but occasion is "other" and comments are present.
+  const currentDate = new Date(Date.now());
+  const reserveInfo = {
+    resDate: `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate() + 3).toPrecision(2)}`,
+    setResDate: jest.fn(),
+    availableTimes: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+    setAvailableTimes: jest.fn(),
+    resTime: "17:00",
+    setResTime: jest.fn(),
+    resGuests: 3,
+    setResGuests: jest.fn(),
+    resSeating: "No Preference",
+    setResSeating: jest.fn(),
+    resOccasion: "other",
+    setResOccasion: jest.fn(),
+    resComments: "Testing the tests.",
+    setResComments: jest.fn()
+  };
+
+  expect(validateReserveForm(reserveInfo)).toBeFalsy();
 });
 
 test('Reservation first name is required.', () => {
