@@ -6,64 +6,91 @@ import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
 
+const states = [
+    "AL",
+    "AK",
+    "AZ",
+    "AR",
+    "CA",
+    "CO",
+    "CT",
+    "DE",
+    "DC",
+    "FL",
+    "GA",
+    "HI",
+    "ID",
+    "IL",
+    "IN",
+    "KS",
+    "KY",
+    "LA",
+    "ME",
+    "MD",
+    "MA",
+    "MI",
+    "MN",
+    "MS",
+    "MO",
+    "MT",
+    "NE",
+    "NV",
+    "NH",
+    "NJ",
+    "NM",
+    "NY",
+    "NC",
+    "ND",
+    "OH",
+    "OK",
+    "OR",
+    "PA",
+    "RI",
+    "SC",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VT",
+    "VA",
+    "WA",
+    "WV",
+    "WI",
+    "WY"
+];
+
+function expDateIsExpired(expDate) {
+    const [expMonth, expYear] = expDate.split("/");
+    const expDateAsDate = new Date("20" + expYear, expMonth - 1);
+    return expDateAsDate <= new Date(Date.now());
+}
+
+// Returns true if any of the fields are invalid.
+export function validateConfirmForm(reserveUserInfo) {
+    return !reserveUserInfo.resFirstName ||
+    !reserveUserInfo.resLastName ||
+    !reserveUserInfo.resEmail ||
+    !reserveUserInfo.resEmail.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/) ||
+    !reserveUserInfo.resCCName ||
+    !reserveUserInfo.resAddress ||
+    !reserveUserInfo.resCity ||
+    !reserveUserInfo.resState ||
+    !states.includes(reserveUserInfo.resState) ||
+    !reserveUserInfo.resZip ||
+    !reserveUserInfo.resCCNum ||
+    !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
+    !reserveUserInfo.resExpDate ||
+    !reserveUserInfo.resExpDate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/) ||
+    expDateIsExpired(reserveUserInfo.resExpDate) ||
+    !reserveUserInfo.res3Digit ||
+    !reserveUserInfo.res3Digit.match(/^\d{3}$/)
+}
+
 export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
     useEffect(() => {
         const currentDate = new Date();
         reserveUserInfo.setResExpDate(`${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toPrecision(4).substring(2)}`);
     }, []);
-
-    const states = [
-        "AL",
-        "AK",
-        "AZ",
-        "AR",
-        "CA",
-        "CO",
-        "CT",
-        "DE",
-        "DC",
-        "FL",
-        "GA",
-        "HI",
-        "ID",
-        "IL",
-        "IN",
-        "KS",
-        "KY",
-        "LA",
-        "ME",
-        "MD",
-        "MA",
-        "MI",
-        "MN",
-        "MS",
-        "MO",
-        "MT",
-        "NE",
-        "NV",
-        "NH",
-        "NJ",
-        "NM",
-        "NY",
-        "NC",
-        "ND",
-        "OH",
-        "OK",
-        "OR",
-        "PA",
-        "RI",
-        "SC",
-        "SD",
-        "TN",
-        "TX",
-        "UT",
-        "VT",
-        "VA",
-        "WA",
-        "WV",
-        "WI",
-        "WY"
-    ];
 
     return (<>
         <ReservationHero headerText="Confirm your Reservation" photo={chef} backLink="/reserve-a-table"/>
@@ -290,23 +317,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     </div>
                 </fieldset>
 
-                <button type="submit" className='MainButton LeadText' disabled={
-                    !reserveUserInfo.resFirstName ||
-                    !reserveUserInfo.resLastName ||
-                    !reserveUserInfo.resEmail ||
-                    !reserveUserInfo.resEmail.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/) ||
-                    !reserveUserInfo.resCCName ||
-                    !reserveUserInfo.resAddress ||
-                    !reserveUserInfo.resCity ||
-                    !states.includes(reserveUserInfo.resState) ||
-                    !reserveUserInfo.resZip ||
-                    !reserveUserInfo.resCCNum ||
-                    !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
-                    !reserveUserInfo.resExpDate ||
-                    !reserveUserInfo.resExpDate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/) ||
-                    !reserveUserInfo.res3Digit ||
-                    !reserveUserInfo.res3Digit.match(/^\d{3}$/)
-                }>Confirm Reservation</button>
+                <button type="submit" className='MainButton LeadText' disabled={validateConfirmForm(reserveUserInfo)}>Confirm Reservation</button>
             </form>
         </main>
     </>);

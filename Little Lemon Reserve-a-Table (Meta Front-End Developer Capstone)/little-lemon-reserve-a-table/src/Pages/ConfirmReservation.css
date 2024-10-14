@@ -74,7 +74,7 @@ div:has(#ccNum:user-invalid)::after {
 }
 
 div:has(#expDate:user-invalid)::after {
-    content: "This field is required and must be in the form MM/YY.";
+    content: "This field is required, must be in the form MM/YY, and must not be in the past (i.e., your card must not be expired).";
 }
 
 div:has(#threeDigitCode:user-invalid)::after {

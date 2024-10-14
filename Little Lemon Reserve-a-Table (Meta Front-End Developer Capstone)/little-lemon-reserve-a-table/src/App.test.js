@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import {initializeTimes, updateTimes, submitAPI} from './App';
 import App from './App';
 import ReserveATable, {validateReserveForm} from './Pages/ReserveATable';
-import ConfirmReservation from './Pages/ConfirmReservation';
+import ConfirmReservation, {validateConfirmForm} from './Pages/ConfirmReservation';
 
 beforeEach(() => {
   localStorage.removeItem("TableReservation-2024-10-11-17:00");
@@ -1899,4 +1899,635 @@ test('Reservation 3-digit code must be a 3-digit code.', () => {
 
   const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
   expect(threeDigitElement).toHaveAttribute("pattern", "^\\d{3}$");
+});
+
+test('Reservation form page 2 can be submitted when all fields are valid.', () => {
+  // Happy path.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeFalsy();
+});
+
+test('Reservation form page 2 cannot be submitted when first name is missing.', () => {
+  // Same as "happy path", except no name.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when last name is missing.', () => {
+  // Same as "happy path", but no last name.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when email is missing.', () => {
+  // Same as "happy path", but no email.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when email is invalid.', () => {
+  // Same as "happy path", but email is not a valid email.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when CC name is missing.', () => {
+  // Same as "happy path", but no credit card name.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when address is missing.', () => {
+  // Same as "happy path", but no address.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when city is missing.', () => {
+  // Same as "happy path", but no city.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when state is missing.', () => {
+  // Same as "happy path", but no state.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when state is invalid.', () => {
+  // Same as "happy path", but state is not a valid state.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "ZZ",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when zip code is missing.', () => {
+  // Same as "happy path", but no ZIP code.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when CC number is missing.', () => {
+  // Same as "happy path", but no credit card number.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when CC number is invalid.', () => {
+  // Same as "happy path", but credit card number is not a valid credit card number.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 00",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when exp date is missing.', () => {
+  // Same as "happy path", but no exp date.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: "",
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when exp date is invalid.', () => {
+  // Same as "happy path", but exp date isn't MM/YY.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: "10",
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when exp date is in the past.', () => {
+  // Same as "happy path", but exp date is in the past.
+  // (This case might fail in 100 years give-or-take, not sure how to fix.)
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() - 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when 3-digit code is missing.', () => {
+  // Same as "happy path", but no 3-digit code.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 cannot be submitted when 3-digit code is invalid.', () => {
+  // Same as "happy path", but 3-digit code is anything other than 3 digits.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "0",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
 });
