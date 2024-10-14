@@ -7,56 +7,56 @@ import ReservationHero from '../Components/ReservationHero'
 import { useEffect } from 'react';
 
 const states = [
-    "AL",
-    "AK",
-    "AZ",
-    "AR",
-    "CA",
-    "CO",
-    "CT",
-    "DE",
-    "DC",
-    "FL",
-    "GA",
-    "HI",
-    "ID",
-    "IL",
-    "IN",
-    "KS",
-    "KY",
-    "LA",
-    "ME",
-    "MD",
-    "MA",
-    "MI",
-    "MN",
-    "MS",
-    "MO",
-    "MT",
-    "NE",
-    "NV",
-    "NH",
-    "NJ",
-    "NM",
-    "NY",
-    "NC",
-    "ND",
-    "OH",
-    "OK",
-    "OR",
-    "PA",
-    "RI",
-    "SC",
-    "SD",
-    "TN",
-    "TX",
-    "UT",
-    "VT",
-    "VA",
-    "WA",
-    "WV",
-    "WI",
-    "WY"
+    {value: "AL", accessibleValue: "Alabama"},
+    {value: "AK", accessibleValue: "Alaska"},
+    {value: "AZ", accessibleValue: "Arizona"},
+    {value: "AR", accessibleValue: "Arkansas"},
+    {value: "CA", accessibleValue: "California"},
+    {value: "CO", accessibleValue: "Colorado"},
+    {value: "CT", accessibleValue: "Connecticut"},
+    {value: "DE", accessibleValue: "Delaware"},
+    {value: "DC", accessibleValue: "D.C."},
+    {value: "FL", accessibleValue: "Florida"},
+    {value: "GA", accessibleValue: "Georgia"},
+    {value: "HI", accessibleValue: "Hawaii"},
+    {value: "ID", accessibleValue: "Idaho"},
+    {value: "IL", accessibleValue: "Illinois"},
+    {value: "IN", accessibleValue: "Indiana"},
+    {value: "KS", accessibleValue: "Kansas"},
+    {value: "KY", accessibleValue: "Kentucky"},
+    {value: "LA", accessibleValue: "Louisiana"},
+    {value: "ME", accessibleValue: "Maine"},
+    {value: "MD", accessibleValue: "Maryland"},
+    {value: "MA", accessibleValue: "Massachusetts"},
+    {value: "MI", accessibleValue: "Michigan"},
+    {value: "MN", accessibleValue: "Minnesota"},
+    {value: "MS", accessibleValue: "Mississippi"},
+    {value: "MO", accessibleValue: "Missouri"},
+    {value: "MT", accessibleValue: "Montana"},
+    {value: "NE", accessibleValue: "Nebraska"},
+    {value: "NV", accessibleValue: "Nevada"},
+    {value: "NH", accessibleValue: "New Hampshire"},
+    {value: "NJ", accessibleValue: "New Jersey"},
+    {value: "NM", accessibleValue: "New Mexico"},
+    {value: "NY", accessibleValue: "New York"},
+    {value: "NC", accessibleValue: "North Carolina"},
+    {value: "ND", accessibleValue: "North Dakota"},
+    {value: "OH", accessibleValue: "Ohio"},
+    {value: "OK", accessibleValue: "Oklahoma"},
+    {value: "OR", accessibleValue: "Oregon"},
+    {value: "PA", accessibleValue: "Pennsylvania"},
+    {value: "RI", accessibleValue: "Rhode Island"},
+    {value: "SC", accessibleValue: "South Carolina"},
+    {value: "SD", accessibleValue: "South Dakota"},
+    {value: "TN", accessibleValue: "Tennessee"},
+    {value: "TX", accessibleValue: "Texas"},
+    {value: "UT", accessibleValue: "Utah"},
+    {value: "VT", accessibleValue: "Vermont"},
+    {value: "VA", accessibleValue: "Virginia"},
+    {value: "WA", accessibleValue: "Washington"},
+    {value: "WV", accessibleValue: "West Virginia"},
+    {value: "WI", accessibleValue: "Wisconsin"},
+    {value: "WY", accessibleValue: "Wyoming"}
 ];
 
 function expDateIsExpired(expDate) {
@@ -75,7 +75,7 @@ export function validateConfirmForm(reserveUserInfo) {
     !reserveUserInfo.resAddress ||
     !reserveUserInfo.resCity ||
     !reserveUserInfo.resState ||
-    !states.includes(reserveUserInfo.resState) ||
+    !states.map(current => current.value).includes(reserveUserInfo.resState) ||
     !reserveUserInfo.resZip ||
     !reserveUserInfo.resCCNum ||
     !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
@@ -125,13 +125,14 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="phone" className='ParagraphText'>Phone #:</label>
+                        <label htmlFor="phone" className='ParagraphText' aria-hidden>Phone #:</label>
                         <input
                             type="tel"
                             id="phone"
                             name="phone"
                             autoComplete='tel'
                             className='FormField LeadText'
+                            aria-label='Phone number:'
                             value={reserveUserInfo.resPhone}
                             onChange={e => reserveUserInfo.setResPhone(e.target.value)}
                         />
@@ -218,7 +219,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             onChange={e => reserveUserInfo.setResState(e.target.value)}
                         >
                             {states.map(currentState =>
-                                <option key={currentState} value={currentState} className='LeadText'>{currentState}</option>
+                                <option key={currentState.value} value={currentState.value} className='LeadText' aria-label={currentState.accessibleValue}>{currentState.value}</option>
                             )}
                         </select>
                     </div>
