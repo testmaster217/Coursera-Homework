@@ -22,6 +22,21 @@ const occasions = [
     {value: "other", displayMsg: 'Other (Explain in "Additional comments")'}
 ];
 
+function timeTo12Hour(time) {
+    let [hour, minute] = time.split(":");
+    let suffix = " P.M.";
+    if (parseInt(hour) > 12) {
+        hour %= 12;
+    } else {
+        suffix = " A.M.";
+        if (parseInt(hour) === 0) {
+            hour = 12;
+        }
+    }
+
+    return hour + ":" + minute + suffix;
+}
+
 // Validation functions.
 function validateDate(dateToCheck) {
     // Check if date is missing.
@@ -107,9 +122,10 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
     return (<>
         <ReservationHero headerText="Reserve a Table" photo={restaurant} backLink="/"/>
         <main>
-            {/* TODO: May need to replace the native form elements with stuff from
-            a UI framework for better customizability. Alternatively, can just use
-            a _lot_ of CSS. */}
+            {/* Some UI elements (namely, the radio buttons and the <option>s
+            for the <select> elements throughout the pages) don't look how I
+            want them to. I'm not going to fix it because it would be too
+            much work and I'm already late turning this in. */}
             <form className="ReserveForm" role='form' onSubmit={handleSubmit}>
                 <label htmlFor="reservationDate" className='ParagraphText'>
                     <span><span className='HighlightText' aria-hidden>*</span>Choose a date:</span>
@@ -145,7 +161,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         onChange={e => reserveInfo.setResTime(e.target.value)}
                     >
                         {reserveInfo.availableTimes.map(timeSlot =>
-                            <option key={timeSlot} value={timeSlot} className='LeadText'>{timeSlot}</option>
+                            <option key={timeSlot} value={timeSlot} className='LeadText'>{timeTo12Hour(timeSlot)}</option>
                         )}
                     </select>
                     <p id="timeError" className='HighlightText' role='alert'>{validateTime(reserveInfo.availableTimes, reserveInfo.resTime)}</p>
