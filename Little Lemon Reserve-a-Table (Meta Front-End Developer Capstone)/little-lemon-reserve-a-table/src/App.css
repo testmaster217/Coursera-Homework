@@ -74,13 +74,13 @@
     font-size: 16px;
 }
 
-:user-invalid ~ p {
+/* :user-invalid ~ p {
     display: block;
 }
 
 :user-valid ~ p {
     display: none;
-}
+} */
 
 body {
     background-color: var(--secondary-white);
@@ -154,8 +154,15 @@ option:not(:first-child) {
 .FormField:user-invalid, .FormDropDown:user-invalid, textarea:user-invalid, input[type=radio]:user-invalid {
     background-color: var(--secondary-pink);
 }
+.FormField:user-invalid ~ p, .FormDropDown:user-invalid ~ p, textarea:user-invalid ~ p, input[type=radio]:user-invalid ~ p {
+    display: block;
+}
+
 .FormField:user-valid, .FormDropDown:user-valid, textarea:user-valid, input[type=radio]:user-valid {
     background-color: var(--secondary-white);
+}
+.FormField:user-valid ~ p, .FormDropDown:user-valid ~ p, textarea:user-valid ~ p, input[type=radio]:user-valid ~ p {
+    display: none;
 }
 
 #root {

@@ -219,8 +219,8 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         />
                         <p id="lNameError" className='HighlightText' role='alert'>{validateLName(reserveUserInfo.resLastName)}</p>
                     </label>
-                    <label htmlFor="phone" className='ParagraphText' aria-hidden>
-                        Phone #:
+                    <label htmlFor="phone" className='ParagraphText'>
+                        <span aria-hidden>Phone #:</span>
                         <input
                             type="tel"
                             id="phone"
@@ -284,7 +284,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                         <p id="addressError" className='HighlightText' role='alert'>{validateAddress(reserveUserInfo.resAddress)}</p>
                     </label>
                     <label htmlFor="addressLine2" className='ParagraphText'>
-                        Address line 2:
+                        <span>Address line 2:</span>
                         <input
                             type="text"
                             id="addressLine2"
