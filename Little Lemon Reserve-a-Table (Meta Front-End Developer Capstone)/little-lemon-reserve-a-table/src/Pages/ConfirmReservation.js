@@ -427,7 +427,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             className='FormField LeadText'
                             value={reserveUserInfo.res3Digit}
                             aria-errormessage='threeDigitError'
-                            onChange={e => reserveUserInfo.setRes3Digit(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value.match(/^\d{1,3}$/) || !e.target.value)
+                                    reserveUserInfo.setRes3Digit(e.target.value);
+                            }}
                         />
                         <p id="threeDigitError" className='HighlightText' role='alert'>{validate3Digit(reserveUserInfo.res3Digit)}</p>
                     </label>
