@@ -142,7 +142,7 @@ test('Reservation date is required.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Choose a date:$/);
+  const dateElement = screen.getByLabelText(/Choose a date:/);
   expect(dateElement).toHaveAttribute("required");
 });
 
@@ -170,11 +170,12 @@ test('Reservation date is type date.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Choose a date:$/);
+  const dateElement = screen.getByLabelText(/Choose a date:/);
   expect(dateElement).toHaveAttribute("type", "date");
 });
 
 test("Reservation date has today's date as the minimum.", () => {
+  const currentDate = new Date();
   const reserveInfo = {
     resDate: "2024-10-11",
     setResDate: jest.fn(),
@@ -198,8 +199,8 @@ test("Reservation date has today's date as the minimum.", () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Choose a date:$/);
-  expect(dateElement).toHaveAttribute("min", reserveInfo.resDate);
+  const dateElement = screen.getByLabelText(/Choose a date:/);
+  expect(dateElement).toHaveAttribute("min", `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}`);
 });
 
 test('Reservation time is required.', () => {
@@ -226,7 +227,7 @@ test('Reservation time is required.', () => {
     </BrowserRouter>
   );
 
-  const timeElement = screen.getByLabelText(/Choose a time:$/);
+  const timeElement = screen.getByLabelText(/Choose a time:/);
   expect(timeElement).toHaveAttribute("required");
 });
 
@@ -254,7 +255,7 @@ test('Reservation number of guests is required.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  const dateElement = screen.getByLabelText(/Number of guests:/);
   expect(dateElement).toHaveAttribute("required");
 });
 
@@ -282,7 +283,7 @@ test('Reservation number of guests is type number.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  const dateElement = screen.getByLabelText(/Number of guests:/);
   expect(dateElement).toHaveAttribute("type", "number");
 });
 
@@ -310,7 +311,7 @@ test('Reservation number of guests has 1 as the minimum.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  const dateElement = screen.getByLabelText(/Number of guests:/);
   expect(dateElement).toHaveAttribute("min", "1");
 });
 
@@ -338,7 +339,7 @@ test('Reservation number of guests has 10 as the maximum.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  const dateElement = screen.getByLabelText(/Number of guests:/);
   expect(dateElement).toHaveAttribute("max", "10");
 });
 
@@ -366,7 +367,7 @@ test('Reservation number of guests has 1 as the step amount.', () => {
     </BrowserRouter>
   );
 
-  const dateElement = screen.getByLabelText(/Number of guests:$/);
+  const dateElement = screen.getByLabelText(/Number of guests:/);
   expect(dateElement).toHaveAttribute("step", "1");
 });
 
@@ -394,7 +395,7 @@ test('Reservation seating choice is required.', () => {
     </BrowserRouter>
   );
 
-  const seatingElement = screen.getByLabelText(/No Preference$/);
+  const seatingElement = screen.getByLabelText(/No Preference/);
   expect(seatingElement).toHaveAttribute("required");
 });
 
@@ -422,7 +423,7 @@ test('Reservation occasion is required.', () => {
     </BrowserRouter>
   );
 
-  const occasionElement = screen.getByLabelText(/Is it a special occasion\?$/);
+  const occasionElement = screen.getByLabelText(/Is it a special occasion\?/);
   expect(occasionElement).toHaveAttribute("required");
 });
 
@@ -450,7 +451,7 @@ test('Reservation comments is not required normally.', () => {
     </BrowserRouter>
   );
 
-  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):$/);
+  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):/);
   expect(commentsElement).not.toHaveAttribute("required");
 });
 
@@ -478,7 +479,7 @@ test('Reservation comments is required if occasion is "other".', () => {
     </BrowserRouter>
   );
 
-  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):$/);
+  const commentsElement = screen.getByLabelText(/Additional comments\? \(i\.e\.\, any special isntructions or accommodations needed\):/);
   expect(commentsElement).toHaveAttribute("required");
 });
 
@@ -1054,7 +1055,7 @@ test('Reservation first name is required.', () => {
     </BrowserRouter>
   );
 
-  const fNameElement = screen.getByLabelText(/First name:$/);
+  const fNameElement = screen.getByLabelText(/First name:/);
   expect(fNameElement).toHaveAttribute("required");
 });
 
@@ -1094,7 +1095,7 @@ test('Reservation last name is required.', () => {
     </BrowserRouter>
   );
 
-  const lNameElement = screen.getByLabelText(/Last name:$/);
+  const lNameElement = screen.getByLabelText(/Last name:/);
   expect(lNameElement).toHaveAttribute("required");
 });
 
@@ -1134,7 +1135,7 @@ test('Reservation phone is type tel', () => {
     </BrowserRouter>
   );
 
-  const phoneElement = screen.getByLabelText(/Phone #:$/);
+  const phoneElement = screen.getByLabelText(/Phone #:/);
   expect(phoneElement).toHaveAttribute("type", "tel");
 });
 
@@ -1174,7 +1175,7 @@ test('Reservation email name is required.', () => {
     </BrowserRouter>
   );
 
-  const emailElement = screen.getByLabelText(/Email:$/);
+  const emailElement = screen.getByLabelText(/Email:/);
   expect(emailElement).toHaveAttribute("required");
 });
 
@@ -1214,7 +1215,7 @@ test('Reservation email is type email.', () => {
     </BrowserRouter>
   );
 
-  const emailElement = screen.getByLabelText(/Email:$/);
+  const emailElement = screen.getByLabelText(/Email:/);
   expect(emailElement).toHaveAttribute("type", "email");
 });
 
@@ -1254,7 +1255,7 @@ test('Reservation CC name is required.', () => {
     </BrowserRouter>
   );
 
-  const ccNameElement = screen.getByLabelText(/Name on credit card:$/);
+  const ccNameElement = screen.getByLabelText(/Name on credit card:/);
   expect(ccNameElement).toHaveAttribute("required");
 });
 
@@ -1294,7 +1295,7 @@ test('Reservation address is required.', () => {
     </BrowserRouter>
   );
 
-  const addressElement = screen.getByLabelText(/Address:$/);
+  const addressElement = screen.getByLabelText(/Address:/);
   expect(addressElement).toHaveAttribute("required");
 });
 
@@ -1334,7 +1335,7 @@ test('Reservation city is required.', () => {
     </BrowserRouter>
   );
 
-  const cityElement = screen.getByLabelText(/City:$/);
+  const cityElement = screen.getByLabelText(/City:/);
   expect(cityElement).toHaveAttribute("required");
 });
 
@@ -1374,7 +1375,7 @@ test('Reservation state is required.', () => {
     </BrowserRouter>
   );
 
-  const stateElement = screen.getByLabelText(/State:$/);
+  const stateElement = screen.getByLabelText(/State:/);
   expect(stateElement).toHaveAttribute("required");
 });
 
@@ -1414,7 +1415,7 @@ test('Reservation zip is required.', () => {
     </BrowserRouter>
   );
 
-  const zipElement = screen.getByLabelText(/ZIP code:$/);
+  const zipElement = screen.getByLabelText(/ZIP code:/);
   expect(zipElement).toHaveAttribute("required");
 });
 
@@ -1454,7 +1455,7 @@ test('Reservation CC number is required.', () => {
     </BrowserRouter>
   );
 
-  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  const ccNumElement = screen.getByLabelText(/Credit card number:/);
   expect(ccNumElement).toHaveAttribute("required");
 });
 
@@ -1494,7 +1495,7 @@ test('Reservation CC number is type tel.', () => {
     </BrowserRouter>
   );
 
-  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  const ccNumElement = screen.getByLabelText(/Credit card number:/);
   expect(ccNumElement).toHaveAttribute("type", "tel");
 });
 
@@ -1534,7 +1535,7 @@ test('Reservation CC number must be 19 characters long.', () => {
     </BrowserRouter>
   );
 
-  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  const ccNumElement = screen.getByLabelText(/Credit card number:/);
   expect(ccNumElement).toHaveAttribute("minLength", "19");
   expect(ccNumElement).toHaveAttribute("maxLength", "19");
 });
@@ -1575,7 +1576,7 @@ test('Reservation CC number must be a CC number.', () => {
     </BrowserRouter>
   );
 
-  const ccNumElement = screen.getByLabelText(/Credit card number:$/);
+  const ccNumElement = screen.getByLabelText(/Credit card number:/);
   expect(ccNumElement).toHaveAttribute("pattern", "^\\d{4}\\u{0020}\\d{4}\\u{0020}\\d{4}\\u{0020}\\d{4}$");
 });
 
@@ -1615,7 +1616,7 @@ test('Reservation exp date is required.', () => {
     </BrowserRouter>
   );
 
-  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  const expDateElement = screen.getByLabelText(/Expiration date:/);
   expect(expDateElement).toHaveAttribute("required");
 });
 
@@ -1655,7 +1656,7 @@ test('Reservation exp date is type tel.', () => {
     </BrowserRouter>
   );
 
-  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  const expDateElement = screen.getByLabelText(/Expiration date:/);
   expect(expDateElement).toHaveAttribute("type", "tel");
 });
 
@@ -1695,7 +1696,7 @@ test('Reservation exp date must be 5 characters long.', () => {
     </BrowserRouter>
   );
 
-  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  const expDateElement = screen.getByLabelText(/Expiration date:/);
   expect(expDateElement).toHaveAttribute("minLength", "5");
   expect(expDateElement).toHaveAttribute("maxLength", "5");
 });
@@ -1736,7 +1737,7 @@ test('Reservation exp date must be an exp date.', () => {
     </BrowserRouter>
   );
 
-  const expDateElement = screen.getByLabelText(/Expiration date:$/);
+  const expDateElement = screen.getByLabelText(/Expiration date:/);
   expect(expDateElement).toHaveAttribute("pattern", "^(?:0[1-9]|1[0-2])\\/\\d{2}$");
 });
 
@@ -1776,7 +1777,7 @@ test('Reservation 3-digit code is required.', () => {
     </BrowserRouter>
   );
 
-  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  const threeDigitElement = screen.getByLabelText(/3-digit code:/);
   expect(threeDigitElement).toHaveAttribute("required");
 });
 
@@ -1816,7 +1817,7 @@ test('Reservation 3-digit code is type tel.', () => {
     </BrowserRouter>
   );
 
-  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  const threeDigitElement = screen.getByLabelText(/3-digit code:/);
   expect(threeDigitElement).toHaveAttribute("type", "tel");
 });
 
@@ -1856,7 +1857,7 @@ test('Reservation 3-digit code must be 3 characters long.', () => {
     </BrowserRouter>
   );
 
-  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  const threeDigitElement = screen.getByLabelText(/3-digit code:/);
   expect(threeDigitElement).toHaveAttribute("minLength", "3");
   expect(threeDigitElement).toHaveAttribute("maxLength", "3");
 });
@@ -1897,7 +1898,7 @@ test('Reservation 3-digit code must be a 3-digit code.', () => {
     </BrowserRouter>
   );
 
-  const threeDigitElement = screen.getByLabelText(/3-digit code:$/);
+  const threeDigitElement = screen.getByLabelText(/3-digit code:/);
   expect(threeDigitElement).toHaveAttribute("pattern", "^\\d{3}$");
 });
 

@@ -1,8 +1,9 @@
 .ReserveForm {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 2em;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 2em;
+    row-gap: 3em;
     width: 50em;
     padding: 2em calc(50% - 25em);
 }
@@ -70,37 +71,6 @@
     height: 3em;
     grid-column: 1/4;
     margin: auto;
-}
-
-/* Styles for invalid fields */
-div:has(#reservationDate:user-invalid:not(:out-of-range))::after {
-    content: "This field is required and must be a valid date.";
-}
-div:has(#reservationDate:user-invalid:out-of-range)::after {
-    content: "Date can't be in the past.";
-}
-
-div:has(#reservationTime:user-invalid)::after {
-    content: "Please choose from the available times."
-}
-
-div:has(#numOfGuests:user-invalid:out-of-range)::after {
-    content: "Number of guests must be between 1 and 10.";
-}
-div:has(#numOfGuests:user-invalid:not(:out-of-range))::after {
-    content: "This field is required and must be a whole number.";
-}
-
-div:has([id$="Radio"]:user-invalid)::after {
-    content: "Please choose one of these options.";
-}
-
-div:has(#occasion:user-invalid)::after {
-    content: 'Please choose from the available options, or choose "Other" and explain in the comments.'
-}
-
-div:has(#comments:user-invalid)::after {
-    content: 'If you set the "Occasion" field to "Other", please use this comments box to explain what the occasion is.'
 }
 
 textarea:user-invalid, input[type=radio]:user-invalid {

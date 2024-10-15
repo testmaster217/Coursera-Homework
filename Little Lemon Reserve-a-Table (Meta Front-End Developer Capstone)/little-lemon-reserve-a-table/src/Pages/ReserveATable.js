@@ -6,6 +6,8 @@ import ReservationHero from '../Components/ReservationHero'
 
 import { useEffect } from 'react';
 
+const currentDate = new Date();
+
 const seatingChoices = [
     {value: "Inside", defaultChecked: false},
     {value: "Outside", defaultChecked: false},
@@ -20,29 +22,85 @@ const occasions = [
     {value: "other", displayMsg: 'Other (Explain in "Additional comments")'}
 ];
 
+// Validation functions.
+function validateDate(dateToCheck) {
+    // Check if date is missing.
+    if (!dateToCheck)
+        return "This field is required and must be a valid date.";
+    // Check if date is not a valid yyyy-mm-dd date.
+    // (I know the regex isn't perfect, also it's based on this: https://regex101.com/library/NXvFly?orderBy=RELEVANCE&search=date&filterFlavors=javascript.)
+    if (Date.parse(dateToCheck) === NaN || !dateToCheck.match(/^\d{4}-(?:0[1-9]|1[0-2])-\d{2}$/))
+        return "The date must be a valid date.";
+    // Check if date is in the past.
+    if (dateToCheck < `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}`)
+        return "The date can't be in the past.";
+    // Date is valid here.
+    return "";
+}
+
+function validateTime(availableTimesToCheck, timeToValidate) {
+    // Check if time is missing or not a valid choice.
+    if (!timeToValidate || !availableTimesToCheck.includes(timeToValidate))
+        return "Please choose from the available times.";
+    // Time is valid here.
+    return "";
+}
+
+function validateGuests(guestsToValidate) {
+    // Check if number of guests is missing.
+    if (!guestsToValidate)
+        return "This field is required.";
+    // Check if number of guests is not a number or is not a whole number.
+    if (!parseInt(guestsToValidate) || guestsToValidate % 1 !== 0)
+        return "Number of guests must be a whole number.";
+    // Check if number of guests is too small or too big.
+    if (parseInt(guestsToValidate) < 1 || parseInt(guestsToValidate) > 10)
+        return "Number of guests must be between 1 and 10.";
+    // Number of guests is valid here.
+    return "";
+}
+
+function validateSeating(seatingToValidate) {
+    // Check if seating choice is missing or invalid.
+    if (!seatingToValidate || !seatingChoices.map(current => current.value).includes(seatingToValidate))
+        return "Please choose one of these options.";
+    // Seating choice is valid here.
+    return "";
+}
+
+function validateOccasion(occasionToValidate) {
+    // Check if occasion is msising or invalid.
+    if (!occasionToValidate || !occasions.map(current => current.value).includes(occasionToValidate))
+        return 'Please choose from the available options, or choose "Other" and explain in the comments.';
+    // Occasion is valid here.
+    return "";
+}
+
+function validateComments(occasionToCheck, commentsToValidate) {
+    // Check if occasion is "other" and comments are blank.
+    if (occasionToCheck === "other" && !commentsToValidate)
+        return 'If you set the "Occasion" field to "Other", please use this comments box to explain what the occasion is.';
+    // Comments are valid here.
+    return "";
+}
+
 // Returns true if any of the form fields are invalid.
 export function validateReserveForm(reserveInfo) {
-    const currentDate = new Date(Date.now());
-
-    return !reserveInfo.resDate ||
-    reserveInfo.resDate < `${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}` ||
-    !reserveInfo.availableTimes.includes(reserveInfo.resTime) ||
-    !reserveInfo.resTime ||
-    !reserveInfo.resGuests ||
-    !parseInt(reserveInfo.resGuests) ||
-    parseInt(reserveInfo.resGuests) < 1 ||
-    parseInt(reserveInfo.resGuests) > 10 ||
-    reserveInfo.resGuests % 1 !== 0 ||
-    !reserveInfo.resSeating ||
-    !seatingChoices.map(current => current.value).includes(reserveInfo.resSeating) ||
-    !reserveInfo.resOccasion ||
-    !occasions.map(current => current.value).includes(reserveInfo.resOccasion) ||
-    (reserveInfo.resOccasion === "other" && !reserveInfo.resComments);
+    // All of these functions return an error
+    // message if the field that they test is
+    // invalid, so if they are all falsy (they
+    // don't return a message), then the form
+    // is valid.
+    return validateDate(reserveInfo.resDate) ||
+           validateTime(reserveInfo.availableTimes, reserveInfo.resTime) ||
+           validateGuests(reserveInfo.resGuests) ||
+           validateSeating(reserveInfo.resSeating) ||
+           validateOccasion(reserveInfo.resOccasion) ||
+           validateComments(reserveInfo.resOccasion, reserveInfo.resComments);
 }
 
 export default function ReserveATable({reserveInfo, handleSubmit}) {
     useEffect(() => {
-        const currentDate = new Date();
         reserveInfo.setResDate(`${(currentDate.getFullYear()).toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${(currentDate.getDate()).toPrecision(2)}`);
     }, []);
 
@@ -62,7 +120,8 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         required
                         className='FormField LeadText'
                         value={reserveInfo.resDate}
-                        min={reserveInfo.resDate}
+                        min={`${currentDate.getFullYear().toPrecision(4)}-${(currentDate.getMonth() + 1).toPrecision(2)}-${currentDate.getDate().toPrecision(2)}`}
+                        aria-errormessage='dateError'
                         onChange={e => {
                             reserveInfo.setResDate(e.target.value);
                             let newDate = new Date(e.target.value);
@@ -70,6 +129,9 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                             reserveInfo.setAvailableTimes({type: "changed_date", newDate: newDate});
                         }}
                     />
+                    {/* Couldn't figure out how to get the screen reader to announce when the field was NO LONGER invalid.
+                    (I was using Windows Narrator in Microsoft Edge.) */}
+                    <p id="dateError" className='HighlightText' role='alert'>{validateDate(reserveInfo.resDate)}</p>
                 </label>
                 <label htmlFor="reservationTime" className='ParagraphText'>
                     <span><span className='HighlightText' aria-hidden>*</span>Choose a time:</span>
@@ -79,12 +141,14 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         required
                         className='FormDropDown LeadText'
                         value={reserveInfo.resTime}
+                        aria-errormessage='timeError'
                         onChange={e => reserveInfo.setResTime(e.target.value)}
                     >
                         {reserveInfo.availableTimes.map(timeSlot =>
                             <option key={timeSlot} value={timeSlot} className='LeadText'>{timeSlot}</option>
                         )}
                     </select>
+                    <p id="timeError" className='HighlightText' role='alert'>{validateTime(reserveInfo.availableTimes, reserveInfo.resTime)}</p>
                 </label>
                 <label htmlFor="numOfGuests" className='ParagraphText'>
                     <span><span className='HighlightText' aria-hidden>*</span>Number of guests:</span>
@@ -98,12 +162,15 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         step="1"
                         className='FormField LeadText'
                         value={reserveInfo.resGuests}
+                        aria-errormessage='guestsError'
                         onChange={e => reserveInfo.setResGuests(e.target.value)}
                     />
+                    <p id="guestsError" className='HighlightText' role='alert'>{validateGuests(reserveInfo.resGuests)}</p>
                 </label>
                 <fieldset
                     id="seatingChoice"
                     onChange={e => reserveInfo.setResSeating(e.target.value)}
+                    aria-errormessage='seatingError'
                 >
                     <legend className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Where would you like to sit?</span>
@@ -121,6 +188,7 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                             {choice.value}
                         </label>
                     )}
+                    <p id="seatingError" className='HighlightText' role='alert'>{validateSeating(reserveInfo.resSeating)}</p>
                 </fieldset>
                 <label htmlFor="occasion" className='ParagraphText'>
                     <span><span className='HighlightText' aria-hidden>*</span>Is it a special occasion?</span>
@@ -130,12 +198,14 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         required
                         className='FormDropDown LeadText'
                         value={reserveInfo.resOccasion}
+                        aria-errormessage='occasionError'
                         onChange={e => reserveInfo.setResOccasion(e.target.value)}
                     >
                         {occasions.map(current =>
                             <option key={current.value} value={current.value} className='LeadText'>{current.displayMsg}</option>
                         )}
                     </select>
+                    <p id="occasionError" className='HighlightText' role='alert'>{validateOccasion(reserveInfo.resOccasion)}</p>
                 </label>
                 <label htmlFor="comments" className='ParagraphText'>
                     <span>{reserveInfo.resOccasion === "other" && <span className='HighlightText' aria-hidden>*</span>}Additional comments? (i.e., any special isntructions or accommodations needed):</span>
@@ -145,8 +215,10 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
                         required={reserveInfo.resOccasion === "other"}
                         className='LeadText'
                         value={reserveInfo.resComments}
+                        aria-errormessage='commentsError'
                         onChange={e => reserveInfo.setResComments(e.target.value)}
                     />
+                    <p id="commentsError" className='HighlightText' role='alert'>{validateComments(reserveInfo.resOccasion, reserveInfo.resComments)}</p>
                 </label>
                 <button type="submit" className='MainButton LeadText' disabled={validateReserveForm(reserveInfo)}>Submit Reservation</button>
             </form>
