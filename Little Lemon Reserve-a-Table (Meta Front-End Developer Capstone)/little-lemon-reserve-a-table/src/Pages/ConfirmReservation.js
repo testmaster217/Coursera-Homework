@@ -59,31 +59,122 @@ const states = [
     {value: "WY", accessibleValue: "Wyoming"}
 ];
 
+// Validation fucntions.
+function validateFName(fNameToValidate) {
+    // Check if first name is missing.
+    if (!fNameToValidate)
+        return "This field is required.";
+    // First name is valid here.
+    return "";
+}
+
+function validateLName(lNameToValidate) {
+    // Check if last name is missing.
+    if (!lNameToValidate)
+        return "This field is required.";
+    // Last name is valid here.
+    return "";
+}
+
+function validateEmail(emailToValidate) {
+    // Check if email is missing or invalid.
+    if (!emailToValidate || !emailToValidate.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/))
+        return "This field is required and must be a valid email address.";
+    // Email is valid here.
+    return "";
+}
+
+function validateCCName(ccNameToValidate) {
+    // Check if CC name is missing.
+    if (!ccNameToValidate)
+        return "This field is required.";
+    // CC name is valid here.
+    return "";
+}
+
+function validateAddress(addressToValidate) {
+    // Check if address is missing.
+    if (!addressToValidate)
+        return "This field is required.";
+    // Address is valid here.
+    return "";
+}
+
+function validateCity(cityToValidate) {
+    // Check if city is missing.
+    if (!cityToValidate)
+        return "This field is required.";
+    // City is valid here.
+    return "";
+}
+
+function validateState(stateToValidate) {
+    // Check if state is missing or invalid.
+    if (!stateToValidate || !states.map(current => current.value).includes(stateToValidate))
+        return "Please choose one of the states.";
+    // State is valid here.
+    return "";
+}
+
+function validateZip(zipToValidate) {
+    // Check if ZIP code is missing.
+    if (!zipToValidate)
+        return "This field is required.";
+    // ZIP code is valid here.
+    return "";
+}
+
+function validateCCNum(ccNumToValidate) {
+    // Check if CC number is missing or invalid.
+    if (!ccNumToValidate || !ccNumToValidate.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u))
+        return "This field is required and must be a valid credit card number.";
+    // CC number is valid here.
+    return "";
+}
+
 function expDateIsExpired(expDate) {
     const [expMonth, expYear] = expDate.split("/");
     const expDateAsDate = new Date("20" + expYear, expMonth - 1);
     return expDateAsDate <= new Date(Date.now());
 }
 
+function validateExpDate(expDateToValidate) {
+    // Check if exp date is missing or invalid.
+    if (!expDateToValidate || !expDateToValidate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/))
+        return "This field is required and must be in the form MM/YY.";
+    // Check if exp date is in the past.
+    if (expDateIsExpired(expDateToValidate))
+        return "Expiration date can't be in the past (i.e., your card must not be expired.)";
+    // Exp date is valid here.
+    return "";
+}
+
+function validate3Digit(threeDigitToValidate) {
+    // Check if 3-digit code is missing or invalid.
+    if (!threeDigitToValidate || !threeDigitToValidate.match(/^\d{3}$/))
+        return "This field is required and must be three digits.";
+    // 3-digit code is valid here.
+    return "";
+}
+
 // Returns true if any of the fields are invalid.
 export function validateConfirmForm(reserveUserInfo) {
-    return !reserveUserInfo.resFirstName ||
-    !reserveUserInfo.resLastName ||
-    !reserveUserInfo.resEmail ||
-    !reserveUserInfo.resEmail.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/) ||
-    !reserveUserInfo.resCCName ||
-    !reserveUserInfo.resAddress ||
-    !reserveUserInfo.resCity ||
-    !reserveUserInfo.resState ||
-    !states.map(current => current.value).includes(reserveUserInfo.resState) ||
-    !reserveUserInfo.resZip ||
-    !reserveUserInfo.resCCNum ||
-    !reserveUserInfo.resCCNum.match(/^\d{4}\u{0020}\d{4}\u{0020}\d{4}\u{0020}\d{4}$/u) ||
-    !reserveUserInfo.resExpDate ||
-    !reserveUserInfo.resExpDate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/) ||
-    expDateIsExpired(reserveUserInfo.resExpDate) ||
-    !reserveUserInfo.res3Digit ||
-    !reserveUserInfo.res3Digit.match(/^\d{3}$/)
+    // All of these functions return an error
+    // message if the field that they test is
+    // invalid, so if they are all falsy (they
+    // don't return a message), then the form
+    // is valid.
+    return validateFName(reserveUserInfo.resFirstName) ||
+           validateLName(reserveUserInfo.resLastName) ||
+           validateEmail(reserveUserInfo.resEmail) ||
+           validateCCName(reserveUserInfo.resCCName) ||
+           validateAddress(reserveUserInfo.resAddress) ||
+           validateCity(reserveUserInfo.resCity) ||
+           validateState(reserveUserInfo.resState)||
+           validateZip(reserveUserInfo.resZip) ||
+           validateCCNum(reserveUserInfo.resCCNum) ||
+           validateExpDate(reserveUserInfo.resExpDate) ||
+           validate3Digit(reserveUserInfo.res3Digit);
 }
 
 export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
@@ -108,8 +199,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='given-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resFirstName}
+                            aria-errormessage='fNameError'
                             onChange={e => reserveUserInfo.setResFirstName(e.target.value)}
                         />
+                        <p id="fNameError" className='HighlightText' role='alert'>{validateFName(reserveUserInfo.resFirstName)}</p>
                     </label>
                     <label htmlFor="lName" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Last name:</span>
@@ -121,8 +214,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='family-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resLastName}
+                            aria-errormessage='lNameError'
                             onChange={e => reserveUserInfo.setResLastName(e.target.value)}
                         />
+                        <p id="lNameError" className='HighlightText' role='alert'>{validateLName(reserveUserInfo.resLastName)}</p>
                     </label>
                     <label htmlFor="phone" className='ParagraphText' aria-hidden>
                         Phone #:
@@ -136,6 +231,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resPhone}
                             onChange={e => reserveUserInfo.setResPhone(e.target.value)}
                         />
+                        {/* Phone number has no validation at all. */}
                     </label>
                     <label htmlFor="email" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Email:</span>
@@ -147,8 +243,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             required
                             className='FormField LeadText'
                             value={reserveUserInfo.resEmail}
+                            aria-errormessage='emailError'
                             onChange={e => reserveUserInfo.setResEmail(e.target.value)}
                         />
+                        <p id="emailError" className='HighlightText' role='alert'>{validateEmail(reserveUserInfo.resEmail)}</p>
                     </label>
                 </fieldset>
 
@@ -164,8 +262,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='cc-name'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCName}
+                            aria-errormessage='ccNameError'
                             onChange={e => reserveUserInfo.setResCCName(e.target.value)}
                         />
+                        <p id="ccNameError" className='HighlightText' role='alert'>{validateCCName(reserveUserInfo.resCCName)}</p>
                     </label>
                     <label htmlFor="address" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Address:</span>
@@ -178,8 +278,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='billing address-line1'
                             className='FormField LeadText'
                             value={reserveUserInfo.resAddress}
+                            aria-errormessage='adressError'
                             onChange={e => reserveUserInfo.setResAddress(e.target.value)}
                         />
+                        <p id="addressError" className='HighlightText' role='alert'>{validateAddress(reserveUserInfo.resAddress)}</p>
                     </label>
                     <label htmlFor="addressLine2" className='ParagraphText'>
                         Address line 2:
@@ -193,6 +295,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             value={reserveUserInfo.resAddress2}
                             onChange={e => reserveUserInfo.setResAddress2(e.target.value)}
                         />
+                        {/* Address line 2 doesn't have any validation at all. */}
                     </label>
                     <label htmlFor="city" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>City:</span>
@@ -204,8 +307,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='billing address-level2'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCity}
+                            aria-errormessage='cityError'
                             onChange={e => reserveUserInfo.setResCity(e.target.value)}
                         />
+                        <p id="cityError" className='HighlightText' role='alert'>{validateCity(reserveUserInfo.resCity)}</p>
                     </label>
                     <label htmlFor="state" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>State:</span>
@@ -216,12 +321,14 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             className='FormDropDown LeadText'
                             autoComplete='billing address-level1'
                             value={reserveUserInfo.resState}
+                            aria-errormessage='stateError'
                             onChange={e => reserveUserInfo.setResState(e.target.value)}
                         >
                             {states.map(currentState =>
                                 <option key={currentState.value} value={currentState.value} className='LeadText' aria-label={currentState.accessibleValue}>{currentState.value}</option>
                             )}
                         </select>
+                        <p id="stateError" className='HighlightText' role='alert'>{validateState(reserveUserInfo.resState)}</p>
                     </label>
                     <label htmlFor="zip" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>ZIP code:</span>
@@ -233,8 +340,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='billing postal-code'
                             className='FormField LeadText'
                             value={reserveUserInfo.resZip}
+                            aria-errormessage='zipError'
                             onChange={e => reserveUserInfo.setResZip(e.target.value)}
                         />
+                        <p id="zipError" className='HighlightText' role='alert'>{validateZip(reserveUserInfo.resZip)}</p>
                     </label>
                     <label htmlFor="ccNum" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Credit card number:</span>
@@ -250,6 +359,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='cc-number'
                             className='FormField LeadText'
                             value={reserveUserInfo.resCCNum}
+                            aria-errormessage='ccNumError'
                             onChange={e => {
                                 // reserveUserInfo.setResCCNum(e.target.value);
                                 // If the input so far includes only digits (with spaces after evcery four) or is blank, then...
@@ -266,6 +376,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                                 }
                             }}
                         />
+                        <p id="ccNumError" className='HighlightText' role='alert'>{validateCCNum(reserveUserInfo.resCCNum)}</p>
                     </label>
                     <label htmlFor="expDate" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Expiration date:</span>
@@ -281,6 +392,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='cc-exp'
                             className='FormField LeadText'
                             value={reserveUserInfo.resExpDate}
+                            aria-errormessage='expDateError'
                             onChange={e => {
                                 // Input should be either a single digit (0 or 1) or 2 digits (0 followed by a nonzero digit,
                                 // or 1 followed by 0, 1, or 2). If it's two digits, they might be followed by a /, which
@@ -298,6 +410,7 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                                 }
                             }}
                         />
+                        <p id="expDateError" className='HighlightText' role='alert'>{validateExpDate(reserveUserInfo.resExpDate)}</p>
                     </label>
                     <label htmlFor="threeDigitCode" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>3-digit code:</span>
@@ -313,8 +426,10 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             autoComplete='cc-csc'
                             className='FormField LeadText'
                             value={reserveUserInfo.res3Digit}
+                            aria-errormessage='threeDigitError'
                             onChange={e => reserveUserInfo.setRes3Digit(e.target.value)}
                         />
+                        <p id="threeDigitError" className='HighlightText' role='alert'>{validate3Digit(reserveUserInfo.res3Digit)}</p>
                     </label>
                 </fieldset>
 
