@@ -63,10 +63,10 @@ function validateTime(availableTimesToCheck, timeToValidate) {
 
 function validateGuests(guestsToValidate) {
     // Check if number of guests is missing.
-    if (!guestsToValidate)
+    if (!guestsToValidate && guestsToValidate !== 0)
         return "This field is required.";
     // Check if number of guests is not a number or is not a whole number.
-    if (!parseInt(guestsToValidate) || guestsToValidate % 1 !== 0)
+    if ((isNaN(guestsToValidate) || guestsToValidate % 1 !== 0) && guestsToValidate !== 0)
         return "Number of guests must be a whole number.";
     // Check if number of guests is too small or too big.
     if (parseInt(guestsToValidate) < 1 || parseInt(guestsToValidate) > 10)
