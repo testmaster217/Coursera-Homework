@@ -785,7 +785,7 @@ test('Reservation form page 1 cannot be submitted when number of guests > 10.', 
   expect(validateReserveForm(reserveInfo)).toBeTruthy();
 });
 
-test('Reservation form page 1 cannot be submitted when number of guests === 0.', () => {
+test('Reservation form page 1 cannot be submitted when number of guests === 11.', () => {
   // (Boundary case. Should be invalid.)
   // Everything is the same as the "happy path" test case, but the number of guests is 11.
   const currentDate = new Date(Date.now());
