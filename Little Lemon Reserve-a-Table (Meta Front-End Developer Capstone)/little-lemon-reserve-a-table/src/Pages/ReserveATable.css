@@ -39,7 +39,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    flex-grow: 1;
     padding: 0;
     margin: 0;
     border: none;
@@ -47,6 +46,7 @@
 
 #seatingChoice label {
     display: flex;
+    padding-block: 0.25em;
 }
 
 #seatingChoice input[type="radio"] {
@@ -86,9 +86,5 @@ textarea:user-valid, input[type=radio]:user-valid {
         flex-direction: column;
         width: calc(100% - 2em);
         padding: 2em 1em;
-    }
-
-    #seatingChoice label {
-        padding-block: 0.5em;
     }
 }
