@@ -90,6 +90,21 @@ img, .MainButton, .Card {
     border-radius: 16px;
 }
 
+/* Failed attempt to style the <option>s in the <select>s */
+/* option {
+    background-color: var(--secondary-white);
+    color: var(--primary-green);
+}
+
+option:hover {
+    background-color: var(--primary-green);
+    color: var(--secondary-white);
+}
+
+option:not(:first-child) {
+    border-top: 2px dashed var(--primary-green);
+} */
+
 .MainButton {
     background-color: var(--primary-yellow);
     color: var(--secondary-black);
