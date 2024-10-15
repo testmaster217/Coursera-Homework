@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 export default function NavBar() {
     return <nav>
         <div className='Icons'>
-            <img src={logo} alt="Little Lemon's logo"/>
+            <Link to="/" aria-label='Little Lemon homepage'><img src={logo} aria-hidden/></Link>
             <button type="button">
                 <span className='ParagraphText'>MENU</span>
                 <FontAwesomeIcon icon={faBars}/>

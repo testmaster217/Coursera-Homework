@@ -2,9 +2,11 @@ import './Footer.css';
 
 import logo from "../Assets/Logo.svg";
 
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
     return <footer className='PageFooter'>
-        <img src={logo} alt="Little Lemon's logo"/>
+        <Link to="/" aria-label='Little Lemon homepage'><img src={logo} aria-hidden/></Link>
         <section>
             <h3 className='SectionTitle'>NAVIGATION</h3>
             <menu>
