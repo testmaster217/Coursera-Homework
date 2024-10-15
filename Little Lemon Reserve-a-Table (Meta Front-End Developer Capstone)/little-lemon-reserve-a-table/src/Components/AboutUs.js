@@ -2,9 +2,21 @@ import "./AboutUs.css";
 
 import marioAndAdrianA from "../Assets/Mario and Adrian A.jpg";
 import marioAndAdrianB from "../Assets/Mario and Adrian b.jpg";
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function AboutUs() {
-    return <section className="AboutUs" id="about-us">
+    let location = useLocation();
+    const aboutSection = useRef(null);
+
+    useEffect(() => {
+        if (location.hash.match(/#about-us$/)) {
+            aboutSection.current.scrollIntoView({behavior: "smooth"});
+            aboutSection.current.focus();
+        }
+    }, [location]);
+
+    return <section className="AboutUs" id="about-us" ref={aboutSection}>
         <div className="AboutWords">
             <h3 className="DisplayTitle">About Us</h3>
             <h4 className="Subtitle">Our Story</h4>

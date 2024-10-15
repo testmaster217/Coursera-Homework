@@ -18,8 +18,7 @@ export default function NavBar() {
         </div>
         <menu>
             <li><Link to="/" className='ParagraphText'>HOME</Link></li>
-            {/* TODO: Make this link to the "About Us" section of the homepage. */}
-            <li><Link to="/" className='ParagraphText'>ABOUT</Link></li>
+            <li><Link to="/#about-us" className='ParagraphText'>ABOUT</Link></li>
             <li><Link to="/" className='ParagraphText'>MENU</Link></li>
             <li><Link to="/reserve-a-table" className='ParagraphText'>RESERVATIONS</Link></li>
             <li><Link to="/" className='ParagraphText'>ORDER ONLINE</Link></li>

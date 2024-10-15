@@ -165,9 +165,6 @@ function App() {
             <NavBar/>
             <Routes>
                 <Route path='/' element={<Homepage/>}/>
-                {/* TODO: Add a route to make the "About Us" link in the nav bar scroll to
-                the "About Us" section of the homepage. Will involve useEffect and possibly
-                useRef */}
                 <Route path='/reserve-a-table' element={<ReserveATable reserveInfo={reserveInfo} handleSubmit={e => {
                     e.preventDefault();
                     submitFormPart1();
