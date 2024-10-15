@@ -151,6 +151,10 @@ option:not(:first-child) {
     padding: 0;
 }
 
+.FormField ~ p, .FormDropDown ~ p, textarea ~ p, input[type=radio] ~ p {
+    display: none;
+}
+
 .FormField:user-invalid, .FormDropDown:user-invalid, textarea:user-invalid, input[type=radio]:user-invalid {
     background-color: var(--secondary-pink);
 }
