@@ -76,6 +76,14 @@ function validateLName(lNameToValidate) {
     return "";
 }
 
+function validatePhone(phoneToValidate) {
+    // Check if phone number is invalid. (Missing IS allowed!)
+    if (phoneToValidate !== "" && !phoneToValidate.match(/^\d{3}-\d{3}-\d{4}$/u))
+        return "Phone number is optional, but must be a properly-formatted 10-digit phone number if present.";
+    // Phone number is valid here.
+    return "";
+}
+
 function validateEmail(emailToValidate) {
     // Check if email is missing or invalid.
     if (!emailToValidate || !emailToValidate.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/))
@@ -117,9 +125,9 @@ function validateState(stateToValidate) {
 }
 
 function validateZip(zipToValidate) {
-    // Check if ZIP code is missing.
-    if (!zipToValidate)
-        return "This field is required.";
+    // Check if ZIP code is missing or invalid.
+    if (!zipToValidate || !zipToValidate.match(/^\d{5}$/u))
+        return "This field is required and must be a valid ZIP code.";
     // ZIP code is valid here.
     return "";
 }
@@ -140,7 +148,7 @@ function expDateIsExpired(expDate) {
 
 function validateExpDate(expDateToValidate) {
     // Check if exp date is missing or invalid.
-    if (!expDateToValidate || !expDateToValidate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/))
+    if (!expDateToValidate || !expDateToValidate.match(/^(?:0[1-9]|1[0-2])\/\d{2}$/u))
         return "This field is required and must be in the form MM/YY.";
     // Check if exp date is in the past.
     if (expDateIsExpired(expDateToValidate))
@@ -151,7 +159,7 @@ function validateExpDate(expDateToValidate) {
 
 function validate3Digit(threeDigitToValidate) {
     // Check if 3-digit code is missing or invalid.
-    if (!threeDigitToValidate || !threeDigitToValidate.match(/^\d{3}$/))
+    if (!threeDigitToValidate || !threeDigitToValidate.match(/^\d{3}$/u))
         return "This field is required and must be three digits.";
     // 3-digit code is valid here.
     return "";
@@ -166,6 +174,7 @@ export function validateConfirmForm(reserveUserInfo) {
     // is valid.
     return validateFName(reserveUserInfo.resFirstName) ||
            validateLName(reserveUserInfo.resLastName) ||
+           validatePhone(reserveUserInfo.resPhone) ||
            validateEmail(reserveUserInfo.resEmail) ||
            validateCCName(reserveUserInfo.resCCName) ||
            validateAddress(reserveUserInfo.resAddress) ||
@@ -226,12 +235,29 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                             id="phone"
                             name="phone"
                             autoComplete='tel'
+                            minLength="12"
+                            maxLength="12"
+                            placeholder='###-###-####'
+                            pattern='^\d{3}-\d{3}-\d{4}$'
                             className='FormField LeadText'
                             aria-label='Phone number:'
+                            aria-errormessage='phoneError'
                             value={reserveUserInfo.resPhone}
-                            onChange={e => reserveUserInfo.setResPhone(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value.match(/^(?:(?:\d{1,2})|(?:\d{3}-?)){1,2}(?:\d{1,4})?$/ug) || !e.target.value) {
+                                    // If the number of digits > 4 && the number of digits % 4 === 1, and there isn't already a space before the digit that the user just typed, add one.
+                                    let digits = e.target.value.length !== 0 ? e.target.value.match(/\d{1}/g).length : 0; // Finds the digits in the string.
+                                    if ((digits === 4 || digits === 7) && e.target.value.at(-2) !== "-") {
+                                        let valAsArray = Array.from(e.target.value);
+                                        valAsArray.splice(e.target.value.length - 1, 0, "-");
+                                        e.target.value = valAsArray.toString().replaceAll(",", "");
+                                    }
+
+                                    reserveUserInfo.setResPhone(e.target.value);
+                                }
+                            }}
                         />
-                        {/* Phone number has no validation at all. */}
+                        <p id="phoneError" className='HighlightText' role='alert'>{validatePhone(reserveUserInfo.resPhone)}</p>
                     </label>
                     <label htmlFor="email" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>Email:</span>
@@ -333,15 +359,22 @@ export default function ConfirmReservation({reserveUserInfo, handleSubmit}) {
                     <label htmlFor="zip" className='ParagraphText'>
                         <span><span className='HighlightText' aria-hidden>*</span>ZIP code:</span>
                         <input
-                            type="text"
+                            type="tel"
                             id="zip"
                             name="zip"
                             required
+                            minLength="5"
+                            maxLength="5"
+                            placeholder='#####'
+                            pattern='^\d{5}$'
                             autoComplete='billing postal-code'
                             className='FormField LeadText'
                             value={reserveUserInfo.resZip}
                             aria-errormessage='zipError'
-                            onChange={e => reserveUserInfo.setResZip(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value.match(/^\d{1,5}$/) || !e.target.value)
+                                    reserveUserInfo.setResZip(e.target.value);
+                            }}
                         />
                         <p id="zipError" className='HighlightText' role='alert'>{validateZip(reserveUserInfo.resZip)}</p>
                     </label>

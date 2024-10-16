@@ -1139,6 +1139,87 @@ test('Reservation phone is type tel', () => {
   expect(phoneElement).toHaveAttribute("type", "tel");
 });
 
+test('Reservation phone must be exactly 12 characters long', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const phoneElement = screen.getByLabelText(/Phone #:/);
+  expect(phoneElement).toHaveAttribute("minLength", "12");
+  expect(phoneElement).toHaveAttribute("maxLength", "12");
+});
+
+test('Reservation phone must be a phone number', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const phoneElement = screen.getByLabelText(/Phone #:/);
+  expect(phoneElement).toHaveAttribute("pattern", "^\\d{3}-\\d{3}-\\d{4}$");
+});
+
 test('Reservation email name is required.', () => {
   const reserveUserInfo = {
     resFirstName: "",
@@ -1417,6 +1498,127 @@ test('Reservation zip is required.', () => {
 
   const zipElement = screen.getByLabelText(/ZIP code:/);
   expect(zipElement).toHaveAttribute("required");
+});
+
+test('Reservation zip is type tel.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const zipElement = screen.getByLabelText(/ZIP code:/);
+  expect(zipElement).toHaveAttribute("type", "tel");
+});
+
+test('Reservation zip must be exactly 5 characters long.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const zipElement = screen.getByLabelText(/ZIP code:/);
+  expect(zipElement).toHaveAttribute("minLength", "5");
+  expect(zipElement).toHaveAttribute("maxLength", "5");
+});
+
+test('Reservation zip must be a zip code.', () => {
+  const reserveUserInfo = {
+    resFirstName: "",
+    setResFirstName: jest.fn(),
+    resLastName: "",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "",
+    setResEmail: jest.fn(),
+    resCCName: "",
+    setResCCName: jest.fn(),
+    resAddress: "",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "",
+    setResCity: jest.fn(),
+    resState: "AL",
+    setResState: jest.fn(),
+    resZip: "",
+    setResZip: jest.fn(),
+    resCCNum: "",
+    setResCCNum: jest.fn(),
+    resExpDate: "10/27",
+    setResExpDate: jest.fn(),
+    res3Digit: "",
+    setRes3Digit: jest.fn()
+  }
+
+  render(
+    <BrowserRouter>
+      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+    </BrowserRouter>
+  );
+
+  const zipElement = screen.getByLabelText(/ZIP code:/);
+  expect(zipElement).toHaveAttribute("pattern", "^\\d{5}$");
 });
 
 test('Reservation CC number is required.', () => {
@@ -1910,7 +2112,7 @@ test('Reservation form page 2 can be submitted when all fields are valid.', () =
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -1945,7 +2147,7 @@ test('Reservation form page 2 cannot be submitted when first name is missing.', 
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -1980,7 +2182,7 @@ test('Reservation form page 2 cannot be submitted when last name is missing.', (
     setResFirstName: jest.fn(),
     resLastName: "",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2007,6 +2209,76 @@ test('Reservation form page 2 cannot be submitted when last name is missing.', (
   expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
 });
 
+test('Reservation form page 2 cannot be submitted when phone is present but invalid.', () => {
+  // Same as "happy path", but phone is not a properly-formatted phone number.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "1234",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
+test('Reservation form page 2 can be submitted when phone is empty.', () => {
+  // Same as "happy path", but phone is missing. (Should still be valid.)
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "12345",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeFalsy();
+});
+
 test('Reservation form page 2 cannot be submitted when email is missing.', () => {
   // Same as "happy path", but no email.
   const currentDate = new Date(Date.now());
@@ -2015,7 +2287,7 @@ test('Reservation form page 2 cannot be submitted when email is missing.', () =>
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "",
     setResEmail: jest.fn(),
@@ -2050,7 +2322,7 @@ test('Reservation form page 2 cannot be submitted when email is invalid.', () =>
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester",
     setResEmail: jest.fn(),
@@ -2085,7 +2357,7 @@ test('Reservation form page 2 cannot be submitted when CC name is missing.', () 
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2120,7 +2392,7 @@ test('Reservation form page 2 cannot be submitted when address is missing.', () 
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2155,7 +2427,7 @@ test('Reservation form page 2 cannot be submitted when city is missing.', () => 
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2190,7 +2462,7 @@ test('Reservation form page 2 cannot be submitted when state is missing.', () =>
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2225,7 +2497,7 @@ test('Reservation form page 2 cannot be submitted when state is invalid.', () =>
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2260,7 +2532,7 @@ test('Reservation form page 2 cannot be submitted when zip code is missing.', ()
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2287,6 +2559,41 @@ test('Reservation form page 2 cannot be submitted when zip code is missing.', ()
   expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
 });
 
+test('Reservation form page 2 cannot be submitted when zip code is invalid.', () => {
+  // Same as "happy path", but ZIP code is not a ZIP code.
+  const currentDate = new Date(Date.now());
+  const reserveUserInfo = {
+    resFirstName: "Tester",
+    setResFirstName: jest.fn(),
+    resLastName: "Testerson",
+    setResLastName: jest.fn(),
+    resPhone: "123-456-7890",
+    setResPhone: jest.fn(),
+    resEmail: "tester@example.com",
+    setResEmail: jest.fn(),
+    resCCName: "Tester Testerson",
+    setResCCName: jest.fn(),
+    resAddress: "123 Main St.",
+    setResAddress: jest.fn(),
+    resAddress2: "",
+    setResAddress2: jest.fn(),
+    resCity: "Exampleville",
+    setResCity: jest.fn(),
+    resState: "OK",
+    setResState: jest.fn(),
+    resZip: "123",
+    setResZip: jest.fn(),
+    resCCNum: "0000 0000 0000 0000",
+    setResCCNum: jest.fn(),
+    resExpDate: `${(currentDate.getMonth() + 1).toPrecision(2)}/${(currentDate.getFullYear() + 3).toString().substring(2)}`,
+    setResExpDate: jest.fn(),
+    res3Digit: "000",
+    setRes3Digit: jest.fn()
+  }
+
+  expect(validateConfirmForm(reserveUserInfo)).toBeTruthy();
+});
+
 test('Reservation form page 2 cannot be submitted when CC number is missing.', () => {
   // Same as "happy path", but no credit card number.
   const currentDate = new Date(Date.now());
@@ -2295,7 +2602,7 @@ test('Reservation form page 2 cannot be submitted when CC number is missing.', (
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2330,7 +2637,7 @@ test('Reservation form page 2 cannot be submitted when CC number is invalid.', (
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2359,13 +2666,12 @@ test('Reservation form page 2 cannot be submitted when CC number is invalid.', (
 
 test('Reservation form page 2 cannot be submitted when exp date is missing.', () => {
   // Same as "happy path", but no exp date.
-  const currentDate = new Date(Date.now());
   const reserveUserInfo = {
     resFirstName: "Tester",
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2394,13 +2700,12 @@ test('Reservation form page 2 cannot be submitted when exp date is missing.', ()
 
 test('Reservation form page 2 cannot be submitted when exp date is invalid.', () => {
   // Same as "happy path", but exp date isn't MM/YY.
-  const currentDate = new Date(Date.now());
   const reserveUserInfo = {
     resFirstName: "Tester",
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2436,7 +2741,7 @@ test('Reservation form page 2 cannot be submitted when exp date is in the past.'
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2471,7 +2776,7 @@ test('Reservation form page 2 cannot be submitted when 3-digit code is missing.'
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
@@ -2506,7 +2811,7 @@ test('Reservation form page 2 cannot be submitted when 3-digit code is invalid.'
     setResFirstName: jest.fn(),
     resLastName: "Testerson",
     setResLastName: jest.fn(),
-    resPhone: "",
+    resPhone: "123-456-7890",
     setResPhone: jest.fn(),
     resEmail: "tester@example.com",
     setResEmail: jest.fn(),
