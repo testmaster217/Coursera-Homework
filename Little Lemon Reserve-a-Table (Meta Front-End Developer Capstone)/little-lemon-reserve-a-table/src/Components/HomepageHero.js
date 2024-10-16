@@ -2,12 +2,15 @@ import './HomepageHero.css';
 
 import food from "../Assets/restauranfood.jpg";
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { useHeaderContext } from './HeaderProvider';
 
 export default function HomepageHero() {
+    const {headerSkipTarget} = useHeaderContext();
     const navigate = useNavigate();
 
-    return <header className="HomepageHero">
+    return <header className="HomepageHero" ref={headerSkipTarget} tabIndex="-1">
         <div>
             <h1 className='DisplayTitle'>Little Lemon</h1>
             <h2 className='Subtitle'>Chicago</h2>

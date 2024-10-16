@@ -3,12 +3,15 @@ import './ReservationHero.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { useHeaderContext } from './HeaderProvider';
 
 export default function ReservationHero({headerText, photo, backLink}) {
+    const {headerSkipTarget} = useHeaderContext();
     const navigate = useNavigate();
 
-    return <header className="ReservationHero">
+    return <header className="ReservationHero" ref={headerSkipTarget} tabIndex="-1">
         <div>
             <button type="button" className="BackButton" title="Back" onClick={() => navigate(backLink)}>
                 <FontAwesomeIcon icon={faArrowLeft}/>

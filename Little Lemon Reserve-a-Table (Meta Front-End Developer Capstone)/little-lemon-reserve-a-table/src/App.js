@@ -1,6 +1,7 @@
 import './App.css';
 
 import Footer from './Components/Footer';
+import HeaderProvider from './Components/HeaderProvider';
 import Homepage from './Pages/Homepage';
 import ReserveATable from './Pages/ReserveATable';
 import ConfirmReservation from './Pages/ConfirmReservation';
@@ -161,7 +162,7 @@ function App() {
     }
 
     return (
-        <>
+        <HeaderProvider>
             <NavBar/>
             <Routes>
                 <Route path='/' element={<Homepage/>}/>
@@ -176,7 +177,7 @@ function App() {
                 <Route path='/reserve-confirmation' element={<ReservationConfirmation/>}/>
             </Routes>
             <Footer/>
-        </>
+        </HeaderProvider>
     );
 }
 

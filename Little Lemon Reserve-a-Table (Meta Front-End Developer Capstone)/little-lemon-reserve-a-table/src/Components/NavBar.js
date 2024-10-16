@@ -8,10 +8,14 @@ import {faBars} from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+import { useHeaderContext } from './HeaderProvider';
+
 export default function NavBar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const {headerSkipTarget} = useHeaderContext();
 
     return <nav>
+        <button className='MainButton' id='skipBtn' onClick={() => headerSkipTarget.current.focus()}>Skip to banner</button>
         <div className='Icons'>
             <Link to="/" aria-label='Little Lemon homepage'><img src={logo} aria-hidden/></Link>
             <button type="button" onClick={() => setMenuOpen(!menuOpen)}>

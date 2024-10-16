@@ -47,6 +47,16 @@ nav a:active {
     color: var(--primary-yellow);
 }
 
+#skipBtn {
+    position: absolute;
+    left: -99999px;
+    height: 3em;
+    padding-inline: 1em;
+}
+#skipBtn:focus {
+    left: 0%;
+}
+
 @media only screen and (max-width: 52em) {
     nav {
         width: calc(100% - 2em);
