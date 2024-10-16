@@ -32,12 +32,12 @@ export default function NavBar() {
             <li><Link to="/" className='ParagraphText'>LOGIN</Link></li>
         </menu>
         {menuOpen && <menu>
-            <li><Link to="/" className='ParagraphText'>HOME</Link></li>
-            <li><Link to="/#about-us" className='ParagraphText'>ABOUT</Link></li>
-            <li><Link to="/" className='ParagraphText'>MENU</Link></li>
-            <li><Link to="/reserve-a-table" className='ParagraphText'>RESERVATIONS</Link></li>
-            <li><Link to="/" className='ParagraphText'>ORDER ONLINE</Link></li>
-            <li><Link to="/" className='ParagraphText'>LOGIN</Link></li>
+            <li><Link to="/" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>HOME</Link></li>
+            <li><Link to="/#about-us" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>ABOUT</Link></li>
+            <li><Link to="/" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>MENU</Link></li>
+            <li><Link to="/reserve-a-table" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>RESERVATIONS</Link></li>
+            <li><Link to="/" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>ORDER ONLINE</Link></li>
+            <li><Link to="/" className='ParagraphText' onClick={() => setMenuOpen(!menuOpen)}>LOGIN</Link></li>
         </menu>}
     </nav>;
 }
