@@ -54,11 +54,14 @@ nav a:active {
     }
 
     nav menu {
-        display: none; /*  TODO: Change this to "flex" when the hamburger button is clicked. */
         flex-direction: column;
         justify-content: stretch;
         width: 100%;
         padding-top: 1em;
+    }
+
+    .DesktopMenu {
+        display: none;
     }
 
     nav menu li {
