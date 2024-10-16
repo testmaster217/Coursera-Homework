@@ -10,6 +10,11 @@ nav {
     width: 50em;
     justify-content: space-between;
     padding: 1em calc(50% - 25em);
+    position: sticky;
+    top: 0%;
+    z-index: 2;
+    box-shadow: 0 4px 4px rgb(from var(--primary-green) r g b / 0.25);
+    background-color: var(--secondary-white);
 }
 
 .Icons button {
