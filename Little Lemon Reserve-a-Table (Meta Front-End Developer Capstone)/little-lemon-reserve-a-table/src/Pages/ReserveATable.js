@@ -122,10 +122,12 @@ export default function ReserveATable({reserveInfo, handleSubmit}) {
     return (<>
         <ReservationHero headerText="Reserve a Table" photo={restaurant} backLink="/"/>
         <main>
-            {/* Some UI elements (namely, the radio buttons and the <option>s
-            for the <select> elements throughout the pages) don't look how I
-            want them to. I'm not going to fix it because it would be too
-            much work and I'm already late turning this in. */}
+            {/* Some UI elements (namely, the radio buttons, the <option>s
+            for the <select> elements throughout the pages, and the slanted
+            lines in the corner of the <textarea> or whatever your browser
+            uses to show that it's editable) don't look how I want them to.
+            I'm not going to fix it because it would be too much work and
+            I'm already late turning this in. */}
             <form className="ReserveForm" role='form' onSubmit={handleSubmit}>
                 <label htmlFor="reservationDate" className='ParagraphText'>
                     <span><span className='HighlightText' aria-hidden>*</span>Choose a date:</span>
