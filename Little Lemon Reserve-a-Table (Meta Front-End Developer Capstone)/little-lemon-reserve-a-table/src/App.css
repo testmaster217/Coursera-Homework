@@ -74,14 +74,6 @@
     font-size: 16px;
 }
 
-/* :user-invalid ~ p {
-    display: block;
-}
-
-:user-valid ~ p {
-    display: none;
-} */
-
 body {
     background-color: var(--secondary-white);
 }
