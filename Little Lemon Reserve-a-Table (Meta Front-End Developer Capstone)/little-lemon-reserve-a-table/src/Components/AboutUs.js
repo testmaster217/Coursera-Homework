@@ -11,14 +11,13 @@ export default function AboutUs() {
 
     useEffect(() => {
         if (location.hash.match(/#about-us$/)) {
-            aboutSection.current.scrollIntoView({behavior: "smooth"});
             aboutSection.current.focus();
         }
     }, [location]);
 
-    return <section className="AboutUs" id="about-us" ref={aboutSection}>
+    return <section className="AboutUs" id="about-us">
         <div className="AboutWords">
-            <h3 className="DisplayTitle">About Us</h3>
+            <h3 className="DisplayTitle" ref={aboutSection} tabIndex="-1">About Us</h3>
             <h4 className="Subtitle">Our Story</h4>
             <p className="ParagraphText">
                 Based in Chicago, Illinois, Little Lemon is a family-owned Mediterranean restaurant, focused on traditional recipes served with a modern twist. The chefs draw inspiration from Italian, Greek, and Turkish culture and have a menu of 12-15 items that they rotate seasonally. The restaurant has a rustic and relaxed atmosphere with moderate prices, making it a popular place for a meal any time of the day.
