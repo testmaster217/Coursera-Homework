@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
 
 import {initializeTimes, updateTimes, submitAPI} from './App';
 import App from './App';
 import ReserveATable, {validateReserveForm} from './Pages/ReserveATable';
 import ConfirmReservation, {validateConfirmForm} from './Pages/ConfirmReservation';
+import HeaderProvider from './Components/HeaderProvider';
 
 beforeEach(() => {
   localStorage.removeItem("TableReservation-2024-10-11-17:00");
@@ -30,7 +32,9 @@ test('Renders the "Submit" button for the first page of the reservation form', (
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
   const submitButton = screen.getByText(/Submit Reservation/i);
@@ -50,9 +54,13 @@ test('updateTimes works', () => {
 
 test('First part of the reservation form can be submitted', () => {
   render(
-    <BrowserRouter>
-      <App/>
-    </BrowserRouter>
+    <React.StrictMode>
+      <BrowserRouter>
+        <HeaderProvider>
+          <App/>
+        </HeaderProvider>
+      </BrowserRouter>
+    </React.StrictMode>
   );
 
   const reserveButton = screen.getByText(/Reserve a Table/i)
@@ -138,7 +146,9 @@ test('Reservation date is required.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -166,7 +176,9 @@ test('Reservation date is type date.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -195,7 +207,9 @@ test("Reservation date has today's date as the minimum.", () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -223,7 +237,9 @@ test('Reservation time is required.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -251,7 +267,9 @@ test('Reservation number of guests is required.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -279,7 +297,9 @@ test('Reservation number of guests is type number.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -307,7 +327,9 @@ test('Reservation number of guests has 1 as the minimum.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -335,7 +357,9 @@ test('Reservation number of guests has 10 as the maximum.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -363,7 +387,9 @@ test('Reservation number of guests has 1 as the step amount.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -391,7 +417,9 @@ test('Reservation seating choice is required.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -419,7 +447,9 @@ test('Reservation occasion is required.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -447,7 +477,9 @@ test('Reservation comments is not required normally.', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -475,7 +507,9 @@ test('Reservation comments is required if occasion is "other".', () => {
 
   render(
     <BrowserRouter>
-      <ReserveATable reserveInfo={reserveInfo}/>
+      <HeaderProvider>
+        <ReserveATable reserveInfo={reserveInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1051,7 +1085,9 @@ test('Reservation first name is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1091,7 +1127,9 @@ test('Reservation last name is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1131,7 +1169,9 @@ test('Reservation phone is type tel', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1171,7 +1211,9 @@ test('Reservation phone must be exactly 12 characters long', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1212,7 +1254,9 @@ test('Reservation phone must be a phone number', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1252,7 +1296,9 @@ test('Reservation email name is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1292,7 +1338,9 @@ test('Reservation email is type email.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1332,7 +1380,9 @@ test('Reservation CC name is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1372,7 +1422,9 @@ test('Reservation address is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1412,7 +1464,9 @@ test('Reservation city is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1452,7 +1506,9 @@ test('Reservation state is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1492,7 +1548,9 @@ test('Reservation zip is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1532,7 +1590,9 @@ test('Reservation zip is type tel.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1572,7 +1632,9 @@ test('Reservation zip must be exactly 5 characters long.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1613,7 +1675,9 @@ test('Reservation zip must be a zip code.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1653,7 +1717,9 @@ test('Reservation CC number is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1693,7 +1759,9 @@ test('Reservation CC number is type tel.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1733,7 +1801,9 @@ test('Reservation CC number must be 19 characters long.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1774,7 +1844,9 @@ test('Reservation CC number must be a CC number.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1814,7 +1886,9 @@ test('Reservation exp date is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1854,7 +1928,9 @@ test('Reservation exp date is type tel.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1894,7 +1970,9 @@ test('Reservation exp date must be 5 characters long.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1935,7 +2013,9 @@ test('Reservation exp date must be an exp date.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -1975,7 +2055,9 @@ test('Reservation 3-digit code is required.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -2015,7 +2097,9 @@ test('Reservation 3-digit code is type tel.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -2055,7 +2139,9 @@ test('Reservation 3-digit code must be 3 characters long.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
@@ -2096,7 +2182,9 @@ test('Reservation 3-digit code must be a 3-digit code.', () => {
 
   render(
     <BrowserRouter>
-      <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      <HeaderProvider>
+        <ConfirmReservation reserveUserInfo={reserveUserInfo}/>
+      </HeaderProvider>
     </BrowserRouter>
   );
 
