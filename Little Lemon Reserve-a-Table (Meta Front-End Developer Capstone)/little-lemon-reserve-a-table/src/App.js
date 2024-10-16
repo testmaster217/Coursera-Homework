@@ -1,15 +1,15 @@
 import './App.css';
 
 import Footer from './Components/Footer';
-import HeaderProvider from './Components/HeaderProvider';
 import Homepage from './Pages/Homepage';
 import ReserveATable from './Pages/ReserveATable';
 import ConfirmReservation from './Pages/ConfirmReservation';
 import ReservationConfirmation from './Pages/ReservationConfirmation';
 import NavBar from './Components/NavBar';
+import { useHeaderContext } from './Components/HeaderProvider';
 
-import { useReducer, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useEffect, useReducer, useState } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 /* API functions. (Copied and pasted from the API link because it doesn't work for some reason.) */
 const seededRandom = function (seed) {
@@ -57,7 +57,16 @@ export function initializeTimes() {
 }
 
 function App() {
-    /* TODO: Add default states for all of these based on the formats that they need to be in. */
+    let location = useLocation();
+    const {headerSkipTarget} = useHeaderContext();
+
+    useEffect(() => {
+        if (!location.hash) {
+            headerSkipTarget.current.focus({preventScroll: true});
+            window.scroll(0, 0);
+        }
+    }, [location]);
+
     const [resDate, setResDate] = useState("");
     const [availableTimes, setAvailableTimes] = useReducer(updateTimes, null, initializeTimes);
     const [resTime, setResTime] = useState(availableTimes[0]);
@@ -162,7 +171,7 @@ function App() {
     }
 
     return (
-        <HeaderProvider>
+        <>
             <NavBar/>
             <Routes>
                 <Route path='/' element={<Homepage/>}/>
@@ -177,7 +186,7 @@ function App() {
                 <Route path='/reserve-confirmation' element={<ReservationConfirmation/>}/>
             </Routes>
             <Footer/>
-        </HeaderProvider>
+        </>
     );
 }
 
