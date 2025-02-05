@@ -1,0 +1,18 @@
+superuser name: admin
+superuser email: admin@littlelemon.com
+superuser password: Lemon@789!
+
+Manager:
+name: Adrian
+email: adrian@littlelemon.com
+password: Lemon@123!
+
+Delivery crew:
+name: Dan
+email: dan@littlelemon.com
+password: Lemon@456!
+
+Customer:
+name: Sue
+email: sue@example.com
+password: i_am_customer
