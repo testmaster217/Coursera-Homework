@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, User
 from rest_framework import generics, status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
-from .serializers import MenuItemSerializer
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+
 from .models import MenuItem
+from .serializers import MenuItemSerializer
 
 # Custom permission class to make things easier.
 class IsManager(BasePermission):
@@ -16,6 +18,7 @@ class IsManager(BasePermission):
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
     ordering_fields = ['price']
     search_fields = ['title', 'category__title']
 
@@ -27,6 +30,7 @@ class MenuItemsView(generics.ListCreateAPIView):
 class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     def get_permissions(self):
         if self.request.method == 'GET':
@@ -37,6 +41,7 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
 # how to do them as class-based views.
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated, IsManager])
+@throttle_classes([AnonRateThrottle, UserRateThrottle])
 def managers(request):
     if request.method == 'GET':
         managers = Group.objects.get(name="Manager")
@@ -53,6 +58,7 @@ def managers(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated, IsManager])
+@throttle_classes([AnonRateThrottle, UserRateThrottle])
 def single_manager(request, username):
     user = get_object_or_404(User, username=username)
     managers = Group.objects.get(name="Manager")
@@ -61,6 +67,7 @@ def single_manager(request, username):
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated, IsManager])
+@throttle_classes([AnonRateThrottle, UserRateThrottle])
 def delivery_crew(request):
     if request.method == 'GET':
         crew = Group.objects.get(name="Delivery crew")
@@ -77,6 +84,7 @@ def delivery_crew(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated, IsManager])
+@throttle_classes([AnonRateThrottle, UserRateThrottle])
 def single_deliverer(request, username):
     user = get_object_or_404(User, username=username)
     crew = Group.objects.get(name="Delivery crew")

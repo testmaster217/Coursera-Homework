@@ -137,6 +137,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     "PAGE_SIZE": 5,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    # Not sure what rates would be good, just copy-pasted these from a resource in the course.
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '2/minute',
+        'user': '10/minute'
+    }
 }
 
 DJOSER = {
