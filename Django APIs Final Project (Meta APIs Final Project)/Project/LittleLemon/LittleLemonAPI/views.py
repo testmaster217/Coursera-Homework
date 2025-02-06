@@ -52,7 +52,7 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         return request.user.groups.filter(name='Manager').exists()
-# Doing these two as function-based views because I couldn't figure out
+# Doing these four as function-based views because I couldn't figure out
 # how to do them as class-based views.
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated, IsManager])
@@ -76,4 +76,28 @@ def single_manager(request, username):
     user = get_object_or_404(User, username=username)
     managers = Group.objects.get(name="Manager")
     managers.user_set.remove(user)
+    return Response({"message": "ok"})
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated, IsManager])
+def delivery_crew(request):
+    if request.method == 'GET':
+        crew = Group.objects.get(name="Delivery crew")
+        return Response([deliverer.username for deliverer in crew.user_set.all()])
+
+    if request.method == 'POST':
+        username = request.data['username']
+        if username:
+            user = get_object_or_404(User, username=username)
+            crew = Group.objects.get(name="Delivery crew")
+            crew.user_set.add(user)
+            return Response({"message": "ok"})
+        return Response({"message": "username is required"}, status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated, IsManager])
+def single_deliverer(request, username):
+    user = get_object_or_404(User, username=username)
+    crew = Group.objects.get(name="Delivery crew")
+    crew.user_set.remove(user)
     return Response({"message": "ok"})
