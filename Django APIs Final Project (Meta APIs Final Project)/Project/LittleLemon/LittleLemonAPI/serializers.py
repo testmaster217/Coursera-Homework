@@ -21,3 +21,18 @@ class CartSerializer(serializers.ModelSerializer):
 
     def calculate_price(self, cart:Cart):
         return cart.quantity * cart.unit_price
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'user', 'delivery_crew', 'status', 'total', 'date']
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    price = serializers.SerializerMethodField(method_name='calculate_price')
+
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'order', 'menuitem', 'quantity', 'unit_price', 'price']
+
+    def calculate_price(self, item:OrderItem):
+        return item.quantity * item.unit_price
