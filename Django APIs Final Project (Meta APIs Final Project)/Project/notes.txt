@@ -1,3 +1,5 @@
+Some users that you can log in as:
+
 superuser name: admin
 superuser email: admin@littlelemon.com
 superuser password: Lemon@789!

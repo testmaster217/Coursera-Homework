@@ -7,6 +7,11 @@ from rest_framework.response import Response
 from .serializers import MenuItemSerializer
 from .models import MenuItem
 
+# Custom permission class to make things easier.
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Manager').exists() or request.user.is_superuser
+
 # Create your views here.
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all()
@@ -17,12 +22,7 @@ class MenuItemsView(generics.ListCreateAPIView):
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
-        return [IsAuthenticated()]
-
-    def post(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name='Manager').exists():
-            return super().post(request, *args, **kwargs)
-        return Response({"message": "Only managers can do that."}, 403)
+        return [IsAuthenticated(), IsManager()]
 
 class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MenuItem.objects.all()
@@ -31,27 +31,8 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
-        return [IsAuthenticated()]
+        return [IsAuthenticated(), IsManager()]
 
-    def put(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name='Manager').exists():
-            return super().put(request, *args, **kwargs)
-        return Response({"message": "Only managers can do that."}, 403)
-
-    def patch(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name='Manager').exists():
-            return super().patch(request, *args, **kwargs)
-        return Response({"message": "Only managers can do that."}, 403)
-
-    def delete(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name='Manager').exists():
-            return super().delete(request, *args, **kwargs)
-        return Response({"message": "Only managers can do that."}, 403)
-
-# Custom permission class to make things easier.
-class IsManager(BasePermission):
-    def has_permission(self, request, view):
-        return request.user.groups.filter(name='Manager').exists()
 # Doing these four as function-based views because I couldn't figure out
 # how to do them as class-based views.
 @api_view(['GET', 'POST'])
