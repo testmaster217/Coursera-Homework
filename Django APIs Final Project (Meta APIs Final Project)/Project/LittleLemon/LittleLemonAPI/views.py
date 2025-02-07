@@ -95,6 +95,7 @@ def single_deliverer(request, username):
 class CartView(generics.ListCreateAPIView, generics.DestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     def get_queryset(self):
@@ -123,6 +124,7 @@ class CartView(generics.ListCreateAPIView, generics.DestroyAPIView):
 class OrdersView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.request.user.groups.filter(name='Manager').exists():
@@ -130,3 +132,6 @@ class OrdersView(generics.ListCreateAPIView):
         elif self.request.user.groups.filter(name='Delivery crew').exists():
             return Order.objects.all().filter(delivery_crew=self.request.user)
         return Order.objects.all().filter(user=self.request.user)
+
+    # How do I do the POST method? It needs to call other endpoints. How do I do that?
+
