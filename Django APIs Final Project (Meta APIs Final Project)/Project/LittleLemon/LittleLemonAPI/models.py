@@ -33,7 +33,7 @@ class Order(models.Model):
     delivery_crew = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="delivery_crew", null=True)
     status = models.BooleanField(db_index=True, default=0)
     total = models.DecimalField(max_digits=6, decimal_places=2)
-    date = models.DateField(db_index=True)
+    date = models.DateField(db_index=True) # Must be in YYYY-MM-DD format.
 
 class OrderItem(models.Model):
     order = models.ForeignKey(User, on_delete=models.CASCADE)

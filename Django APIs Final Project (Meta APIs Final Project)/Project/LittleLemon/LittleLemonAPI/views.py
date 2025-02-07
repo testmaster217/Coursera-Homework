@@ -125,6 +125,7 @@ class OrdersView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     def get_queryset(self):
         if self.request.user.groups.filter(name='Manager').exists():
@@ -135,3 +136,8 @@ class OrdersView(generics.ListCreateAPIView):
 
     # How do I do the POST method? It needs to call other endpoints. How do I do that?
 
+class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
