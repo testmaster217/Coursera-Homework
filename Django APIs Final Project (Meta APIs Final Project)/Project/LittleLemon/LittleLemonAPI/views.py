@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, User
 from rest_framework import generics, status
@@ -103,11 +104,16 @@ class CartView(generics.ListCreateAPIView, generics.DestroyAPIView):
 
     def post(self, request, *args, **kwargs):
         data = {
-            'user': request.user,
+            'user': request.user.pk,
             'menuitem': request.data.get('menuitem'),
-            'quantity': request.data.get('quantity')
+            'quantity': request.data.get('quantity'),
+            'unit_price': request.data.get('unit_price'),
+            'price': Decimal(request.data.get('quantity')) * Decimal(request.data.get('unit_price'))
         }
-        return super().post({'data': data}, *args, **kwargs)
+        serialized_item = self.get_serializer(data=data)
+        serialized_item.is_valid(raise_exception=True)
+        serialized_item.save()
+        return Response(serialized_item.data, status.HTTP_201_CREATED)
 
     def delete(self, request, *args, **kwargs):
         for cart in self.get_queryset():

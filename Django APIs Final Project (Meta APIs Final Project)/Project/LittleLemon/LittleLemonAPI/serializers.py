@@ -13,14 +13,9 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'slug', 'title']
 
 class CartSerializer(serializers.ModelSerializer):
-    (unit_price, price) = serializers.SerializerMethodField(method_name='calculate_price')
-
     class Meta:
         model = Cart
         fields = ['id', 'user', 'menuitem', 'quantity', 'unit_price', 'price']
-
-    def calculate_price(self, cart:Cart):
-        return (cart.menuitem.price, cart.menuitem.price * cart.quantity)
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
