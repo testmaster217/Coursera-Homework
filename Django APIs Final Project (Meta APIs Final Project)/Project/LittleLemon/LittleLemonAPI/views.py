@@ -7,8 +7,8 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
-from .models import Cart, MenuItem
-from .serializers import CartSerializer, MenuItemSerializer
+from .models import Cart, MenuItem, Order
+from .serializers import CartSerializer, MenuItemSerializer, OrderSerializer
 
 # Custom permission class to make things easier.
 class IsManager(BasePermission):
@@ -119,3 +119,14 @@ class CartView(generics.ListCreateAPIView, generics.DestroyAPIView):
         for cart in self.get_queryset():
             cart.delete()
         return Response({"message": "Your cart has been emptied."})
+
+class OrdersView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='Manager').exists():
+            return super().get_queryset()
+        elif self.request.user.groups.filter(name='Delivery crew').exists():
+            return Order.objects.all().filter(delivery_crew=self.request.user)
+        return Order.objects.all().filter(user=self.request.user)
