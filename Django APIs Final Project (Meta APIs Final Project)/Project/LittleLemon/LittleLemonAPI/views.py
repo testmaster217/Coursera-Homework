@@ -6,8 +6,8 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from .models import Cart, MenuItem
+from .serializers import CartSerializer, MenuItemSerializer
 
 # Custom permission class to make things easier.
 class IsManager(BasePermission):
@@ -90,3 +90,26 @@ def single_deliverer(request, username):
     crew = Group.objects.get(name="Delivery crew")
     crew.user_set.remove(user)
     return Response({"message": "ok"})
+
+class CartView(generics.ListCreateAPIView, generics.DestroyAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+
+    def get_queryset(self):
+        return Cart.objects.all().filter(user=self.request.user)
+
+    # GET method doesn't need to change.
+
+    def post(self, request, *args, **kwargs):
+        data = {
+            'user': request.user,
+            'menuitem': request.data.get('menuitem'),
+            'quantity': request.data.get('quantity')
+        }
+        return super().post({'data': data}, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        for cart in self.get_queryset():
+            cart.delete()
+        return Response({"message": "Your cart has been emptied."})
