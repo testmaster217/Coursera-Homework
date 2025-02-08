@@ -134,7 +134,8 @@ class OrdersView(generics.ListCreateAPIView):
             return Order.objects.all().filter(delivery_crew=self.request.user)
         return Order.objects.all().filter(user=self.request.user)
 
-    # How do I do the POST method? It needs to call other endpoints. How do I do that?
+    # How do I make the GET method return the OrderItems along with the order?
+    # Do the POST method.
 
 class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
