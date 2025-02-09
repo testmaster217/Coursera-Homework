@@ -10,10 +10,14 @@ from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from .models import Cart, MenuItem, Order
 from .serializers import CartSerializer, MenuItemSerializer, OrderItemSerializer, OrderSerializer
 
-# Custom permission class to make things easier.
+# Custom permission classes to make things easier.
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         return request.user.groups.filter(name='Manager').exists() or request.user.is_superuser
+
+class IsDeliveryCrew(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Delivery crew').exists() or request.user.is_superuser
 
 # Create your views here.
 class MenuItemsView(generics.ListCreateAPIView):
@@ -182,3 +186,9 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
+
+    def get(self, request, *args, **kwargs):
+        order = super().get(request, *args, **kwargs)
+        if request.user.pk == order.data.get("user"):
+            return order
+        return Response({"message": "That's not your order."}, status.HTTP_403_FORBIDDEN)

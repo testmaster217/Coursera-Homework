@@ -9,5 +9,6 @@ urlpatterns = [
     path('groups/delivery-crew/users', views.delivery_crew),
     path('groups/delivery-crew/users/<username>', views.single_deliverer),
     path('cart/menu-items', views.CartView.as_view()),
-    path('orders', views.OrdersView.as_view())
+    path('orders', views.OrdersView.as_view()),
+    path('orders/<int:pk>', views.SingleOrderView.as_view()),
 ]
