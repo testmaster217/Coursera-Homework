@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
 from .models import Cart, MenuItem, Order
-from .serializers import CartSerializer, MenuItemSerializer, OrderSerializer
+from .serializers import CartSerializer, MenuItemSerializer, OrderItemSerializer, OrderSerializer
 
 # Custom permission class to make things easier.
 class IsManager(BasePermission):
@@ -134,8 +134,48 @@ class OrdersView(generics.ListCreateAPIView):
             return Order.objects.all().filter(delivery_crew=self.request.user)
         return Order.objects.all().filter(user=self.request.user)
 
-    # How do I make the GET method return the OrderItems along with the order?
-    # Do the POST method.
+    def post(self, request, *args, **kwargs):
+        # Get the user's cart.
+        # (Logic based on the CartView's under-the-hood "get" method because
+        # I could not figure out how to call the API endpoint the proper way.)
+        cart_queryset = Cart.objects.all().filter(user=self.request.user)
+        cart = CartSerializer(cart_queryset, many=True).data
+        # For each item in the cart, add its price to a 'total' variable.
+        total = 0
+        for item in cart:
+            total += Decimal(item.get("price"))
+        # Use the 'total' variable and some other needed information to build
+        # the data to create a new order, similar to how I did the POST method
+        # for the CartView.
+        data = {
+            'user': request.user.pk,
+            'total': total,
+            'date': request.data.get('date'),
+        }
+        serialized_item = self.get_serializer(data=data)
+        serialized_item.is_valid(raise_exception=True)
+        serialized_item.save()
+        # After creating the order, create an orderitem from each item in the cart,
+        # and then empty the cart.
+        for item in cart:
+            orderitem_data = {
+                'order': serialized_item.data.get("id"),
+                'menuitem': item.get("menuitem"),
+                'quantity': item.get("quantity"),
+                'unit_price': item.get("unit_price"),
+                'price': item.get("price")
+            }
+            serialized_orderitem = OrderItemSerializer(data=orderitem_data)
+            serialized_orderitem.is_valid(raise_exception=True)
+            serialized_orderitem.save()
+        # (Deletion logic copied from the CartView's "delete" method for the
+        # same reason that I copied the "get" logic. At least I'm copying my
+        # own code this time.)
+        for cart in cart_queryset:
+            cart.delete()
+        # Temporary return until I can get a proper one made.
+        # Would like to return the created order with all of its orderitems.
+        return Response({'message': "Order placed!"}, status.HTTP_201_CREATED)
 
 class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
