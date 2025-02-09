@@ -129,7 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_FILTER_BACKENDS": [
         'rest_framework.filters.OrderingFilter',
@@ -143,8 +142,8 @@ REST_FRAMEWORK = {
     ],
     # Not sure what rates would be good, just copy-pasted these from a resource in the course.
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '2/minute',
-        'user': '10/minute'
+        'anon': '5/minute',
+        'user': '5/minute'
     }
 }
 
