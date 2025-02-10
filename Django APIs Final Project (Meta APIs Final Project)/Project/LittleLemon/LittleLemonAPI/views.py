@@ -207,10 +207,19 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
 
     def patch(self, request, *args, **kwargs):
         # If called by the customer, works like put().
+        
         # If called by the manager, they can update anyone's order, but only the
         # delivery crew and status fields. If they try to update anything else,
         # they get a 403 error.
+        if self.request.user.groups.filter(name='Manager').exists():
+            if request.data.keys() <= {'delivery_crew', 'status'}:
+                return super().patch(request, *args, **kwargs)
+            return Response({"message": "Managers can only update the delivery crew or status of an order."}, 403)
         # If called by the delivery crew, they can only update orders that have
         # been assigned to them, and can only update the status of those orders.
         # If they try anything else, they get a 403 error.
+        if self.request.user.groups.filter(name='Delivery crew').exists():
+            if request.data.keys() <= {'status'}:
+                return super().patch(request, *args, **kwargs)
+            return Response({"message": "Delivery crewmwmbers can only update the status of an order."}, 403)
         return super().patch(request, *args, **kwargs)
