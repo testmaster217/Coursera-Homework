@@ -11,4 +11,6 @@ urlpatterns = [
     path('cart/menu-items', views.CartView.as_view()),
     path('orders', views.OrdersView.as_view()),
     path('orders/<int:pk>', views.SingleOrderView.as_view()),
+    path('categories', views.CategoriesView.as_view()),
+    path('categories/<int:pk>', views.SingleCategoryView.as_view())
 ]

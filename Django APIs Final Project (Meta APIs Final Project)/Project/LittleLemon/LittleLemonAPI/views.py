@@ -8,8 +8,8 @@ from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
-from .models import Cart, MenuItem, Order, OrderItem
-from .serializers import CartSerializer, MenuItemSerializer, OrderItemSerializer, OrderSerializer
+from .models import Cart, Category, MenuItem, Order, OrderItem
+from .serializers import CartSerializer, CategorySerializer, MenuItemSerializer, OrderItemSerializer, OrderSerializer
 
 # Custom permission classes to make things easier.
 class IsManager(BasePermission):
@@ -21,6 +21,27 @@ class IsDeliveryCrew(BasePermission):
         return request.user.groups.filter(name='Delivery crew').exists() or request.user.is_superuser
 
 # Create your views here.
+class CategoriesView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        return [IsAuthenticated(), IsManager()]
+
+class SingleCategoryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        return [IsAuthenticated(), IsManager()]
+
+
 class MenuItemsView(generics.ListCreateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
