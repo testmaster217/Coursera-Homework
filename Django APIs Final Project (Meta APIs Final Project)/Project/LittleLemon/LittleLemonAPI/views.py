@@ -184,11 +184,33 @@ class OrdersView(generics.ListCreateAPIView):
 class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
+
+    def get_permissions(self):
+        if self.request.method == "DELETE":
+            return [IsAuthenticated(), IsManager()]
+        return [IsAuthenticated()]
 
     def get(self, request, *args, **kwargs):
         order = super().get(request, *args, **kwargs)
         if request.user.pk == order.data.get("user"):
             return order
         return Response({"message": "That's not your order."}, status.HTTP_403_FORBIDDEN)
+
+    def put(self, request, *args, **kwargs):
+        # Only customer needs to call this method, and they should only be able to update
+        # the date, the order items, and (indirectly) the total.
+        # If a customer tries to update any fields that they shouldn't be able to
+        # - including trying to directly update the total - or if they try to update
+        # someone else's order, they should get a 403 error.
+        return super().put(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        # If called by the customer, works like put().
+        # If called by the manager, they can update anyone's order, but only the
+        # delivery crew and status fields. If they try to update anything else,
+        # they get a 403 error.
+        # If called by the delivery crew, they can only update orders that have
+        # been assigned to them, and can only update the status of those orders.
+        # If they try anything else, they get a 403 error.
+        return super().patch(request, *args, **kwargs)
