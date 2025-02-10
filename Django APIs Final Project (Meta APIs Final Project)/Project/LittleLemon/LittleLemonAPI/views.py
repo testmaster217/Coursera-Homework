@@ -1,13 +1,14 @@
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, User
+from django.core.exceptions import PermissionDenied
 from rest_framework import generics, status
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
-from .models import Cart, MenuItem, Order
+from .models import Cart, MenuItem, Order, OrderItem
 from .serializers import CartSerializer, MenuItemSerializer, OrderItemSerializer, OrderSerializer
 
 # Custom permission classes to make things easier.
@@ -197,14 +198,70 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
             return order
         return Response({"message": "That's not your order."}, status.HTTP_403_FORBIDDEN)
 
-    def put(self, request, *args, **kwargs):
-        # Only customer needs to call this method, and they should only be able to
-        # update the date and the order items, while the total should update itself
-        # automatically if the order items change.
-        # If a customer tries to update any fields that they shouldn't be able to
-        # - including trying to directly update the total - or if they try to update
-        # someone else's order, they should get a 403 error.
-        return super().put(request, *args, **kwargs)
+    def update_checks(self, request, pk):
+        # The customer should only be able to update the date and the order items,
+        # while the total should update itself automatically if the order items
+        # change. If a customer tries to update any fields that they shouldn't be
+        # able to - including trying to directly update the total - or if they try
+        # to update someone else's order, they should get a 403 error.
+        order = Order.objects.get(id=pk)
+        serialized_order = OrderSerializer(order)
+        if serialized_order.data.get('user') != request.user.pk:
+            raise PermissionDenied("You can only modify your own orders.")
+        if not request.data.keys() <= {'date', 'orderitems'}:
+            raise PermissionDenied("You can only update the date and items of an order, and the total will update on its own if the items change.")
+        # At this point, they are cleared to make the update.
+        total = serialized_order.data.get('total')
+        # If they're updating the orderitems,
+        if request.data.keys() <= {'orderitems'}:
+            # Extract them into a list,
+            new_orderitems = list(request.data.get('orderitems'))
+            # Get the queryset of existing orderitems,
+            orderitems = OrderItem.objects.all().filter(order=order)
+            # Remove every item in the queryset.
+            for item in orderitems:
+                item.delete()
+            # Add every item from the list to the queryset.
+            total = 0
+            for item in new_orderitems:
+                orderitem_data = {
+                    'order': order,
+                    'menuitem': item.get("menuitem"),
+                    'quantity': item.get("quantity"),
+                    'unit_price': item.get("unit_price"),
+                    'price': Decimal(item.get("quantity")) * Decimal(item.get("unit_price"))
+                }
+                serialized_orderitem = OrderItemSerializer(data=orderitem_data)
+                serialized_orderitem.is_valid(raise_exception=True)
+                serialized_orderitem.save()
+                total += serialized_orderitem.data.get("price")
+        # Return the total for the order.
+        return total
+
+    def put(self, request, pk, *args, **kwargs):
+        # Only customer needs to call this method.
+        try:
+            total = self.update_checks(request, pk)
+        # If the update-checking logic had an authorization problem, return a 403 error.
+        except PermissionDenied as denied:
+            return Response({"message": denied.args[0]}, 403)
+        # If the update-checking logic did not have a problem, then the actual
+        # update can procede. (In fact, the update logic includes the part where
+        # the orderitems are updated, if they are, so all that's left is the rest
+        # of the order.)
+        data = {
+            'user': request.user.pk,
+            'total': total,
+            'date': request.data.get('date'),
+        }
+        # Much like with the POST method in the OrdersView, I based this off of
+        # the code for the underlying PUT method because I didn't know how else
+        # to do what I wanted.
+        instance = self.get_object()
+        serialized_item = self.get_serializer(instance, data=data, partial=False)
+        serialized_item.is_valid(raise_exception=True)
+        self.perform_update(serialized_item)
+        return Response(serialized_item.data)
 
     def patch(self, request, pk, *args, **kwargs):
         # If called by the manager, they can update anyone's order, but only the
@@ -226,4 +283,25 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
                 return super().patch(request, *args, **kwargs)
             return Response({"message": "Delivery crewmwmbers can only update the status of an order."}, 403)
         # If called by the customer, works like put().
-        
+        try:
+            total = self.update_checks(request, pk)
+        # If the update-checking logic had an authorization problem, return a 403 error.
+        except PermissionDenied as denied:
+            return Response({"message": denied.args[0]}, 403)
+        # If the update-checking logic did not have a problem, then the actual
+        # update can procede. (In fact, the update logic includes the part where
+        # the orderitems are updated, if they are, so all that's left is the rest
+        # of the order.)
+        data = {
+            'user': request.user.pk,
+            'total': total,
+            'date': request.data.get('date'),
+        }
+        # Much like with the POST method in the OrdersView, I based this off of
+        # the code for the underlying PUT method because I didn't know how else
+        # to do what I wanted.
+        instance = self.get_object()
+        serialized_item = self.get_serializer(instance, data=data, partial=True)
+        serialized_item.is_valid(raise_exception=True)
+        self.perform_update(serialized_item)
+        return Response(serialized_item.data)
