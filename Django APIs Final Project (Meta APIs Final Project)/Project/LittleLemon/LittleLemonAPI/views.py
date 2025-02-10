@@ -198,16 +198,15 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
         return Response({"message": "That's not your order."}, status.HTTP_403_FORBIDDEN)
 
     def put(self, request, *args, **kwargs):
-        # Only customer needs to call this method, and they should only be able to update
-        # the date, the order items, and (indirectly) the total.
+        # Only customer needs to call this method, and they should only be able to
+        # update the date and the order items, while the total should update itself
+        # automatically if the order items change.
         # If a customer tries to update any fields that they shouldn't be able to
         # - including trying to directly update the total - or if they try to update
         # someone else's order, they should get a 403 error.
         return super().put(request, *args, **kwargs)
 
-    def patch(self, request, *args, **kwargs):
-        # If called by the customer, works like put().
-        
+    def patch(self, request, pk, *args, **kwargs):
         # If called by the manager, they can update anyone's order, but only the
         # delivery crew and status fields. If they try to update anything else,
         # they get a 403 error.
@@ -218,8 +217,13 @@ class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
         # If called by the delivery crew, they can only update orders that have
         # been assigned to them, and can only update the status of those orders.
         # If they try anything else, they get a 403 error.
-        if self.request.user.groups.filter(name='Delivery crew').exists():
+        elif self.request.user.groups.filter(name='Delivery crew').exists():
+            order = Order.objects.get(id=pk)
+            serialized_order = OrderSerializer(order)
+            if (serialized_order.data.get('delivery_crew') != request.user.pk):
+                return Response({"message": "You can only modify orders that you have been assigned to."}, 403)
             if request.data.keys() <= {'status'}:
                 return super().patch(request, *args, **kwargs)
             return Response({"message": "Delivery crewmwmbers can only update the status of an order."}, 403)
-        return super().patch(request, *args, **kwargs)
+        # If called by the customer, works like put().
+        
