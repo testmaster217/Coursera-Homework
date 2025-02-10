@@ -43,6 +43,31 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
             return []
         return [IsAuthenticated(), IsManager()]
 
+    def clear_featured(self, request):
+        # If setting the "featured" field to "true":
+        if {"featured"} <= request.data.keys() and request.data.get("featured") == "true":
+            # Get all items that already have it set to "true",
+            featured_items = MenuItem.objects.all().filter(featured=True)
+            # Set it to "false" for each of them.
+            for item in featured_items:
+                serialized_item = self.get_serializer(item, data={"featured": "false"}, partial=True)
+                serialized_item.is_valid()
+                self.perform_update(serialized_item)
+
+    def put(self, request, *args, **kwargs):
+        # If setting "featured" to "true", everything that already has it as "true"
+        # should change it to "false".
+        self.clear_featured(request)
+        # Only then should the request go through.
+        return super().put(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        # If setting "featured" to "true", everything that already has it as "true"
+        # should change it to "false".
+        self.clear_featured(request)
+        # Only then should the request go through.
+        return super().patch(request, *args, **kwargs)
+
 # Doing these four as function-based views because I couldn't figure out
 # how to do them as class-based views.
 @api_view(['GET', 'POST'])
